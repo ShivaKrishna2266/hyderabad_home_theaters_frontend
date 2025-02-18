@@ -1,0 +1,63 @@
+/* Ensure the navbar is properly styled */
+.navbar {
+  background-color: #fa1e1e; 
+  padding: 2px 0;
+}
+.navbar_2{
+  padding: 2px 0;
+}
+/* Centering the logo */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.logo_2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+/* Styling the image */
+.logo img {
+  max-height: 80px; /* Adjust size as needed */
+  width: auto;
+}
+.logo_2 img{
+  max-height: 80px;
+  width: auto;
+}
+.login, .cart , .form-inline {
+  display: inline-block;
+  margin: 0 10px;
+}
+.login a, .cart a {
+  text-decoration: none;
+  color: #333; /* Adjust color as needed */
+  font-size: 20px; /* Adjust size as needed */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.login a:hover, .cart a:hover {
+  color: #ff6600; /* Change color on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+.login i, .cart i {
+  padding: 5px;
+}
+.login i, .cart i {
+  transition: transform 0.2s ease-in-out, background 0.2s ease, color 0.2s ease;
+}
+.login i:hover, .cart i:hover {
+  color: #0b0a0a;
+  transform: scale(1.4);  /* Zoom-in effect */
+}
+.nav-item {
+  margin: 0 8px; /* Adds spacing between the nav items */
+}
+
+
+
+
+
+
