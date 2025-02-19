@@ -1,0 +1,43 @@
+.contact-section{
+    background: url('https://cf.bstatic.com/xdata/images/hotel/max1024x768/627771761.jpg?k=53766114a62bcde999fe1c8bf04778e37f383bb73f5857d03450f1a725807112&o=&hp=1') no-repeat center center/cover;}
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.titel h1 {
+    font-family: 'Poppins', sans-serif;
+    font-style:italic;
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+hr {
+    width: 100%;
+    border: 2px solid #070707;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.contact-form{
+    background: #ecedeb;
+    padding: 15px;
+    border-radius: 10px;
+}
+.card {
+    background: rgba(216, 251, 62, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    height: 50%; /* Ensures card takes full height of its parent */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+.touch {
+    width: 100%;
+}

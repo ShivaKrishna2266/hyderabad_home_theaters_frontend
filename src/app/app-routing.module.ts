@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home/home.component';
 import { HeaderComponent } from './header/header/header.component';
 import { FooterComponent } from './footer/footer/footer.component';
+import { AboutUsComponent } from './about_us/about-us/about-us.component';
+import { ContactUsComponent } from './contact_us/contact-us/contact-us.component';
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent }, // Default route
   { path: 'header', component: HeaderComponent},
   { path: 'footer', component: FooterComponent},
+  { path: 'aboutUs', component:AboutUsComponent},
+  { path: 'contactUs', component:ContactUsComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

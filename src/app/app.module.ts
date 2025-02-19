@@ -8,21 +8,25 @@ import { HomeComponent } from './home/home/home.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AboutUsComponent } from './about_us/about-us/about-us.component';
+import { ContactUsComponent } from './contact_us/contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    AboutUsComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule
-    
-    
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
