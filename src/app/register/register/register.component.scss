@@ -1,0 +1,27 @@
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.9s ease-in-out;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    background: #dfe2e0;
+    // background: url('https://thegadgetflow.com/wp-content/uploads/2024/07/BenQ-V5000i-4K-HDR-Ultra-Short-Throw-Projector-01-1536x922.jpg') no-repeat center center/cover;
+}
+.container-flued{
+    background: url('https://ultraexperience.it/wp-content/uploads/2022/10/grande-schermo-a-parete-tv-nel-moderno-televisore-del-soggiorno-in-interni-di-lusso-ia-generativa-2.webp') no-repeat center center/cover;
+
+}
+
+.btn-primary {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 86, 179, 0.5);
+}
