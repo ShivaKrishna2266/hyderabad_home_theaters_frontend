@@ -8,6 +8,7 @@ import { ContactUsComponent } from './contact_us/contact-us/contact-us.component
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register/register.component';
 
+
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent }, // Default route
