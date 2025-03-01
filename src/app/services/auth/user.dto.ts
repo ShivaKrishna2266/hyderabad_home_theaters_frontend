@@ -1,9 +1,9 @@
 export default class UserDTO {
-    username : string | undefined;
-    name : string | undefined;
-    email : string | undefined;
-    password : string | undefined;
-    appUserRoles : string[] | undefined;
+    username : string='';
+    email : string='' ;
+    phoneNumber:string='';
+    password : string='' ;
+    appUserRoles : string[] = [];
 }
 
 export enum AppUserRole {
@@ -14,6 +14,6 @@ export enum AppUserRole {
   
 
   export class AuthenticationRequest {
-    username :string | undefined;
-    password :string | undefined;
+    username :string='' ;
+    password :string ='';
   }

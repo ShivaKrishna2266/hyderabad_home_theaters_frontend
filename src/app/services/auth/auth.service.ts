@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserStorageService } from "../storege/user-storege.service";
 import { environment } from "src/environments/environments";
+import UserDTO, { AppUserRole } from "./user.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,13 @@ import { environment } from "src/environments/environments";
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient
+  constructor(private http: HttpClient,
+              private userStorageService : UserStorageService,
     
-  ) {} // Removed unnecessary instance of UserStorageService
+  ) {} 
+  register(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, userData); // No Authorization header needed
+  }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/authenticate`,{ username, password },{ observe: 'response' }
