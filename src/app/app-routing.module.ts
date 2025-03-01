@@ -5,8 +5,9 @@ import { HeaderComponent } from './header/header/header.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { AboutUsComponent } from './about_us/about-us/about-us.component';
 import { ContactUsComponent } from './contact_us/contact-us/contact-us.component';
-import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register/register.component';
+import { LoginComponent } from './login/login.component';
+
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'contactUs', component:ContactUsComponent},
   { path: 'login', component:LoginComponent},
   { path: 'register', component:RegisterComponent},
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

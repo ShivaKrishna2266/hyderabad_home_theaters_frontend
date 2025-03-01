@@ -1,50 +1,40 @@
 <div class="container-fluid d-flex justify-content-center">
-    <div class="card col-md-6 col-sm-6 col-lg-6 mt-5 mb-5 p-4">
-        <div class="mt-3 d-flex justify-content-center">
-            <h3><b>Login</b></h3>
-        </div>
-        <!-- ngForm for Template-driven form -->
-        <form (ngSubmit)="login(loginForm)" #loginForm="ngForm" novalidate>
-            <div class="mb-3">
-                <label for="name" class="form-label"><b>Username</b></label>
-                <input 
-                    type="text" 
-                    name="username" 
-                    id="username" 
-                    class="form-control" 
-                    placeholder="Username" 
-                    required
-                    [(ngModel)]="user.username"
-                    #name="ngModel"
-                >
-                <div *ngIf="name.invalid && name.touched" class="text-danger">
-                    Username is required
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label"><b>Password</b></label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="password" 
-                    class="form-control" 
-                    placeholder="Password" 
-                    required
-                    [(ngModel)]="user.password"
-                    #password="ngModel"
-                >
-                <div *ngIf="password.invalid && password.touched" class="text-danger">
-                    Password is required
-                </div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
-            </div>
-        </form>
-        <br>
-        <h6 class="d-flex justify-content-center">
-            You don't have an account? 
-            <a routerLink="/register" class="ms-2">Register here</a>
-        </h6>
+  <div class="card col-md-6 col-sm-6 col-lg-6 mt-5 mb-5 p-4">
+    <div class="mt-3 d-flex justify-content-center">
+      <h2><b>Login</b></h2>
     </div>
+    <form class="form mt-2 mb" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-2">
+        <label for="username" class="form-label"><b>Your Name</b></label>
+        <input type="text" class="form-control" placeholder="Username" formControlName="username" />
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" style="color: red;">
+          Username is required</div>
+      </div>
+      <div class="mb-2">
+        <div class="password-container">
+          <label for="password" class="form-label"><b>Password</b></label>
+          <div class="input-group">
+            <input [type]="hidePassword ? 'password' : 'text'" class="form-control" placeholder="Password"
+              formControlName="password" />
+            <div type="button" (click)="togglePasswordVisibility()" class="icon-container">
+              <i [ngClass]="hidePassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" style="color: red;">
+          Password is required
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-5 mb-3">
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">
+          Login
+        </button>
+      </div>
+    </form>
+    <br>
+    <h3 class="d-flex justify-content-center">
+      You don't have an account?
+      <a routerLink="/register" class="ms-2">Register here</a>
+    </h3>
+  </div>
 </div>
