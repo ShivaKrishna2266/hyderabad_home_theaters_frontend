@@ -25,6 +25,10 @@ export class UserStorageService {
     static getToken(): string | null{
       return localStorage.getItem(TOKEN);
     }
+    
+    getToken(): string | null{
+      return localStorage.getItem(TOKEN);
+    }
 
     static getUser(): any{
      const user = localStorage.getItem(USER);
