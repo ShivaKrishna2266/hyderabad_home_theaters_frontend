@@ -1,75 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth/auth.service';
+import { UserStorageService } from '../services/storege/user-storege.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
-import { UserStorageService } from '../services/user-storege.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  user = { username: '', password: '' }; // User input model
-  errorMessage: string | null = null; // Error handling
-  public submitted = false;
+export class LoginComponent {
+  loginForm!: FormGroup;
+  hidePassword = true;
 
   constructor(
-    private router: Router,
-    private userStorageService: UserStorageService,
+    private formBuilder: FormBuilder,
     private authService: AuthService,
-  ) {}
+    private userStorageService: UserStorageService,
+    private router: Router
+  ) { }
+  ngOnInit(): void {
+    this.userStorageService.singOut(); // Clears old session data on load
 
-  ngOnInit(): void {}
-
-  get f() {
-    return this.user;
+    this.loginForm = this.formBuilder.group({
+      username: [null, Validators.required],
+      password: [null, Validators.required]
+    });
   }
-
-  login(loginForm: NgForm) {
-    this.submitted = true;
-    
-    if (loginForm.valid) {
-      // Clear local storage before login
-      this.userStorageService.clearStorage();
-
-      const { username, password } = loginForm.value;
-      this.authService.login(username, password).subscribe(
-        (response: any) => {
-          console.log('Login API Response:', response);
-          
-          // Store token and user details in local storage
-          this.userStorageService.setToken(response.token);
-          this.userStorageService.setRole(response.role);
-          this.userStorageService.setUser(response.user); // Ensure `user` exists
-
-          // Redirect based on role
-          this.redirectBasedOnRole(response.role);
-        },
-        (error: any) => {
-          console.error('Login API Error:', error);
-          this.errorMessage = 'Invalid username or password.';
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+  onSubmit(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    const { username, password } = this.loginForm.value;
+    this.authService.login(username, password).subscribe(
+      (response) => {
+        console.log(response.data);
+        const res = response.body;
+        if (res && res.token && res.role) {
+          this.userStorageService.saveToken(res.token);
+          this.userStorageService.saveUser(res);
+          if (res.role === 'ROLE_ADMIN') {
+            this.router.navigateByUrl('/admin/admin-dashbord');
+          } else if (res.role === 'ROLE_USER') {
+            this.router.navigateByUrl('/user/dashboard');
+          } else {
+            this.router.navigateByUrl('/dashboard');
+          }
         }
-      );
-    }
-  }
-
-  private redirectBasedOnRole(role: string): void {
-    switch (role) {
-      case 'ADMIN':
-        this.router.navigate(['/admin/admin_home']);
-        break;
-      case 'USER':
-        this.router.navigate(['/user/home']);
-        break;
-      default:
-        console.warn('Unknown role, redirecting to login.');
-        this.router.navigate(['/login']); // Fallback redirection
-        break;
-    }
-  }
-
-  closeErrorMessage() {
-    this.errorMessage = null;
+      },
+      (error) => { }
+    );
   }
 }
