@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register/register.component';
 import { AuthInterceptor } from './services/auth/auth-intercepter';
 import { AdminModule } from './admin/admin.module';
+import { BrandsComponent } from './brands/brands.component';
 
 
 
@@ -29,6 +30,7 @@ import { AdminModule } from './admin/admin.module';
     ContactUsComponent,
     LoginComponent,
     RegisterComponent,
+    BrandsComponent,
     
     
     
