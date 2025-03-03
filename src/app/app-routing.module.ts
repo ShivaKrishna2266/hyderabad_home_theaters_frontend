@@ -7,6 +7,7 @@ import { AboutUsComponent } from './about_us/about-us/about-us.component';
 import { ContactUsComponent } from './contact_us/contact-us/contact-us.component';
 import { RegisterComponent } from './register/register/register.component';
 import { LoginComponent } from './login/login.component';
+import { BrandsComponent } from './brands/brands.component';
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'login', component:LoginComponent},
   { path: 'register', component:RegisterComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+  { path: 'brands', component:BrandsComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

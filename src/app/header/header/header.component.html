@@ -45,9 +45,19 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="home">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Brands</a>
-      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" routerLink="/brands" id="brandDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Brands
+        </a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="brandDropdown">
+          <li><a href="#" class="dropdown-item">1</a></li>
+          <li><a href="#" class="dropdown-item">2</a></li>
+          <li><a href="#" class="dropdown-item">3</a></li>
+          <li><a href="#" class="dropdown-item">4</a></li>
+          <li><a href="#" class="dropdown-item">5</a></li>
+          <li><a href="#" class="dropdown-item">6</a></li>
+        </ul>
+      </li>      
       <li class="nav-item">
         <a class="nav-link" href="#">Categories</a>
       </li>
