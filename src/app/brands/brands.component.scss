@@ -1,17 +1,93 @@
-ul {
-    list-style-type: none;
-    padding: 0;
-}
+/* Global styles */
+/* Container Background */
+// .container {
+//     background-image: url('https://media.istockphoto.com/id/1623303770/photo/creative-background-image-is-blurred-evening-city-lights-and-light-snowfall.webp?b=1&s=612x612&w=0&k=20&c=--I6QisPR7yGmgujOI2co8U3FIK5tBv6xAjMup67ghc='); /* Replace with your image URL */
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
+//     border-radius: 10px;
+//     padding: 20px;
+//     animation: fadeIn 1s ease-in-out;
+// }
 
-li {
-    cursor: pointer;
-    padding: 8px;
+
+
+body {
     background-color: #f8f9fa;
-    margin-bottom: 5px;
-    border-radius: 4px;
-    transition: 0.3s;
+    font-family: Arial, sans-serif;
 }
 
-li:hover {
-    background-color: #ddd;
+/* Brand List Styling */
+.card h2 {
+    color: #007bff;
+    font-size: 24px;
+    animation: bounceIn 1s ease-in-out;
+}
+
+/* List group animation */
+.list-group-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Product Card Styling */
+.card_1 {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Hover Effect on Products */
+.card_1:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #d5f652;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.product-img {
+    // width: 100%;
+    // height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Image Hover Effect */
+.product-img:hover {
+    transform: scale(1.08);
 }

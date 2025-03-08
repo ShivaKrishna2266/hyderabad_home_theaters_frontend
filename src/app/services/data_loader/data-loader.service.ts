@@ -16,4 +16,15 @@ export class DataLoaderService {
   getAllBrands(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllBrands");
   }
+
+  getAllProducts(): Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllProducts");
+  }
+  getProductsByBrand(brandId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/data/getProductsByBrand/${brandId}`);
+  }
+  
+  getAllCategories(): Observable<any>{
+     return this.http.get<any>(this.apiUrl + "/data/getAllCategories");
+  }
 }
