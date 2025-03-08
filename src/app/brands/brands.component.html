@@ -1,20 +1,45 @@
-<div class="container">
-    <div class="row mt-3">
+<div class="container mt-3">
+    <div class="row backgroundImage mt-3 g-4">
         <!-- Left Side: Brand Names -->
-        <div class="card col-md-3 col-sm-3 col-lg-3 mt-5 mb-4">
-            <ul class="mt-3">
-                <li *ngFor="let brand of brands" (click)="selectBrand(brand.brandName)">{{brand.brandName}}</li>
+        <div class=" h-100 col-md-3 col-sm-3 col-lg-3 mt-5 mb-4">
+            <h2 class="mt-3 text-center"><b>Brands</b></h2>
+            <ul class="list-group mt-3 mb-4">
+                <li *ngFor="let brand of brands" 
+                    (click)="selectBrand(brand.brandId)" 
+                    class="list-group-item clickable">
+                   <b> {{ brand.brandName }}</b>
+                </li>
             </ul>
         </div>
 
         <!-- Right Side: Display Products -->
-        <div class="card col-md-9 col-sm-9 col-lg-9 mt-5 mb-4">
-            <h2 *ngIf="selectedBrand">Products for {{ selectedBrand }}</h2>
-            <ul *ngIf="products.length > 0">
-                <li *ngFor="let product of products">{{ product }}</li>
-            </ul>
-            <p *ngIf="selectedBrand && products.length === 0">No products available</p>
+        <div class=" text-center col-md-9 col-sm-9 col-lg-9 mt-5 mb-4">
+            <h1 *ngIf="selectedBrand" class="text-center mt-3">
+               <b>Products for {{ getBrandName(selectedBrand) }}</b> 
+            </h1>
+
+            <div class="container mt-3">
+                <div class="row g-4">  <!-- Add 'g-4' for spacing -->
+                    <!-- Loop through products and display them side by side -->
+                    <div *ngFor="let product of products" class="col-md-4 col-sm-6">
+                        <div class="card_1 h-100 shadow-sm p-3 wow animate__animated animate__fadeInRight">  <!-- Add padding for better spacing -->
+                            <div class="card-body">
+                                <h4 class="card-title"><b>{{ product.productName }}</b></h4>
+                                <!-- <img [src]="product.imageName" alt="{{ product.productName }}" class="product-img"> -->
+                                <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}"
+                                class="product-img">
+                                <p class="card-text"><strong>Price:</strong> ₹{{ product.productPrice }}</p>
+                                <p class="card-text"><strong>Rating:</strong> ⭐⭐⭐⭐{{ product.productRank }}</p>
+                                <p class="card-text"><strong>Stock Quantity:</strong> {{ product.stockQuantity }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p *ngIf="selectedBrand && products.length === 0" class="text-center text-muted">
+                No products available
+            </p>
         </div>
     </div>
 </div>
-

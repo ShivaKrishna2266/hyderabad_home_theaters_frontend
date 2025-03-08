@@ -106,7 +106,6 @@
   /* Change text color on hover */
 }
 
-
 //content section//
 .content-section {
   position: relative;
@@ -139,13 +138,6 @@
 .titel {
   color: #030303;
 }
-
-// Testimonals
-// .testimonial-section {
-//   position: relative;
-//   background: #f4f7f7;
-//   padding: 100px 0;
-// }
 .testimonial-section::before {
   content: "";
   position: absolute;
@@ -179,4 +171,124 @@
 
 .stars {
   color: #fbc02d;
+}
+
+
+/* Top Winning Products Section */
+.top_winning_products {
+    // background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdHT67YOjlvrREPGszyAzZHJjejKPXFA1sQ&s') no-repeat center center/cover;
+    padding: 1px 0;
+    text-align: center;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Title Styling */
+.top_winning_products h2 {
+    font-size: 22px;
+    color: #007bff;
+    // font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    animation: bounceIn 1s ease-in-out;
+}
+
+/* Product Card Styling */
+.card_1 {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: fadeInRight 1s ease-in-out;
+    background: #f8f9f6;
+}
+
+/* Card Hover Effect */
+.card_1:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    // background-color: #c1a2cf;
+}
+
+/* Product Image */
+.product-img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Image Hover Effect */
+.product-img:hover {
+    transform: scale(1.08);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+.pagination-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.pagination-buttons i {
+  cursor: pointer;
+  transition: 0.3s;
+  color: #007bff;
+}
+
+.pagination-buttons i:hover {
+  color: #0056b3;
+  transform: scale(1.2);
+}
+
+/* Disable Click when at First or Last Page */
+.pagination-buttons .disabled i {
+  color: #ccc;
+  pointer-events: none;
+}
+
+
+/* Page Info */
+.page-info {
+  font-size: 13px;
+  font-weight: bold;
 }
