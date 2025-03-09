@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -27,4 +28,8 @@ export class DataLoaderService {
   getAllCategories(): Observable<any>{
      return this.http.get<any>(this.apiUrl + "/data/getAllCategories");
   }
+
+  getSubCategoryByCategory(categoryId: number): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/data/getSubCategoryByCategory/${categoryId}`)
+  } 
 }

@@ -52,7 +52,7 @@
       <div *ngFor="let product of displayedProducts" class="col-md-3 col-sm-6">
         <div class="card_1 h-100 shadow-sm p-3 animate__animated animate__fadeInRight">
           <div class="card-body">
-            <h5 class="card-title">{{ product.productName }}</h5>
+            <h3 class="card-title"><b>{{ product.productName }}</b></h3>
             <!-- <img [src]="product.imageName" alt="{{ product.productName }}" class="product-img"> -->
             <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}"
               class="product-img">
@@ -90,7 +90,7 @@
         <div class="card_1 h-100 shadow-sm p-3 animate__animated animate__fadeInRight">
         <div class="card-body">
           <img src="../../../assets//eleser-section-4k-projecter.png" alt="{{ category.categoryName }}" class="product-img">
-          <h3 class="card-title">{{ category.categoryName }}</h3>
+          <h3 class="card-title"><b>{{ category.categoryName }}</b></h3>
           <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p>
           <p class="card-text"><strong>Tagline:</strong> {{ category.tagline }}</p> -->
         </div>
