@@ -16,11 +16,14 @@ export class BrandsComponent implements OnInit {
   products: ProductDTO[] = [];
   selectedBrand: number | null = null; // Store selected brand ID (changed from string to number)
 
+  currentPage = 1;
+  itemsPerPage = 6;
+
   constructor(
     private router: Router,
     private dataLoaderService: DataLoaderService,
     private productService: ProductService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllBrands();
@@ -46,7 +49,7 @@ export class BrandsComponent implements OnInit {
     const brand = this.brands.find(b => b.brandId === brandId);
     return brand ? brand.brandName : 'Unknown';
   }
-  
+
 
   getProductsByBrand(brandId: number): void {
     this.dataLoaderService.getProductsByBrand(brandId).subscribe(

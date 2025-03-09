@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2 *ngIf="categoryId" class="text-center">Subcategories</h2>
+
+  <div *ngIf="subCategories.length > 0; else noData">
+    <div class="row mt-4 mb-4">
+      <div class="col-md-4" *ngFor="let subCategory of subCategories">
+        <div class="card_1 h-100 shadow-sm p-3 wow animate__animated animate__fadeInRight">
+          <div class="card-body">
+            <h3 class="card-title justify-content-center"><b>{{ subCategory.subCategoryName }}</b></h3>
+            <img src="../.././assets/boss-home-theater-system.webp" alt="{{ subCategory.subCategoryName }}"
+              class="category-img">
+            <p class="card-text">{{ subCategory.description }}</p>
+            <p class="card-text">{{subCategory.tagline}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="text-center text-muted">No subcategories available.</p>
+  </ng-template>
+</div>

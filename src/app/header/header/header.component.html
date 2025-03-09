@@ -46,21 +46,25 @@
         <a class="nav-link" routerLink="home">Home</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" routerLink="/brands" id="brandDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link" routerLink="/brands" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Brands
         </a>
-        <!-- <ul class="dropdown-menu custom-dropdown" aria-labelledby="brandDropdown">
-          <li><a href="#" class="dropdown-item">1</a></li>
-          <li><a href="#" class="dropdown-item">2</a></li>
-          <li><a href="#" class="dropdown-item">3</a></li>
-          <li><a href="#" class="dropdown-item">4</a></li>
-          <li><a href="#" class="dropdown-item">5</a></li>
-          <li><a href="#" class="dropdown-item">6</a></li>
-        </ul> -->
-      </li>      
-      <li class="nav-item">
-        <a class="nav-link" href="#">Categories</a>
       </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="categoryDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Categories
+        </a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="categoryDropdown">
+          <li *ngFor="let category of categories">
+            <a [routerLink]="['/categories', category.categoryId]" class="dropdown-item">
+              {{ category.categoryName }}
+            </a>
+          </li>
+        </ul>
+      </li>
+
       <li class="nav-item">
         <a class="nav-link" href="#">Discount</a>
       </li>
@@ -74,31 +78,3 @@
   </div>
 
 </nav>
-
-<!-- Modal for Login -->
-<!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter username">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
-          </div>
-          <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->

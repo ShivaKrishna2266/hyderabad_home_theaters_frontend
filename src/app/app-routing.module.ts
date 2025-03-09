@@ -8,6 +8,7 @@ import { ContactUsComponent } from './contact_us/contact-us/contact-us.component
 import { RegisterComponent } from './register/register/register.component';
 import { LoginComponent } from './login/login.component';
 import { BrandsComponent } from './brands/brands.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 
@@ -22,6 +23,8 @@ const routes: Routes = [
   { path: 'register', component:RegisterComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
   { path: 'brands', component:BrandsComponent},
+  { path: 'categories', component:CategoriesComponent},
+  { path: 'categories/:categoryId', component: CategoriesComponent },
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

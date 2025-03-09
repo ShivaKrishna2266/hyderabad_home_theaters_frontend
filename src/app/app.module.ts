@@ -17,6 +17,8 @@ import { RegisterComponent } from './register/register/register.component';
 import { AuthInterceptor } from './services/auth/auth-intercepter';
 import { AdminModule } from './admin/admin.module';
 import { BrandsComponent } from './brands/brands.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -31,6 +33,7 @@ import { BrandsComponent } from './brands/brands.component';
     LoginComponent,
     RegisterComponent,
     BrandsComponent,
+    CategoriesComponent,
     
     
     
@@ -43,11 +46,9 @@ import { BrandsComponent } from './brands/brands.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    AdminModule 
-    
-
-
-
+    AdminModule,
+    NgxPaginationModule
+  
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
