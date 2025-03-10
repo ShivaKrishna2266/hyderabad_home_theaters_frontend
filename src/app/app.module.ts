@@ -19,6 +19,7 @@ import { AdminModule } from './admin/admin.module';
 import { BrandsComponent } from './brands/brands.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductComponent } from './product/product.component';
 
 
 
@@ -34,6 +35,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     RegisterComponent,
     BrandsComponent,
     CategoriesComponent,
+    ProductComponent,
     
     
     

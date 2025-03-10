@@ -1,0 +1,18 @@
+<div class="container text-center mt-4 mb-4">
+    <h1><b>Show All Products</b></h1>
+    <div class="row mb-4">
+        <div *ngFor="let product of products" class="col-md-3 col-sm-6">
+          <div class=" h-100 p-3 animate__animated animate__fadeInRight">
+            <div class="card hover-bg">
+              <h3 class="card-title"><b>{{ product.productName }}</b></h3>
+              <!-- <img [src]="product.imageName" alt="{{ product.productName }}" class="product-img"> -->
+              <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}"
+                class="product-img">
+              <p class="card-text"><strong>Price:</strong> ₹{{ product.productPrice }}</p>
+              <p class="card-text"><strong>Rating:</strong> ⭐{{ product.productRank }}</p>
+              <p class="card-text"><strong>Stock Quantity:</strong> {{ product.stockQuantity }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

@@ -1,23 +1,47 @@
 <div class="container mt-4">
-  <h2 *ngIf="categoryId" class="text-center">Subcategories</h2>
-
-  <div *ngIf="subCategories.length > 0; else noData">
-    <div class="row mt-4 mb-4">
-      <div class="col-md-4" *ngFor="let subCategory of subCategories">
-        <div class="card_1 h-100 shadow-sm p-3 wow animate__animated animate__fadeInRight">
-          <div class="card-body">
-            <h3 class="card-title justify-content-center"><b>{{ subCategory.subCategoryName }}</b></h3>
-            <img src="../.././assets/boss-home-theater-system.webp" alt="{{ subCategory.subCategoryName }}"
-              class="category-img">
-            <p class="card-text">{{ subCategory.description }}</p>
-            <p class="card-text">{{subCategory.tagline}}</p>
+  <!-- Show Categories only when no category is selected -->
+  <div *ngIf="!categoryId">
+    <h1 class="text-center mt-3 mb-3"><b>Show All Categories</b></h1>
+    <div class="row mb-4">
+      <div class="col-md-3" *ngFor="let category of categories" class="col-md-3 col-sm-6">
+        <div class=" h-100 p-3 animate__animated animate__fadeInRight">
+          <div class="card hover-bg">
+            <h3 class="card-title"><b>{{ category.categoryName }}</b></h3>
+            <img src="../.././assets/Buystack_AVR-X1800H_Image_StudioF_NA.webp" alt="{{ category.categoryName }}"
+            class="category-img">
+            <p class="card-title"><b>{{category.description}}</b></p>
+            <button (click)="router.navigate(['/categories', category.categoryId])" class="btn btn-primary">
+              View Subcategories
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <ng-template #noData>
-    <p class="text-center text-muted">No subcategories available.</p>
-  </ng-template>
+  <!-- Show Subcategories only when a category is selected -->
+  <div *ngIf="categoryId">
+    <button class="btn btn-secondary mb-3" (click)="showCategories()">Back to Categories</button>
+    <h1 class="text-center mt-3 mb-3"><b>Show All Subcategories</b></h1>
+
+    <div *ngIf="subCategories.length > 0; else noData">
+      <div class="row mt-4 mb-4">
+        <div class="col-md-4" *ngFor="let subCategory of subCategories" class="col-md-3 col-sm-6">
+          <div class=" h-100 p-3 animate__animated animate__fadeInRight">
+            <div class="card hover-bg">
+              <h3 class="card-title text-center"><b>{{ subCategory.subCategoryName }}</b></h3>
+              <img src="../.././assets/boss-home-theater-system.webp" alt="{{ subCategory.subCategoryName }}"
+                class="category-img">
+              <p class="card-text">{{ subCategory.description }}</p>
+              <p class="card-text">{{ subCategory.tagline }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p class="text-center text-muted">No subcategories available.</p>
+    </ng-template>
+  </div>
 </div>
