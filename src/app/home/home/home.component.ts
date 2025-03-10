@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { DataLoaderService } from 'src/app/services/data_loader/data-loader.service';
@@ -13,8 +14,9 @@ export class HomeComponent implements OnInit {
   displayedProducts: ProductDTO[] = [];
   categories: CategoryDTO[] = [];
   paginatedCategories: CategoryDTO[] = [];
+  categoryId: number | null = null;
 
-  showCategories: boolean = true; // Set to false to hide categories
+  // showCategories: boolean = true; // Set to false to hide categories
 
   // Separate Pagination States
   currentProductPage: number = 1;
@@ -22,7 +24,10 @@ export class HomeComponent implements OnInit {
   itemsPerPage: number = 4; // Show 4 items per page
 Math: any;
 
-  constructor(private dataLoaderService: DataLoaderService) {}
+  constructor(
+              private dataLoaderService: DataLoaderService,
+              public router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -99,6 +104,16 @@ Math: any;
 
   get totalCategoryPages(): number {
     return this.categories.length ? Math.ceil(this.categories.length / this.itemsPerPage) : 1;
+  }
+
+  filterSubcategories(): void {
+    this.categories = this.categories.filter(sub => sub.categoryId === this.categoryId);
+  }
+
+  showCategories(): void {
+    this.categoryId = null;
+    this.categories = [];
+    this.router.navigate(['/categories']);
   }
 
 }

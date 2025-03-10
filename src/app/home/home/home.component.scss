@@ -214,9 +214,10 @@
     height: auto;
     max-height: 200px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 20px;
     margin-bottom: 10px;
     transition: transform 0.3s ease-in-out;
+    padding: 10px;
 }
 
 /* Image Hover Effect */

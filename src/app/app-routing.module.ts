@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register/register.component';
 import { LoginComponent } from './login/login.component';
 import { BrandsComponent } from './brands/brands.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { ProductComponent } from './product/product.component';
 
 
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'brands', component:BrandsComponent},
   { path: 'categories', component:CategoriesComponent},
   { path: 'categories/:categoryId', component: CategoriesComponent },
+  { path: 'product', component:ProductComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
