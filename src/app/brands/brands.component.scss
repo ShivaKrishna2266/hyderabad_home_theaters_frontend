@@ -1,110 +1,95 @@
-/* Global styles */
-/* Container Background */
-// .container {
-//     background-image: url('https://media.istockphoto.com/id/1623303770/photo/creative-background-image-is-blurred-evening-city-lights-and-light-snowfall.webp?b=1&s=612x612&w=0&k=20&c=--I6QisPR7yGmgujOI2co8U3FIK5tBv6xAjMup67ghc='); /* Replace with your image URL */
-//     background-size: cover;
-//     background-position: center;
-//     background-repeat: no-repeat;
-//     border-radius: 10px;
-//     padding: 20px;
-//     animation: fadeIn 1s ease-in-out;
-// }
-
-
-
-body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.image-container img {
+  width: 100%;
+  height: 400px;
+}
+.overlay-text {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
 }
 
-/* Brand List Styling */
-.card h2 {
-    color: #007bff;
-    font-size: 24px;
-    animation: bounceIn 1s ease-in-out;
+
+
+.card {
+  // background-color: rgb(241, 234, 84);
+  border: 1px solid #f3f3f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.brand-list {
-    max-width: 400px;
-    margin: auto;
+.card h3 {
+  font-size: 18px;
+  color: #333;
+  // margin-bottom: 10px;
 }
 
-/* List group animation */
-.list-group-item {
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-    line-height: 2;
-    /* Adjust spacing as needed */
-    border-radius: 15px;
-    margin-bottom: 6px;
-    border-color: #c06c13;
+.card p {
+  font-size: 14px;
+  color: #666;
+  // margin-bottom: 20px;
 }
 
-.list-group-item:hover {
-    background-color: #007bff;
-    color: rgb(255, 255, 255);
-    transform: scale(1.05);
+.hover-bg:hover {
+  background-color: #aef922;
+  transform: scale(1.05);
 }
 
-.animate-brand {
-    animation: fadeIn 0.5s ease-in-out;
+.hover-bg .image {
+  overflow: hidden;
+  border-radius: 10px;
 }
 
-/* Product Card Styling */
-.card_1 {
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
-    animation: fadeIn 1s ease-in-out;
+.hover-bg .image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
-/* Hover Effect on Products */
-.card_1:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    background-color: #d5f652;
+.hover-bg:hover .image img {
+  transform: scale(1.1);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.hover-bg h4,
+.hover-bg p {
+  // padding: 10px;
+  transition: color 0.3s ease;
 }
 
-@keyframes bounceIn {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-
-    50% {
-        transform: scale(1.1);
-        opacity: 0.5;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+.hover-bg:hover h4,
+.hover-bg:hover p {
+  color: #007bff;
 }
 
-.product-img {
-    // width: 100%;
-    // height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out;
+
+.pagination-shadow {
+  font-size: 28px;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Image Hover Effect */
-.product-img:hover {
-    transform: scale(1.08);
+.pagination-shadow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pagination-shadow.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
 }

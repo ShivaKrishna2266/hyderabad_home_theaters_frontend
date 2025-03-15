@@ -18,6 +18,10 @@ export class DataLoaderService {
     return this.http.get<any>(this.apiUrl + "/data/getAllBrands");
   }
 
+  getBrandById(brandId: number): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/data/getBrandById/${brandId}`);
+  }
+
   getAllProducts(): Observable<any>{
     return this.http.get<any>(this.apiUrl + "/data/getAllProducts");
   }

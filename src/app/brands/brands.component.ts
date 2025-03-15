@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BrandService } from '../services/brands/brand.service';
 import { BrandDTO } from '../DTO/brandDTO';
-import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { ProductDTO } from '../DTO/productDTO';
 import { ProductService } from '../services/product/product.service';
+import { DataLoaderService } from '../services/data_loader/data-loader.service';
 
 @Component({
   selector: 'app-brands',
@@ -12,55 +12,98 @@ import { ProductService } from '../services/product/product.service';
   styleUrls: ['./brands.component.scss']
 })
 export class BrandsComponent implements OnInit {
-  brands: BrandDTO[] = [];  // Store brands dynamically from the backend
+  brands: BrandDTO[] = [];
   products: ProductDTO[] = [];
-  selectedBrand: number | null = null; // Store selected brand ID (changed from string to number)
+  brandId: number | null = null;
+  displayedBrands: BrandDTO[] = [];
 
+  itemsPerPage = 8;
   currentPage = 1;
-  itemsPerPage = 6;
+  totalPages = Math.ceil(this.brands.length / this.itemsPerPage);
+
 
   constructor(
-    private router: Router,
-    private dataLoaderService: DataLoaderService,
-    private productService: ProductService,
+    private route: ActivatedRoute,
+    public router: Router,
+    private dataLoaderService: DataLoaderService
   ) { }
 
   ngOnInit(): void {
     this.getAllBrands();
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('brandId');
+      if (id) {
+        this.brandId = Number(id);
+        this.getProductsByBrand(this.brandId);
+      } else {
+        this.brandId = null;
+        this.products = [];
+      }
+    });
+    this.brandName();
+  }
+
+  brandName() {
+    if (this.brandId) {
+      this.dataLoaderService.getBrandById(this.brandId).subscribe((brands) => {
+        this.brandName = brands.brandName; // Adjust based on API response
+      });
+    }
+
   }
 
   getAllBrands(): void {
     this.dataLoaderService.getAllBrands().subscribe(
-      (res: { data: BrandDTO[] }) => {
-        this.brands = res.data;
+      (res: any) => {
+        this.brands = res?.data || [];
+        this.updateDisplayedBrands();
       },
       (error) => {
         console.error('Error fetching brands:', error);
+        this.brands = [];
       }
     );
   }
-
-  selectBrand(brandId: number): void {
-    this.selectedBrand = brandId;
-    this.getProductsByBrand(brandId);
-  }
-
-  getBrandName(brandId: number): string {
-    const brand = this.brands.find(b => b.brandId === brandId);
-    return brand ? brand.brandName : 'Unknown';
-  }
-
 
   getProductsByBrand(brandId: number): void {
     this.dataLoaderService.getProductsByBrand(brandId).subscribe(
-      (res: { data: ProductDTO[] }) => {
-        this.products = res.data;
+      (res: any) => {
+        if (res && res.data) {
+          this.products = res.data;
+        } else {
+          console.warn('No products found for category ID:', brandId);
+          this.products = []; // Ensure the array is reset if no data is received
+        }
       },
       (error) => {
         console.error('Error fetching products:', error);
+        this.products = []; // Reset on error to avoid stale data
       }
     );
   }
 
+  showBrands(): void {
+    this.brandId = null;
+    this.products = [];
+    this.router.navigate(['/brands']);
+  }
 
+  updateDisplayedBrands(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedBrands = this.brands.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < Math.ceil(this.brands.length / this.itemsPerPage)) {
+      this.currentPage++;
+      this.updateDisplayedBrands();
+    }
+  }
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedBrands();
+    }
+  }
 }

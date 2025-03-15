@@ -1,9 +1,10 @@
 <div class="container mt-4">
   <!-- Show Categories only when no category is selected -->
   <div *ngIf="!categoryId">
-    <h1 class="text-center mt-3 mb-3"><b>Show All Categories</b></h1>
+    <h1 class="text-center mt-3 mb-3"><b>Your Trusted Categories, All in One Place.</b></h1>
+    <p class="text-right" ><b>Total Categories: {{ categories.length }}</b></p>
     <div class="row mb-4">
-      <div class="col-md-3" *ngFor="let category of categories" class="col-md-3 col-sm-6">
+      <div class="col-md-3" *ngFor="let category of displayedCategoriess" class="col-md-3 col-sm-6">
         <div class=" h-100 p-3 animate__animated animate__fadeInRight">
           <div class="card hover-bg">
             <h3 class="card-title"><b>{{ category.categoryName }}</b></h3>
@@ -16,6 +17,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Pagination Controls -->
+      <div class="text-center mt-3">
+        <i class="fa fa-angle-left pagination-shadow" (click)="prevPage()" [class.disabled]="currentPage === 1"></i>
+        <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+        <i class="fa fa-angle-right pagination-shadow" (click)="nextPage()" [class.disabled]="currentPage >= totalPages"></i>
+      </div>  
     </div>
   </div>
 

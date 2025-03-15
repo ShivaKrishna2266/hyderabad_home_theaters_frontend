@@ -51,3 +51,22 @@
   .hover-bg:hover p {
     color: #007bff;
   }
+  .pagination-shadow {
+    font-size: 28px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .pagination-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pagination-shadow.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  
