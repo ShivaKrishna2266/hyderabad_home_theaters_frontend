@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { BrandsComponent } from './brands/brands.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductComponent } from './product/product.component';
+import { DesignServicesComponent } from './design-services/design-services.component';
 
 
 
@@ -24,9 +25,11 @@ const routes: Routes = [
   { path: 'register', component:RegisterComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
   { path: 'brands', component:BrandsComponent},
+  { path: 'brands/:brandId', component: BrandsComponent },
   { path: 'categories', component:CategoriesComponent},
   { path: 'categories/:categoryId', component: CategoriesComponent },
   { path: 'product', component:ProductComponent},
+  { path: 'design-services', component:DesignServicesComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

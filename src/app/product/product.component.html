@@ -5,6 +5,7 @@
           <div class=" h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg">
               <h3 class="card-title"><b>{{ product.productName }}</b></h3>
+              <h5 class="card-subtitle text-muted">{{ brands[product.brandId] || 'Unknown Brand' }}</h5>
               <!-- <img [src]="product.imageName" alt="{{ product.productName }}" class="product-img"> -->
               <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}"
                 class="product-img">

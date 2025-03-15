@@ -20,6 +20,7 @@ import { BrandsComponent } from './brands/brands.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductComponent } from './product/product.component';
+import { DesignServicesComponent } from './design-services/design-services.component';
 
 
 
@@ -36,6 +37,7 @@ import { ProductComponent } from './product/product.component';
     BrandsComponent,
     CategoriesComponent,
     ProductComponent,
+    DesignServicesComponent,
     
     
     

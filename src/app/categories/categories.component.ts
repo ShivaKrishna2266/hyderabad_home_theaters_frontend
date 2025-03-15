@@ -13,6 +13,11 @@ export class CategoriesComponent implements OnInit {
   categories: CategoryDTO[] = [];
   categoryId: number | null = null;
   subCategories: SubCategoryDTO[] = [];
+  displayedCategoriess: CategoryDTO[] = [];
+  
+  itemsPerPage = 8;
+  currentPage = 1;
+  totalPages = Math.ceil(this.categories.length / this.itemsPerPage);
 
 
 
@@ -43,6 +48,7 @@ export class CategoriesComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.categories = res.data || res;
+          this.updateDisplayedCategoriess();
         } else {
           console.log("No Categories are not found");
           this.categories = [];
@@ -59,7 +65,7 @@ export class CategoriesComponent implements OnInit {
     this.dataLoaderService.getSubCategoryByCategory(categoryId).subscribe(
       (res: any) => {
         if (res && res.data) {
-          this.subCategories = res.data;
+          this.subCategories = res.data;         
         } else {
           console.warn('No subcategories found for category ID:', categoryId);
           this.subCategories = []; // Ensure the array is reset if no data is received
@@ -81,5 +87,25 @@ export class CategoriesComponent implements OnInit {
     this.categoryId = null;
     this.subCategories = [];
     this.router.navigate(['/categories']);
+  }
+
+
+  updateDisplayedCategoriess(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedCategoriess = this.categories.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < Math.ceil(this.categories.length / this.itemsPerPage)) {
+      this.currentPage++;
+      this.updateDisplayedCategoriess();
+    }
+  }
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedCategoriess();
+    }
   }
 }
