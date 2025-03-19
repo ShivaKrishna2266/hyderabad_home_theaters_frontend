@@ -36,4 +36,16 @@ export class DataLoaderService {
   getSubCategoryByCategory(categoryId: number): Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/data/getSubCategoryByCategory/${categoryId}`)
   } 
+
+  getAllGeneralSettings() : Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllGeneralSettings");
+  }
+
+  getAllCountryCodes(): Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllCountryCodes");
+  }
+
+  addCountactUs(data : any){
+    return this.http.post<any>(`${this.apiUrl}/data/addContactUs` , data);
+  }
 }

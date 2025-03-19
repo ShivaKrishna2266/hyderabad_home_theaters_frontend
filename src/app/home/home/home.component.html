@@ -43,21 +43,23 @@
   </button>
 
 </div>
+
 <!-- Top Winning Products Show Get All Products -->
-<div class="top_winning_products mt-4 mb-2">
+<div class="top_winning_products mt-4 ">
   <div class="container text-center mt-5 mb-3">
-    <h2><b>Top Winning Products</b></h2>
+    <h2><b>Most Profitable and High-Demand Products</b></h2>
 
     <div class="row mb-4">
       <div *ngFor="let product of displayedProducts" class="col-md-3 col-sm-6">
-        <div class="card_1 h-100 shadow-sm p-3 animate__animated animate__fadeInRight">
-          <div class="card-body">
+        <div class="h-100 p-2 animate__animated animate__fadeInRight">
+          <div class="card hover-bg text-center">
             <h3 class="card-title"><b>{{ product.productName }}</b></h3>
             <h5 class="card-subtitle text-muted">{{ brands[product.brandId] || 'Unknown Brand' }}</h5>
             <!-- <img [src]="product.imageName" alt="{{ product.productName }}" class="product-img"> -->
-            <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}"
-              class="product-img">
-            
+            <div class="image">
+              <img src="../../../assets/VP-Sub-espresso-mG-250x250.jpg" alt="{{ product.productName }}">
+            </div>
+
             <p class="card-text"><strong>Price:</strong> ₹{{ product.productPrice }}</p>
             <p class="card-text"><strong>Rating:</strong> ⭐{{ product.productRank }}</p>
             <p class="card-text"><strong>Stock Quantity:</strong> {{ product.stockQuantity }}</p>
@@ -67,36 +69,39 @@
     </div>
 
     <!-- Pagination Buttons -->
-    <div class="pagination-buttons mb-2">
+    <div class="pagination-buttons">
       <!-- Previous Page -->
       <span (click)="prevPage()" [class.disabled]="currentProductPage === 1">
-        <i class="fa fa-arrow-left fa-2x"></i>
+        <i class="fa fa-arrow-left fa-1x"></i>
       </span>
       <span class="page-info">
         Page {{ currentProductPage }} of {{ totalproductPages }}
       </span>
       <!-- Next Page -->
       <span (click)="nextPage()" [class.disabled]="currentProductPage >= totalproductPages">
-        <i class="fa fa-arrow-right fa-2x"></i>
+        <i class="fa fa-arrow-right fa-1x"></i>
       </span>
     </div>
-    <button class="btn btn-primary mt-2 mb-3" routerLink="/product">View All Products</button>
+
+    <button class="btn btn-primary mt-2 " routerLink="/product">View All Products</button>
   </div>
 </div>
+
 <!-- Show All Categories -->
-<div class="top_winning_products mt-4 mb-2">
-  <div class="container text-center mt-5 mb-3">
-    <h2><b>Shop our top categories</b></h2>
+<div class="top_winning_products mb-2 mt-5">
+  <div class="container text-center mt-4">
+    <h2><b>Discover Our Most Popular Categories</b></h2>
     <div class="row">
       <div *ngFor="let category of paginatedCategories" class="col-md-3 col-sm-6">
-        <div class="card_1 h-100 shadow-sm p-3 animate__animated animate__fadeInLaft">
-          <div class="card-body">
-            <img src="../../../assets//eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
-              class="product-img">
+        <div class="h-100 p-3 animate__animated animate__fadeInRight">
+          <div class="card hover-bg text-center">
+            <div class="image">
+              <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
+                class="image">
+            </div>
             <h3 class="card-title"><b>{{ category.categoryName }}</b></h3>
             <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p>
-          <p class="card-text"><strong>Tagline:</strong> {{ category.tagline }}</p> -->
-
+            <p class="card-text"><strong>Tagline:</strong> {{ category.tagline }}</p> -->
             <button (click)="router.navigate(['/categories', category.categoryId])" class="btn btn-primary">
               View All {{category.categoryName}}
             </button>
@@ -106,32 +111,137 @@
     </div>
     <div class="pagination-buttons">
       <span (click)="prevPage2()" [class.disabled]="currentCategoryPage === 1">
-        <i class="fa fa-arrow-left fa-2x"></i>
+        <i class="fa fa-arrow-left fa-1x"></i>
       </span>
       <span class="page-info">
         Page {{ currentCategoryPage }} of {{ totalCategoryPages }}
       </span>
       <span (click)="nextPage2()" [class.disabled]="currentCategoryPage >= totalCategoryPages">
-        <i class="fa fa-arrow-right fa-2x"></i>
+        <i class="fa fa-arrow-right fa-1x"></i>
       </span>
     </div>
     <button class="btn btn-primary mt-3 mb-3" routerLink="/categories">View All categories</button>
   </div>
 </div>
 
-<div class="service">
-  <div class="container d-flex justify-content-center mt-5 mb-3">
-    <h1><b>Our Services</b></h1><br>
+<!-- Your Brands -->
+<!-- <div class="brands mt-4 mb-4">
+  <div class="container text-center mt-4">
+    <h2><b>All our top Brands</b></h2>
+    <div class="row">
+      <div *ngFor="let brand of brands" class="col-md-3 col-sm-6">
+        <div class="h-100 p-3 animate__animated animate__fadeInRight">
+          <div class="card hover-bg text-center">
+            <div class="image">
+              <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ brand.imageName }}"
+                class="image">
+            </div>
+            <h3 class="card-title"><b>{{ brand.brandName }}</b></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div> -->
+
+<!-- Our Services -->
+<div class="container">
+  <div class="our_services text-center mt-5">
+    <h2><b>You’re in safe hands with us</b></h2>
   </div>
 
-  <div class="container d-flex justify-content-between text-center">
+  <div class=" text-center">
     <h3><b>At Hyderabad Home Theatre, our vision is to bring a new age cinema hall, where you can immerse yourself into
         the
         movie-watching experience, all in the comfort of your own home.</b></h3>
   </div>
+
+  <div class="container ">
+    <div class="row mt-4 mb-4">
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img
+            src="https://www.shutterstock.com/image-vector/authorized-dealer-label-dealerauthorized-logo-260nw-2545409439.jpg"
+            alt="image" class="image">
+          <h2><b>Authorised Online Dealer</b></h2>
+          <p>We offer free shipping and delivery at your doorsteps on all our products with no hidden charges.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img src="https://5.imimg.com/data5/XX/GD/RR/SELLER-36325530/84bc164e4577a32233b0291e1fc84888-jpg-500x500.jpg"
+            alt="image" class="image">
+          <h2><b>COD Available</b></h2>
+          <p>Apart from prepayment facility we also offer Cash On Delivery options so that you can pay after proper
+            checkup but we charge small amount for confirmation</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img src="https://wizr.ai/wp-content/uploads/2024/08/AI-Impacting-Customer-Service.png" alt="image"
+            class="image">
+          <h2><b>Support</b></h2>
+          <p>We provide you with complete pre and post purchase support to you so that you can get the best as per your
+            need.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img src="https://www.customerservicemanager.com/wp-content/uploads/2023/06/bg-475525049.jpg" alt="image"
+            class="image">
+          <h2><b>Secure Payment</b></h2>
+          <p>We have partnered with top banks and payment gateways so that you can pay safely and securely on every
+            purchase.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img
+            src="https://images.news18.com/punjabi/uploads/2024/12/YOUTUBE-2024-12-839147e9cd9e088fc9a50bb4fec83df5-3x2.jpg?im=FitAndFill=(540,360)"
+            alt="image" class="image">
+          <h2><b><a href="">Hyderabad Home Theaters</a></b></h2>
+          <p>Join our YouTube community for educational purposes and receive special offers every day.
+            click the Link to watch</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img src="https://www.ciotechoutlook.com/newsimages/special/qN4UOiBf.jpeg" alt="image" class="image">
+          <h2><b>COD Order Placed</b></h2>
+          <p>Since these are high-end and costly products, we require a token amount of ₹1000 to ₹5000 (depending on the
+            product price) to confirm your order. The remaining balance can be paid after you receive your products. We
+            prioritize transparency and ensure a smooth process for all our customers</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img src="https://img.freepik.com/free-vector/warehouse-outside-concept-illustration_114360-22339.jpg?w=360"
+            alt="image" class="image">
+          <h2><b>Visit Our Warehouse</b></h2>
+          <p>We are excited to extend an invitation for you to visit our warehouse! Experience firsthand where our
+            products are stored and witness our operations in action.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <img
+            src="https://www.shutterstock.com/image-photo/business-technology-internet-networking-concept-260nw-202415014.jpg"
+            alt="image" class="image">
+          <h2><b>Get Free Consultation</b></h2>
+          <p>Call now to inquire about our products and prices! We offer the best rates in the market. Have questions?
+            Our expert, Mr. Nishant Kumar Gupta, is here to assist you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- Your Services -->
 <div class="container ">
+  <div class="our_services text-center mb-2 mt-5">
+    <h2><b>Our Services</b></h2>
+  </div>
+  
   <div class="row mt-4 mb-4">
     <div class="col-md-3 col-sm-6 col-12 mb-4 wow animate__animated animate__fadeInRight">
       <div class="card hover-bg">
@@ -139,8 +249,8 @@
           <img src="https://fortunehometheatre.com/wp-content/uploads/2024/03/01.png" alt="Home Theatre">
         </div>
         <h4><b>Home Theatre</b></h4><br>
-        <p>We Provide all Services here <br>
-          Read More </p>
+        <p>We Provide all Services here</p>
+        <a routerLink="/design-services" class="read-more"><i class="fa fa-arrow-right fa-1x">Read More</i></a>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12 mb-4">
@@ -149,8 +259,8 @@
           <img src="https://fortunehometheatre.com/wp-content/uploads/2024/03/02.png" alt="Home Theatre">
         </div>
         <h4><b>Home Security</b></h4><br>
-        <p>Read Carefully About Company <br>
-          Read More </p>
+        <p>Read Carefully About Company</p>
+        <a routerLink="/" class="read-more"><i class="fa fa-arrow-right fa-1x">Read More</i></a>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12 mb-4">
@@ -159,8 +269,8 @@
           <img src="https://fortunehometheatre.com/wp-content/uploads/2024/03/03.png" alt="Home Theatre">
         </div>
         <h4><b>Acoustic Design</b></h4><br>
-        <p>We setup Across All India <br>
-          Read More </p>
+        <p>We setup Across All India</p>
+        <a routerLink="/" class="read-more"><i class="fa fa-arrow-right fa-1x">Read More</i></a>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12 mb-4">
@@ -169,8 +279,8 @@
           <img src="https://fortunehometheatre.com/wp-content/uploads/2024/03/04.png" alt="Home Theatre">
         </div>
         <h4><b>Visit Our Warehouse</b></h4><br>
-        <p>Read our Daily Blogs & News <br>
-          Read More </p>
+        <p>Read our Daily Blogs & News</p>
+        <a routerLink="/" class="read-more"><i class="fa fa-arrow-right fa-1x">Read More</i></a>
       </div>
     </div>
   </div>
@@ -179,6 +289,7 @@
   </div>
 </div>
 
+<!-- YOUR Solutions -->
 <div class="content-section mt-4 mb-4">
   <div class="container mt-4 mb-4">
     <div class="row mb-5">
@@ -203,10 +314,10 @@
         </div>
       </div>
       <div class="col-md-6 col-sm-6 col-12 mb-4">
-        <div class="titel justify-content-center text-center ">
+        <div class="text-1 justify-content-center text-center ">
           <h2><b>Acoustic Solutions</b></h2>
           <h4>Why Acoustics Matter?</h4><br>
-          <p class=" d-flex text-center ">The sound you hear in any room is a combination of the direct sound that
+          <p class=" d-flex text-right ">The sound you hear in any room is a combination of the direct sound that
             travels straight from your speakers to your ears, and the indirect reflected sound the sound from your
             speakers that bounces off the walls, floors, ceiling and furniture before it reaches your ears. The good
             part is that they make music and movie dialogue sound much fuller and louder than they would otherwise.
@@ -218,10 +329,10 @@
 
     <div class="row mt-5">
       <div class="col-md-6 col-sm-6 col-12 mb-4">
-        <div class="titel justify-content-center text-center ">
+        <div class="text-1 justify-content-center text-center ">
           <h2><b>Home Theatre Solution</b></h2>
           <h4>Feel every dimension</h4>
-          <p class=" d-flex text-center ">Enter an unforgettable world of video and sound with Dolby Vision, 4K, Dolby
+          <p class=" d-flex text-left ">Enter an unforgettable world of video and sound with Dolby Vision, 4K, Dolby
             Atmos, Auro 3D and dtsX. It transports you from an ordinary moment to an extraordinary experience with
             captivating, multi-dimensional sound that fills your room.
 
@@ -307,3 +418,5 @@
     </div>
   </div>
 </div>
+
+

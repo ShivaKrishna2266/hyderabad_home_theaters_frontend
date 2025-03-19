@@ -50,26 +50,57 @@
 
 // ============card===============//
 .card {
-  // background-color: rgb(241, 234, 84);
-  border: 1px solid #dddddd;
+  border: 1px solid #fefbfb;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(6, 5, 5, 0.1);
   padding: 20px;
   text-align: center;
   transition: all 0.3s ease;
   overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: fadeInRight 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+
+/* Different hover colors for each card */
+.row .col-md-3:nth-of-type(1) .card:hover {
+  background-color: #e1f90d; /* Light Red */
+  color: #000;
+}
+
+.row .col-md-3:nth-of-type(2) .card:hover {
+  background-color: #93e4e2; /* Light Green */
+  color: #000;
+}
+
+.row .col-md-3:nth-of-type(3) .card:hover {
+  background-color: #e784cc; /* Light Blue */
+  color: #000;
+}
+
+.row .col-md-3:nth-of-type(4) .card:hover {
+  background-color: #52b4ed; /* Light Yellow */
+  color: #000;
 }
 
 .card h4 {
   font-size: 18px;
   color: #333;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 .card p {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 20px;
+  color: #3b3b3c;
+  // margin-bottom: 20px;
+  font-weight: 900;
 }
 
 .hover-bg:hover {
@@ -87,6 +118,7 @@
   width: 100%;
   height: auto;
   transition: transform 0.3s ease;
+  background-color: #aef922;
 }
 
 .hover-bg:hover .image img {
@@ -96,7 +128,7 @@
 
 .hover-bg h4,
 .hover-bg p {
-  padding: 10px;
+  padding: 1px;
   transition: color 0.3s ease;
 }
 
@@ -135,9 +167,14 @@
   transform: scale(1.05);
 }
 
-.titel {
-  color: #030303;
+.text-1{
+  font-style:oblique;
+  font-weight: 400;
+  color: rgb(3, 3, 3);
+  font-size: larger;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
 .testimonial-section::before {
   content: "";
   position: absolute;
@@ -176,7 +213,7 @@
 
 /* Top Winning Products Section */
 .top_winning_products {
-    // background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdHT67YOjlvrREPGszyAzZHJjejKPXFA1sQ&s') no-repeat center center/cover;
+    background: url('https://png.pngtree.com/thumb_back/fh260/background/20220218/pngtree-light-bubble-minimalist-image_986487.jpg') no-repeat center center/cover;
     padding: 1px 0;
     text-align: center;
     border-radius: 10px;
@@ -186,43 +223,21 @@
 /* Title Styling */
 .top_winning_products h2 {
     font-size: 22px;
-    color: #007bff;
-    // font-weight: bold;
+    color: #040404;
+    font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 25px;
     animation: bounceIn 1s ease-in-out;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
-
-/* Product Card Styling */
-.card_1 {
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    animation: fadeInRight 1s ease-in-out;
-    background: #f8f9f6;
-}
-
-/* Card Hover Effect */
-.card_1:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    // background-color: #c1a2cf;
-}
-
-/* Product Image */
-.product-img {
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out;
-    padding: 10px;
-}
-
-/* Image Hover Effect */
-.product-img:hover {
-    transform: scale(1.08);
+.our_services h2{
+   font-size: 22px;
+    color: #040404;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    animation: bounceIn 1s ease-in-out;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* Animations */
@@ -293,3 +308,5 @@
   font-size: 13px;
   font-weight: bold;
 }
+
+//===========chat box================= //

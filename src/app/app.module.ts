@@ -21,6 +21,9 @@ import { CategoriesComponent } from './categories/categories.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductComponent } from './product/product.component';
 import { DesignServicesComponent } from './design-services/design-services.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { WhatsappWidgetComponent } from './whatsapp-widget/whatsapp-widget.component';
 
 
 
@@ -38,6 +41,9 @@ import { DesignServicesComponent } from './design-services/design-services.compo
     CategoriesComponent,
     ProductComponent,
     DesignServicesComponent,
+    ProjectsComponent,
+    CompanyProfileComponent,
+    WhatsappWidgetComponent,
     
     
     

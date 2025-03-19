@@ -15,6 +15,7 @@ export class BrandsComponent implements OnInit {
   brands: BrandDTO[] = [];
   products: ProductDTO[] = [];
   brandId: number | null = null;
+  brandName: string | null = null;
   displayedBrands: BrandDTO[] = [];
 
   itemsPerPage = 8;
@@ -35,21 +36,36 @@ export class BrandsComponent implements OnInit {
       if (id) {
         this.brandId = Number(id);
         this.getProductsByBrand(this.brandId);
+        this.getBrandName(this.brandId);
       } else {
         this.brandId = null;
         this.products = [];
+        this.brandName = null;
       }
     });
-    this.brandName();
+
   }
 
-  brandName() {
-    if (this.brandId) {
-      this.dataLoaderService.getBrandById(this.brandId).subscribe((brands) => {
-        this.brandName = brands.brandName; // Adjust based on API response
-      });
+  getBrandName(brandId: number): void {
+    if (!brandId) {
+      this.brandName = null;
+      return;
     }
-
+  
+    this.dataLoaderService.getBrandById(brandId).subscribe({
+      next: (brand) => {
+        if (brand && brand.brandName) {
+          this.brandName = brand.brandName;
+        } else {
+          console.warn(`Brand name not found for ID: ${brandId}`);
+          this.brandName = null; // Avoid showing "Unknown Brand" unnecessarily
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching brand name:', error);
+        this.brandName = null; // Set to null instead of "Unknown Brand"
+      }
+    });
   }
 
   getAllBrands(): void {
@@ -84,6 +100,7 @@ export class BrandsComponent implements OnInit {
 
   showBrands(): void {
     this.brandId = null;
+    this.brandName = null;
     this.products = [];
     this.router.navigate(['/brands']);
   }
