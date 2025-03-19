@@ -11,6 +11,8 @@ import { BrandsComponent } from './brands/brands.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductComponent } from './product/product.component';
 import { DesignServicesComponent } from './design-services/design-services.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 
 
@@ -30,6 +32,8 @@ const routes: Routes = [
   { path: 'categories/:categoryId', component: CategoriesComponent },
   { path: 'product', component:ProductComponent},
   { path: 'design-services', component:DesignServicesComponent},
+  { path: 'projects', component:ProjectsComponent},
+  { path: 'company-profile', component:CompanyProfileComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

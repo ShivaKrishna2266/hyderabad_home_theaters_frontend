@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   paginatedCategories: CategoryDTO[] = [];
   categoryId: number | null = null;
   brands: BrandDTO[] = [];
+  public isChatBoxEnable: boolean = false;
 
   // showCategories: boolean = true; // Set to false to hide categories
 
@@ -65,7 +66,6 @@ Math: any;
     this.dataLoaderService.getAllBrands().subscribe(
       (response: BrandDTO[] | { data: BrandDTO[] } | any) => { // Explicitly define possible types
         console.log('API Response:', response); // Debugging log
-  
         // Ensure response is an array before using reduce
         if (Array.isArray(response)) {
           this.brands = response.reduce((acc: { [key: number]: string }, brand: BrandDTO) => {
@@ -144,6 +144,22 @@ Math: any;
     this.categoryId = null;
     this.categories = [];
     this.router.navigate(['/categories']);
+  }
+
+  logoSrc = 'https://cdn.clare.ai/wati/images/WATI_logo_square_2.png';
+
+  handleError() {
+    this.logoSrc = 'https://cdn.clare.ai/wati/images/WATI_logo_square_2.png';
+  }
+
+  messageUs() {
+    this.isChatBoxEnable = true;
+  }
+
+  closePopup() {
+    console.log('Closing chatbox...');
+    this.isChatBoxEnable = false;
+    console.log('Chatbox closed:', this.isChatBoxEnable);
   }
 
 }

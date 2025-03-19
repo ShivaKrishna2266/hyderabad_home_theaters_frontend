@@ -1,63 +1,178 @@
-<div class="contact-section">
-    <div class="container">
-        <div class="titel mt-5">
-            <h1>Let’s talk </h1>
+<div id="carouselExampleControls " class="carousel banner-slide1" data-ride="carousel">
+    <div id="scrollUp" class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100 lazyload"
+                src="../../../assets/background_image.jpg" alt="Image"
+                loading="lazy" />
+            <div class="carousel-caption sub-banner-caption d-md-block"
+                style="text-align:left;padding-bottom: 100px;font-family: sans-serif;">
+                <h1 class="wow animate__animated animate__fadeInUp animated text-lg-left"
+                    style="visibility: visible;font-size: 35px;font-family: sans-serif">
+                    <b>Contact Us</b>
+                </h1>
+            </div>
         </div>
-        <hr>
-
-        <div class="row ">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <div class="card mt-5 mb-5">
-                    <h3>Get In Touch</h3>
-                    <div class="touch mt-5 mb-5">
-
-                        <a><i class="fas fa-map-marker-alt"></i><span> </span> 1-4-27,2-4-27/1,2-4-27/2 A.S ABDUL KHADER
-                            ARCADE <br> Mahatma Gandhi Road Secundrabad</a><br><br>
-                        <a><i class="fa fa-envelope" aria-hidden="true"></i>
-                            hometheatres.hyderabad@gmail.com</a><br><br>
-                        <a><i class="fas fa-phone"></i> 8639234351</a>
+    </div>
+</div>
+<section class="contact_us" style="overflow:hidden;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact_information">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="contact_information">
+                                <div class="row">
+                                    <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1  wow animate__animated animate__fadeUp "
+                                        style="visibility: visible; animation-name: fadeInUp;padding-top: 50px; ">
+                                        <div class="section-title mb-50 text-center">
+                                            <div class="section-title-heading mb-20">
+                                                <h1 class="mb-5" style="font-size: 30px;"><b>Get In Touch</b></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4 mx-auto wow animate__animated animate__fadeInLeft" style="visibility: visible;">
+                                        <div class="contact_box text-center">
+                                            <a [href]="'mailto:' + generalSetting.email">
+                                                <div class="contact_icon"><i class="far fa-envelope fa-2x"></i></div>
+                                            </a>
+                                            <div class="contact_text">
+                                                <a [href]="'mailto:' + generalSetting.email" class="text-dark mt-lg-2">
+                                                    Email: <br> {{ generalSetting.email }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4 mx-auto wow animate__animated animate__fadeInUp"
+                                        style="visibility: visible; animation-name: fadeInUp;">
+                                        <div class="contact_box text-center">
+                                            <a target="_blank" href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D">
+                                                <div class="contact_icon">
+                                                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="contact_text">
+                                                <a target="_blank" href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D" class="text-dark mt-lg-2">
+                                                    Location: <br> {{ generalSetting.address }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4 mx-auto w animate__animated animate__fadeInRight"
+                                        style="visibility: visible; animation-name: fadeInRight;">
+                                        <div class="contact_box text-center">
+                                            <a href="tel:{{ generalSetting.phoneNumber }}">
+                                                <div class="contact_icon">
+                                                    <i class="fas fa-phone-volume fa-2x"></i>
+                                                </div>
+                                            </a>
+                                            <div class="contact_text">
+                                                <a target="_blank" [href]="'tel:' + generalSetting.phoneNumber"
+                                                    class="text-dark mt-lg-2">
+                                                    Phone: <br> +91 {{ generalSetting.phoneNumber }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="map__map-container map__map-container--desktop hidden-phone"
-                    style="background-image: url(//audiomaxx.in/cdn/shop/files/36da4c79-0dd4-432b-9654-93814ad7dc70.jpg?v=1729502505&amp;width=1200)">
+            </div>
+        </div>
+        <div class="row mt-3 mb-5">
+            <div class="col-md-10 col-sm-10 col-xl-6 col-lg-6 mx-auto wow animate__animated animate__fadeInLeft"
+                style="visibility: visible;">
+                <div class="contact_img mt-5 text-center">
+                    <img src="https://img.freepik.com/premium-photo/businessman-pressing-phone-button_488220-10438.jpg?w=900" alt="Image"
+                        class="img-fluid lazyload" style="width: 100%;" loading="lazy">
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <div class="container">
-                    <div class="contact-form mt-3 mb-3">
-                        <h3 class="text-center mb-4">Get in Touch with Us</h3>
-                        <form>
-                            <div class="mb-3">
-                                <label for="name" class="form-lable"><i class="fa fa-user"></i> Your Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter Your Name"
-                                    required>
+            <div class="mt-5 col-md-10 col-sm-10 col-xl-6 col-lg-6 mx-auto wow animate__animated animate__fadeInRight"
+                style="visibility: visible; animation-name: fadeInRight;">
+                <div class="contactus">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4">
+                                <div class="box text-center"
+                                    style=" padding-top: 1px;margin-bottom: 10px; margin-left: 10px;">
+                                    <h4>Contact Us</h4>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-lable"><i class="fa fa-envelope"></i> Email</label>
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Enter Your Email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="Phone" class="form-lable"><i class="fa fa-phone"></i> Phone Number</label>
-                                <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control"
-                                    placeholder="Enter Mobaile Number" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="city" class="form-lable"><i class="fa fa-map-marker-alt"></i> City</label>
-                                <input type="text" name="city" id="city" class="form-control" placeholder="Enter City"
-                                    required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label"><i class="fas fa-comment"></i> Message</label>
-                                <textarea class="form-control" id="message" rows="4"
-                                    placeholder="Write your message here..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-10"><i class="fas fa-paper-plane"></i> Submit
-                                Now</button>
-                        </form>
+                            <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()" class="w-100">
+                                <div class="col-12">
+                                    <div id="the-message"></div>
+                                    <div id="form-contact" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label required-label">Name</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="Enter Name" formControlName="name" required>
+                                            <div *ngIf="submitted && f['name'].errors" class="text-danger">Name is
+                                                required</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="emailId" class="form-label required-label">Email Address</label>
+                                            <input type="email" class="form-control" id="emailId" name="emailId"
+                                                placeholder="Enter Email Address" formControlName="emailId" required>
+                                            <div *ngIf="submitted && f['emailId'].errors" class="text-danger">Email id
+                                                is required</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-4 col-md-4 mb-3">
+                                                <div class="form-group">
+                                                    <label for="countryCode" class="form-label required-label">Country
+                                                        Code</label>
+                                                    <select name="countryCode" id="countryCode" class="form-control"
+                                                        formControlName="countryCode" required>
+                                                        <option value="0">--select--</option>
+                                                        <option *ngFor="let countryCode of countryCodes"
+                                                            [value]="countryCode.countryCode">
+                                                            {{ countryCode.countryCode + " - " + countryCode.countryName
+                                                            }}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="submitted && f['countryCode'].errors"
+                                                        class="text-danger">Country Code is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-8 col-md-8 mb-3">
+                                                <div class="form-group">
+                                                    <label for="phoneNo" class="form-label required-label">Phone
+                                                        Number</label>
+                                                    <input type="text" class="form-control" id="phoneNo" name="phoneNo"
+                                                        placeholder="Enter Phone Number" formControlName="phoneNo"
+                                                        required>
+                                                    <div *ngIf="submitted && f['phoneNo'].errors" class="text-danger">
+                                                        Phone No is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message" class="form-label required-label">Message</label>
+                                            <textarea name="message" class="form-control" id="message"
+                                                placeholder="Type Your Message Here . . ." formControlName="message"
+                                                required></textarea>
+                                            <div *ngIf="submitted && f['message'].errors" class="text-danger">Message is
+                                                required</div>
+                                        </div>
+                                        <div class="text-center mb-3">
+                                            <button type="submit" class="btn btn-danger">Send Message</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<div class="map">
+    <iframe
+    src="https://www.google.com/maps?q=Mahatma+Gandhi+Road,+Secunderabad,+India&output=embed"
+        width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0"></iframe>
 </div>
