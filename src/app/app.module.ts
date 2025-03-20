@@ -24,6 +24,11 @@ import { DesignServicesComponent } from './design-services/design-services.compo
 import { ProjectsComponent } from './projects/projects.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { WhatsappWidgetComponent } from './whatsapp-widget/whatsapp-widget.component';
+import { TermsOfServiceComponent } from './policy_links/terms-of-service/terms-of-service.component';
+import { PrivacyPolicyComponent } from './policy_links/privacy-policy/privacy-policy.component';
+import { ShippingPolicyComponent } from './policy_links/shipping-policy/shipping-policy.component';
+import { RefundPolicyComponent } from './policy_links/refund-policy/refund-policy.component';
+import { ReturnPolicyComponent } from './policy_links/return-policy/return-policy.component';
 
 
 
@@ -44,6 +49,11 @@ import { WhatsappWidgetComponent } from './whatsapp-widget/whatsapp-widget.compo
     ProjectsComponent,
     CompanyProfileComponent,
     WhatsappWidgetComponent,
+    TermsOfServiceComponent,
+    PrivacyPolicyComponent,
+    ShippingPolicyComponent,
+    RefundPolicyComponent,
+    ReturnPolicyComponent,
     
     
     

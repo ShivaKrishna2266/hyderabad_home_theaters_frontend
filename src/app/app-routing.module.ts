@@ -13,6 +13,11 @@ import { ProductComponent } from './product/product.component';
 import { DesignServicesComponent } from './design-services/design-services.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { PrivacyPolicyComponent } from './policy_links/privacy-policy/privacy-policy.component';
+import { RefundPolicyComponent } from './policy_links/refund-policy/refund-policy.component';
+import { ReturnPolicyComponent } from './policy_links/return-policy/return-policy.component';
+import { ShippingPolicyComponent } from './policy_links/shipping-policy/shipping-policy.component';
+import { TermsOfServiceComponent } from './policy_links/terms-of-service/terms-of-service.component';
 
 
 
@@ -34,6 +39,12 @@ const routes: Routes = [
   { path: 'design-services', component:DesignServicesComponent},
   { path: 'projects', component:ProjectsComponent},
   { path: 'company-profile', component:CompanyProfileComponent},
+  { path: 'privacy-policy', component:PrivacyPolicyComponent},
+  { path: 'refund-policy', component:RefundPolicyComponent},
+  { path: 'return-policy', component:ReturnPolicyComponent},
+  { path: 'shipping-policy', component:ShippingPolicyComponent},
+  { path: 'terms-of-service', component:TermsOfServiceComponent},
+
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

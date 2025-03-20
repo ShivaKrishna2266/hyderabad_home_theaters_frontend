@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { UserStorageService } from './services/storege/user-storege.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
@@ -24,6 +24,7 @@ export class AppComponent {
   isCustomerLoggedIn: boolean = false;
   isAdminLoggedIn: boolean = false;
   showContent = true;
+ 
 
   constructor(private router: Router, private userStorageService: UserStorageService) {}
 
@@ -55,6 +56,9 @@ export class AppComponent {
     // this.updateLoginStatus();
     this.router.navigateByUrl('/login');
   }
+
+
+  
 }
 
 
