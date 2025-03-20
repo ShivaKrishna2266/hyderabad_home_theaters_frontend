@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-whatsapp-widget',
@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class WhatsappWidgetComponent implements OnInit {
 
   public isChatBoxEnable: boolean = false;
+  isVisible = false;
 
   constructor(){}
 
@@ -25,12 +26,15 @@ export class WhatsappWidgetComponent implements OnInit {
     this.isChatBoxEnable = true;
   }
 
-  // closePopup() {
-  //   console.log('Closing chatbox...');
-  //   this.isChatBoxEnable = false;
-  //   console.log('Chatbox closed:', this.isChatBoxEnable);
-  // }
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    this.isVisible = window.scrollY > 200; // Show button when scrolled 200px down
+    console.log("Scroll Position:", window.scrollY, "isVisible:", this.isVisible); // Debugging
+  }
 
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   openPopup() {
     this.isChatBoxEnable = true;
     setTimeout(() => {
