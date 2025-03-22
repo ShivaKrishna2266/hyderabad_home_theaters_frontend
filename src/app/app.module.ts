@@ -29,6 +29,7 @@ import { PrivacyPolicyComponent } from './policy_links/privacy-policy/privacy-po
 import { ShippingPolicyComponent } from './policy_links/shipping-policy/shipping-policy.component';
 import { RefundPolicyComponent } from './policy_links/refund-policy/refund-policy.component';
 import { ReturnPolicyComponent } from './policy_links/return-policy/return-policy.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -67,7 +68,8 @@ import { ReturnPolicyComponent } from './policy_links/return-policy/return-polic
     HttpClientModule,
     FormsModule,
     AdminModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatToolbarModule
   
   ],
   providers: [

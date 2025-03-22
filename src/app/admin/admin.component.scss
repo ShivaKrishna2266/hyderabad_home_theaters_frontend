@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .image,
+  .header {
+    display: flex;
+    align-items: center;
+    height: 80px;
+  }
+  .header{
+    background: #ed1111;
+  }
+  .image img {
+    max-height: 100px;
+    width: auto;
+  }
+  
+  .home_icon {
+    display: flex;
+  }
+  
+  .home_icon i,
+  .logout i {
+    color: black;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .home_icon i:hover,
+  .logout i:hover {
+    transform: scale(1.1);
+  }
+  
+  .logout {
+    margin-left: auto;
+  }
+  
+   button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+
+  

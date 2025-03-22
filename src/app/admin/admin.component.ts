@@ -9,14 +9,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+
   constructor(
     private userStorageService:UserStorageService,
      private router: Router) {}
 
   ngOnInit(): void {
-      console.log("AdminComponent initialized"); // ✅ Add this method
+     
   }
 
+  goToHome(){
+    this.userStorageService.singOut();
+    this.router.navigate(['/home']);
+  }
   logout() {
     this.userStorageService.singOut();
     this.router.navigate(['/login']);
