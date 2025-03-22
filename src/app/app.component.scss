@@ -1,25 +1,111 @@
-#scrollUpBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-    z-index: 1000; /* Ensure it appears above other elements */
-  }
-  
-  #scrollUpBtn i {
-    font-size: 20px;
-  }
-  
-  .show {
-    opacity: 1;
-    visibility: visible;
-  }
-  
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar-nav .nav-link,
+.accordion-header {
+  font-size: 16px;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+
+
+.sub_menu {
+  white-space: nowrap;
+}
+
+
+
+.accordion-item {
+  border: 1px solid #ddd;
+  /* Border for accordion item */
+  border-radius: 4px;
+  /* Rounded corners */
+  margin-bottom: 10px;
+  /* Space between accordion items */
+}
+
+.accordion-body {
+  background-color: #fff;
+  /* Background color for accordion body */
+  padding: 15px;
+  /* Padding inside accordion body */
+  border-top: 16px solid #ddd;
+  /* Border at the top of the accordion body */
+}
+
+.accordion-body .dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  /* Padding for links inside accordion body */
+  color: #2f7272;
+  /* Text color */
+  text-decoration: none;
+  /* Remove underline */
+  border-bottom: 1px solid #eee;
+  /* Border between items */
+}
+
+.accordion-body .dropdown-item:last-child {
+  border-bottom: none;
+  /* Remove border from the last item */
+}
+
+
+.accordion-body {
+  background-color: #fff;
+  /* Background color for accordion body */
+  padding: 15px;
+  /* Padding inside accordion body */
+  border-top: 1px solid #ddd;
+  /* Border at the top of the accordion body */
+}
+
+.accordion-body .dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  /* Padding for links inside accordion body */
+  color: #2f7272;
+  /* Text color */
+  text-decoration: none;
+  /* Remove underline */
+  border-bottom: 1px solid #eee;
+  /* Border between items */
+}
+
+.accordion-body .dropdown-item:last-child {
+  border-bottom: none;
+  /* Remove border from the last item */
+}
+
+
+.logout {
+  position: relative;
+  display: inline-block;
+}
+
+.logout-card {
+  position: absolute;
+  top: 120%;
+  right: 15px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.logout-card-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.logout-card-item:hover {
+  color: #114bec;
+  background-color: #f0f0f0;
+}

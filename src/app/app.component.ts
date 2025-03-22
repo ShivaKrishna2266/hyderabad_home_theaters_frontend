@@ -1,8 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { UserStorageService } from './services/storege/user-storege.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,55 +10,86 @@ import { filter } from 'rxjs';
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('fadeInOut', [
-      state('void', style({ opacity: 0 })), // Initial state
-      transition(':enter', [animate('500ms ease-in')]), // Fade-in effect
-      transition(':leave', [animate('500ms ease-out')]) // Fade-out effect
+      state('void', style({ opacity: 0 })), 
+      transition(':enter', [animate('500ms ease-in')]), 
+      transition(':leave', [animate('500ms ease-out')])
     ])
   ]
 })
-export class AppComponent {
-  title = 'hyderabad_home_theaters_frontEnd';
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  cardVisible = false;
+  closeTimeout: any;
+  private navigationSubscription!: Subscription;
 
-  
- 
-  isCustomerLoggedIn: boolean = false;
-  isAdminLoggedIn: boolean = false;
-  showContent = true;
- 
+  @ViewChild('myModal') myModal?: ElementRef;
 
-  constructor(private router: Router, private userStorageService: UserStorageService) {}
+  constructor(
+    private userStorageService: UserStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    // this.updateLoginStatus();
-
-    // Update login status when navigation occurs
-    // this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(() => {
-      // this.updateLoginStatus();
-    // });
+    // Ensure navigation-based redirection
+    this.navigationSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => this.redirectUser());
   }
 
-  // updateLoginStatus(): void {
-  //   this.isCustomerLoggedIn = this.userStorageService.isCustomerLoggedIn();
-  //   this.isAdminLoggedIn = this.userStorageService.isAdminLoggedIn();
+  ngAfterViewInit(): void {
+    if (this.myModal) {
+      // Ensure modal-related operations are handled properly
+    }
+  }
 
-  //   // Navigate based on user role
-  //   if (this.isAdminLoggedIn) {
-  //     this.router.navigateByUrl('/admin-dashboard');
-  //   } else if (this.isCustomerLoggedIn) {
-  //     this.router.navigateByUrl('/customer/dashboard');
-  //   } else {
-  //     this.router.navigateByUrl('/home');
-  //   }
-  // }
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
-  logOut(): void {
-    this.userStorageService.singOut(); // ✅ Fixed typo
-    // this.updateLoginStatus();
+  isLoggedIn(): boolean {
+    return !!this.userStorageService.getToken();
+  }
+
+  getRole(): string | null {
+    return this.userStorageService.getUserRole();
+  }
+
+  getCurrentRoute(): string {
+    return this.router.url;
+  }
+
+  showCard() {
+    this.cardVisible = true;
+    this.resetCloseTimer();
+  }
+
+  hideCard() {
+    this.resetCloseTimer(); // Clear any existing timeout
+    this.closeTimeout = setTimeout(() => {
+      this.cardVisible = false;
+    }, 3000);
+  }
+
+  resetCloseTimer() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+    }
+  }
+
+  logOut() {
+    this.userStorageService.singOut();
     this.router.navigateByUrl('/login');
   }
 
-
-  
+  redirectUser() {
+    if (this.isLoggedIn()) {
+      const role = this.getRole();
+      if (role === 'ADMIN' && this.router.url !== '/admin-dashboard') {
+        this.router.navigateByUrl('/admin-dashboard');
+      } else if (role === 'USER' && this.router.url !== '/user-dashboard') {
+        this.router.navigateByUrl('/home');
+      }
+    }
+  }
 }
-
-
