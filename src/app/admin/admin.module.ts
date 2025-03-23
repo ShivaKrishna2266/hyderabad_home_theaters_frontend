@@ -4,12 +4,14 @@ import { AdminRoutingModule } from './admin-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
+import { ViewBrandsComponent } from './brands/view_brands/view-brands/view-brands.component';
 
 
 
 @NgModule({
   declarations: [
     AdminComponent,
+    ViewBrandsComponent,
   ],
   imports: [
     CommonModule,
