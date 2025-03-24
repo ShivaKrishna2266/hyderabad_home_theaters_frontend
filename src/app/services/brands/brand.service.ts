@@ -19,6 +19,6 @@ export class BrandService {
     const headers = new HttpHeaders({
       'Authorization':`Bearer${this.userStorageService.getToken()}`
     });
-    return this.http.get<any>(this.apiUrl + '/getAllBrands', { headers });
+    return this.http.get<any>(this.apiUrl + '/admin/getAllBrands', { headers });
   }
 }
