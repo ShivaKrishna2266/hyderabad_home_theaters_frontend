@@ -16,7 +16,7 @@ import { filter, Subscription } from 'rxjs';
     ])
   ]
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit {
   cardVisible = false;
   closeTimeout: any;
   private navigationSubscription!: Subscription;

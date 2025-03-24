@@ -1,1 +1,33 @@
-<p>add-brands works!</p>
+<div class="container">
+    <section class="view-brands">
+        <div class="card-header mt-5 p-2 text-center">
+            <h1 class="mt-3"><b>Add Brands</b></h1>
+        </div>
+    </section>
+
+    <div class="card mt-5 p-4">
+        <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="brandName" class="form-label"><b>Brand Name</b></label>
+                    <input type="text" id="brandName" name="brandName" class="form-control" formControlName="brandName">
+                </div>
+        
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="brandDescription" class="form-label"><b>Brand Description</b></label>
+                    <textarea id="brandDescription" name="brandDescription" class="form-control" formControlName="brandDescription"></textarea>
+                </div>
+        
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="tagLine" class="form-label"><b>Tag Line</b></label>
+                    <input type="text" id="tagLine" name="tagLine" class="form-control" formControlName="tagLine">
+                </div>
+            </div>
+        
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary" [disabled]="brandForm.invalid">Submit</button>
+            </div>
+        </form>
+        
+    </div>
+</div>
