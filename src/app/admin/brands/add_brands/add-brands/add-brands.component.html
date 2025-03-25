@@ -12,18 +12,39 @@
                     <label for="brandName" class="form-label"><b>Brand Name</b></label>
                     <input type="text" id="brandName" name="brandName" class="form-control" formControlName="brandName">
                 </div>
-        
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="categoryId" class="form-label"><b>Category Name</b></label>
+                    <select name="categoryId"id="categoryId"class="form-control"formControlName="categoryId">
+                      <option value="" disabled selected>Select a category</option>
+                      <option *ngFor="let category of categories" [value]="category.categoryId">
+                        {{ category.categoryName }}
+                      </option>
+                    </select>
+                  </div>                
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="brandDescription" class="form-label"><b>Brand Description</b></label>
                     <textarea id="brandDescription" name="brandDescription" class="form-control" formControlName="brandDescription"></textarea>
-                </div>
-        
+                </div>     
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="tagLine" class="form-label"><b>Tag Line</b></label>
                     <input type="text" id="tagLine" name="tagLine" class="form-control" formControlName="tagLine">
                 </div>
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="status" class="form-label"><b>Status</b></label>
+                    <select name="status" id="status" class="form-control" formControlName="status">
+                      <option value="" disabled selected>Select Status</option>
+                      <option value="active">ACTIVE</option>
+                      <option value="inactive">INACTIVE</option>
+                    </select>
+                  </div>      
+                  <div class="col-md-6 col-sm-12 mb-3">
+                    <!-- <label for="imageURL" class="form-label">Multiple files input example</label>
+                    <input  type="file" id="imageURL" name="imageURL" class="form-control" formControlName="imageURL" multiple> -->
+
+                    <label for="imageURL" class="form-label required-label"><b>Brand Image</b></label>
+                   <input type="file" id="imageURL" name="imageURL" formControlName="imageURL" (change)="onFileChange($event, 'imageURL')" accept="imageURL/*" class="form-control ">
+                  </div>            
             </div>
-        
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary" [disabled]="brandForm.invalid">Submit</button>
             </div>

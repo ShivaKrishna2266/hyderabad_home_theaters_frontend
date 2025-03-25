@@ -5,4 +5,6 @@ export interface BrandDTO{
     tagLine :string;
     imageName: string;
     imageURL :string;
+    status: string;
+    categoryId: number;
 }
