@@ -23,14 +23,19 @@ export class BrandService {
     return this.http.get<any>(this.apiUrl + "/admin/getAllBrands",{headers});
   }
 
-  addBrand(brand: BrandDTO): Observable<any> {
+  addBrand(brand: BrandDTO, imageFile: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('brandImageFile', imageFile); // ✅ Must match backend param name
+    formData.append('brandDTO', JSON.stringify(brand)); // ✅ Must match backend param name
+
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Authorization': `Bearer ${token}`
+      // ❌ DO NOT SET 'Content-Type': 'application/json' HERE
     });
-  
-    return this.http.post<any>(this.apiUrl + "/admin/createBrand", brand, { headers }); // ✅ Sending the request body correctly
-  }
+
+    return this.http.post<any>(this.apiUrl + "/admin/createBrand", formData, { headers });
+}
+
   
 }

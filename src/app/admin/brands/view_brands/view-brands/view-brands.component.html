@@ -48,6 +48,7 @@
                     <tr>
                         <th>S.NO</th>
                         <th>Brand Name</th>
+                        <th>Category Name</th>
                         <th>Brand Image</th>
                         <th>Brand Description</th>
                         <th>Tag Line</th>
@@ -60,13 +61,12 @@
                         *ngFor="let brand of filteredBrands.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
                         <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
                         <td>{{ brand.brandName }}</td>
-                        <td>
-                            <img [src]="brand.imageURL" alt="Brand Image" class="img-thumbnail"
-                                style="max-width: 80px;">
-                        </td>
+                        <td>{{brand.categoryId}}</td>
+                        <td><img src="../../../../../assets/brand_images/{{brand.imageURL}}" alt="Cover Image"
+                            style="width: 50px; height: auto;"></td>
                         <td>{{ brand.brandDescription }}</td>
                         <td>{{ brand.tagLine }}</td>
-                        <td>Active</td>
+                        <td>{{ brand.status}}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" (click)="updateBrand(brand)">
                                 <i class="fa fa-edit"></i> 
