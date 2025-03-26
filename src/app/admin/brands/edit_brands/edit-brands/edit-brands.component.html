@@ -1,1 +1,51 @@
-<p>edit-brands works!</p>
+<div class="container">
+  <section class="view-brands">
+      <div class="card-header mt-5 p-2 text-center">
+          <h1 class="mt-3"><b>Edit Brands</b></h1>
+      </div>
+  </section>
+
+  <div class="card mt-5 p-4">
+      
+          <div class="row justify-content-center">
+              <div class="col-md-6 col-sm-12 mb-3">
+                  <label for="brandName" class="form-label"><b>Brand Name</b></label>
+                  <input type="text" id="brandName" name="brandName" [(ngModel)]="brand.brandName" class="form-control" required>
+              </div>
+
+              <div class="col-md-6 col-sm-12 mb-3">
+                  <label for="categoryId" class="form-label"><b>Category Name</b></label>
+                  <select name="categoryId" id="categoryId" [(ngModel)]="brand.categoryId" class="form-control" required>
+                      <option value="" disabled selected>Select a category</option>
+                      <option *ngFor="let category of categories" [value]="category.categoryId">
+                          {{ category.categoryName }}
+                      </option>
+                  </select>
+              </div>
+
+              <div class="col-md-6 col-sm-12 mb-3">
+                  <label for="brandDescription" class="form-label"><b>Brand Description</b></label>
+                  <textarea id="brandDescription" name="brandDescription" [(ngModel)]="brand.brandDescription" class="form-control" required></textarea>
+              </div>
+
+              <div class="col-md-6 col-sm-12 mb-3">
+                  <label for="tagLine" class="form-label"><b>Tag Line</b></label>
+                  <input type="text" id="tagLine" name="tagLine" [(ngModel)]="brand.tagLine" class="form-control" required>
+              </div> 
+
+              <div class="col-md-6 col-sm-12 mb-3">
+                  <label for="status" class="form-label"><b>Status</b></label>
+                  <select name="status" id="status" [(ngModel)]="brand.status" class="form-control" required>
+                      <option value="" disabled selected>Select Status</option>
+                      <option value="ACTIVE">ACTIVE</option>
+                      <option value="INACTIVE">INACTIVE</option>
+                  </select>
+              </div>
+          
+
+          <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+          </div>
+        </div>
+  </div>
+</div>
