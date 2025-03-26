@@ -31,11 +31,16 @@ export class BrandService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
-      // ❌ DO NOT SET 'Content-Type': 'application/json' HERE
     });
 
     return this.http.post<any>(this.apiUrl + "/admin/createBrand", formData, { headers });
 }
+
+  updateBrand(brand:BrandDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.put<any>(this.apiUrl +"/admin/updateBrand/" +brand.brandId, brand, {headers});
+    }
 
   
 }

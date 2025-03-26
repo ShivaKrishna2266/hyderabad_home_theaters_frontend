@@ -1,7 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BrandDTO } from 'src/app/DTO/brandDTO';
+import { CategoryDTO } from 'src/app/DTO/categoryDTO';
+import { CategoryService } from 'src/app/services/admin/category.service';
 import { BrandService } from 'src/app/services/brands/brand.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-view-brands',
@@ -10,6 +13,7 @@ import { BrandService } from 'src/app/services/brands/brand.service';
 })
 export class ViewBrandsComponent implements OnInit {
   public filteredBrands: BrandDTO[] = [];
+  categories: CategoryDTO[] = [];
 
 
 
@@ -21,10 +25,13 @@ export class ViewBrandsComponent implements OnInit {
   constructor(
     private brandService: BrandService,
     private router: Router,
+    private dataService : DataService,
+    private categoryService: CategoryService
   ) { };
 
   ngOnInit(): void {
     this.getAllBrands();
+    this.getAllCategories();
   }
 
   getAllBrands() {
@@ -38,14 +45,30 @@ export class ViewBrandsComponent implements OnInit {
     );
   }
 
+  getAllCategories(){
+    this.categoryService.getAllCategories().subscribe(
+      (res : any)=>{
+        this.categories = res.data;
+      },
+      (error) => {
+        console.error(" Not showing Categories" , error)
+      }
+    )
+  }
+
   addBrands(): void {
     this.router.navigate(['admin/add-brands']);
   }
 
   updateBrand(brand: BrandDTO){
+    this.dataService.brandData = brand,
     this.router.navigate(['admin/edit-brands']);
   }
 
+  getCategoryName(categoryId: number): string {
+    const foundCategory = this.categories.find( category => category.categoryId === categoryId);
+    return foundCategory ? foundCategory.categoryName : "Unknow";
+  }
 
 
   calculateTotalPages() {

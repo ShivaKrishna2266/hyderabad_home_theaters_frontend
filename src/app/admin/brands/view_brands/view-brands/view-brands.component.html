@@ -61,7 +61,7 @@
                         *ngFor="let brand of filteredBrands.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
                         <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
                         <td>{{ brand.brandName }}</td>
-                        <td>{{brand.categoryId}}</td>
+                        <td>{{ getCategoryName(brand.categoryId) }}</td>
                         <td><img src="../../../../../assets/brand_images/{{brand.imageURL}}" alt="Cover Image"
                             style="width: 50px; height: auto;"></td>
                         <td>{{ brand.brandDescription }}</td>
