@@ -19,19 +19,19 @@
       <div class="accordion" id="accordionMenu">
         <!-- Dashboard -->
         <div class="accordion-item">
-          <h2 class="accordion-header p-3" routerLink="admin/admin-dashbord">
+          <h2 class="accordion-header p-3" routerLink="/admin">
             <i class="fas fa-desktop"></i> Dashboard
           </h2>
         </div>
 
         <!-- View Brands -->
         <div class="accordion-item">
-          <h2 class="accordion-header position-relative p-3" id="headingViewCourse2" data-bs-toggle="collapse"
-            data-bs-target="#collapseViewCourse2" aria-expanded="true" aria-controls="collapseViewCourse2">
+          <h2 class="accordion-header position-relative p-3" id="headingViewBrands" data-bs-toggle="collapse"
+            data-bs-target="#collapseViewBrands" aria-expanded="true" aria-controls="collapseViewBrands">
             <i class="fas fa-newspaper"></i> Brands
             <i class="fas fa-caret-down position-absolute top-0 end-0 mt-3 me-2"></i>
           </h2>
-          <div id="collapseViewCourse2" class="accordion-collapse collapse" aria-labelledby="headingViewCourse2"
+          <div id="collapseViewBrands" class="accordion-collapse collapse" aria-labelledby="headingViewBrands"
             data-bs-parent="#accordionMenu">
             <div class="accordion-body">
               <a routerLink="/admin/view-brands" class="d-block py-1 px-1">View Brands</a>
@@ -41,23 +41,24 @@
           </div>
         </div>
         
-        <!-- mock Categories -->
+        <!-- Categories -->
         <div class="accordion-item">
-          <h2 class="accordion-header position-relative p-3" id="headingMockInterviews" data-bs-toggle="collapse"
-            data-bs-target="#collapseMockInterview" aria-expanded="true" aria-controls="collapseMockInterview">
-            <i class="fas fa-comments"></i>Categories
-            <i class="fas fa-caret-down position-absolute top-0 end-0 mt-3 me-2"></i>
+          <h2 class="accordion-header position-relative p-3" id="headingCategories" 
+              data-bs-toggle="collapse" data-bs-target="#collapseCategories" 
+              aria-expanded="true" aria-controls="collapseCategories" role="button">
+            <i class="fas fa-comments"></i> Categories
+            <i class="fas fa-caret-down position-absolute top-50 end-0 translate-middle-y me-2"></i>
           </h2>
-          <div id="collapseMockInterview" class="accordion-collapse collapse" aria-labelledby="headingMockInterviews"
-            data-bs-parent="#accordionMenu">
+          <div id="collapseCategories" class="accordion-collapse collapse show" 
+               aria-labelledby="headingCategories" data-bs-parent="#accordionMenu">
             <div class="accordion-body">
-              <a routerLink="admin/view-interview-category" class="d-block py-1 px-1">View
-                Categories</a>
-              <a routerLink="admin/view-interview-question" class="d-block py-1 px-1">Add Categories</a>
-              <a routerLink="admin/view-interview-question" class="d-block py-1 px-1">Edit Categories</a>
+              <a routerLink="admin/view-categories" class="d-block py-1 px-2">View Categories</a>
+              <a routerLink="admin/add-categories" class="sub_menu d-block py-1 px-2">Add Categories</a>
+              <a routerLink="admin/edit-categories" class="sub_menu d-block py-1 px-2">Edit Categories</a>
             </div>
           </div>
         </div>
+        
 
         <!-- Jobs-SubCategories -->
         <div class="accordion-item">

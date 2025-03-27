@@ -5,13 +5,19 @@ import { AdminAuthGuard } from '../services/auth/admin.auth.guard';
 import { ViewBrandsComponent } from './brands/view_brands/view-brands/view-brands.component';
 import { AddBrandsComponent } from './brands/add_brands/add-brands/add-brands.component';
 import { EditBrandsComponent } from './brands/edit_brands/edit-brands/edit-brands.component';
+import { ViewCategoriesComponent } from './categories/view_categories/view-categories/view-categories.component';
+import { AddCategoriesComponent } from './categories/add_categories/add-categories/add-categories.component';
+import { EditCategoriesComponent } from './categories/edit_categories/edit-categories/edit-categories.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
     { path: 'admin', component:AdminComponent },
     { path: 'view-brands', component: ViewBrandsComponent },
     { path: 'add-brands', component:AddBrandsComponent},
-    { path: 'edit-brands', component:EditBrandsComponent}
+    { path: 'edit-brands', component:EditBrandsComponent},
+    { path: 'view-categories', component:ViewCategoriesComponent},
+    { path: 'add-categories', component:AddCategoriesComponent},
+    { path: 'edit-categories', component:EditCategoriesComponent},
   ] 
 }
 ];

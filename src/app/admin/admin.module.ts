@@ -6,6 +6,9 @@ import { ViewBrandsComponent } from './brands/view_brands/view-brands/view-brand
 import { AddBrandsComponent } from './brands/add_brands/add-brands/add-brands.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditBrandsComponent } from './brands/edit_brands/edit-brands/edit-brands.component';
+import { ViewCategoriesComponent } from './categories/view_categories/view-categories/view-categories.component';
+import { AddCategoriesComponent } from './categories/add_categories/add-categories/add-categories.component';
+import { EditCategoriesComponent } from './categories/edit_categories/edit-categories/edit-categories.component';
 
 
 @NgModule({
@@ -14,6 +17,9 @@ import { EditBrandsComponent } from './brands/edit_brands/edit-brands/edit-brand
     ViewBrandsComponent,
     AddBrandsComponent,
     EditBrandsComponent,
+    ViewCategoriesComponent,
+    AddCategoriesComponent,
+    EditCategoriesComponent,
   ],
   imports: [
     CommonModule,
