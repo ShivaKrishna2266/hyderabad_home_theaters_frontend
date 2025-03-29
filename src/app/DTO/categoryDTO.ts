@@ -3,7 +3,7 @@ export interface CategoryDTO{
     categoryName:string,
     description: string,
     tagline:string,
-    status:boolean,
+    status:string,
     imageUrl:string;
     brandId:number,
     subCategoryId: number,
