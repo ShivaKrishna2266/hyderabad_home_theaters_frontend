@@ -43,14 +43,14 @@
         
         <!-- Categories -->
         <div class="accordion-item">
-          <h2 class="accordion-header position-relative p-3" id="headingCategories">
-            <span data-bs-toggle="collapse" data-bs-target="#collapseCategories" 
+          <h2 class="accordion-header position-relative p-3" id="headingCategories"
+            data-bs-toggle="collapse" data-bs-target="#collapseCategories" 
                   aria-expanded="true" aria-controls="collapseCategories" role="button">
               <i class="fas fa-comments"></i> Categories
               <i class="fas fa-caret-down position-absolute top-50 end-0 translate-middle-y me-2"></i>
-            </span>
+            
           </h2>
-          <div id="collapseCategories" class="accordion-collapse collapse show" 
+          <div id="collapseCategories" class="accordion-collapse collapse " 
                aria-labelledby="headingCategories" data-bs-parent="#accordionMenu">
             <div class="accordion-body">
               <a routerLink="/admin/view-categories" class="d-block py-1 px-2">View Categories</a>
@@ -91,9 +91,9 @@
           <div id="collapseUserResponse" class="accordion-collapse collapse" aria-labelledby="userResponse"
             data-bs-parent="#accordionMenu">
             <div class="accordion-body">
-              <a routerLink="admin/zoom-registered" class="sub_menu d-block py-1 px-0">View Products</a>
-              <a routerLink="admin/landing-pages-lead" class=" d-block py-1 px-0">Add Products</a>
-              <a routerLink="admin/landing-pages-lead" class=" d-block py-1 px-0">Update Products</a>
+              <a routerLink="/admin/view-products" class="sub_menu d-block py-1 px-0">View Products</a>
+              <a routerLink="/admin/add-products" class=" d-block py-1 px-0">Add Products</a>
+              <a routerLink="/admin/edit-products" class=" d-block py-1 px-0">Update Products</a>
             </div>
           </div>
         </div>
