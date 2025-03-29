@@ -9,6 +9,9 @@ import { EditBrandsComponent } from './brands/edit_brands/edit-brands/edit-brand
 import { ViewCategoriesComponent } from './categories/view_categories/view-categories/view-categories.component';
 import { AddCategoriesComponent } from './categories/add_categories/add-categories/add-categories.component';
 import { EditCategoriesComponent } from './categories/edit_categories/edit-categories/edit-categories.component';
+import { ViewProductsComponent } from './products/view_products/view-products/view-products.component';
+import { AddProductsComponent } from './products/add_produtcs/add-products/add-products.component';
+import { EditProductsComponent } from './products/edit_products/edit-products/edit-products.component';
 
 
 @NgModule({
@@ -20,6 +23,9 @@ import { EditCategoriesComponent } from './categories/edit_categories/edit-categ
     ViewCategoriesComponent,
     AddCategoriesComponent,
     EditCategoriesComponent,
+    ViewProductsComponent,
+    AddProductsComponent,
+    EditProductsComponent,
   ],
   imports: [
     CommonModule,
