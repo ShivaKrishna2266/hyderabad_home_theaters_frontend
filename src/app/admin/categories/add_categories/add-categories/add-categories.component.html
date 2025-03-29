@@ -33,19 +33,19 @@
                     <input type="text" name="tagline" id="tagline" class="form-control" formControlName="tagline">
                 </div>
 
-                <!-- <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-control" formControlName="status">
                         <option value="ACTIVE">ACTIVE</option>
                         <option value="INACTIVE">INACTIVE</option>
                     </select>
-                </div> -->
+                </div>
 
-                <!-- <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <label for="imageUrl" class="form-label">Upload Image</label>
                     <input type="file" name="imageUrl" id="imageUrl" class="form-control" formControlName="imageUrl"
-                        (change)="onFileChange($event)" accept="image/*">
-                </div> -->
+                    (change)="onFileChange($event, 'imageURL')" accept="imageURL/*">
+                </div>
             </div>
             
             <div class="text-center mt-4">

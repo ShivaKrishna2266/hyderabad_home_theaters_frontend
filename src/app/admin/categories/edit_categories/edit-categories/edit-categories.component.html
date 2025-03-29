@@ -1,1 +1,47 @@
-<p>edit-categories works!</p>
+<div class="container">
+    <section class="edit-category">
+        <div class="card-header mt-5 p-2 text-center">
+            <h1 class="mt-3"><b>Edit Category</b></h1>
+        </div>
+    </section>
+
+    <div class="card mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-6">
+                <label for="categoryName" class="form-label"><b>Category Name</b></label>
+                <input type="text" name="categoryName" id="categoryName" class="form-control" [(ngModel)]="category.categoryName" >
+            </div>
+            
+            <div class="col-md-6 col-sm-6">
+                <label for="brandId" class="form-label"><b>Brand Name</b></label>
+                <select name="brandId" id="brandId" class="form-control" [(ngModel)]="category.brandId" > 
+                    <option value="" disabled selected>Select Brand</option>
+                    <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <label for="description" class="form-label"><b>Description</b></label>
+                <textarea name="description" id="description" class="form-control" [(ngModel)]="category.description" ></textarea>
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <label for="tagline" class="form-label"><b>Tag Line</b></label>
+                <input type="text" name="tagline" id="tagline" class="form-control" [(ngModel)]="category.tagline" >
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="status" class="form-label"><b>Status</b></label>
+                <select name="status" id="status" class="form-control" [(ngModel)]="category.status" >
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

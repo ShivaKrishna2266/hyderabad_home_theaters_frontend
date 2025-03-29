@@ -43,21 +43,23 @@
         
         <!-- Categories -->
         <div class="accordion-item">
-          <h2 class="accordion-header position-relative p-3" id="headingCategories" 
-              data-bs-toggle="collapse" data-bs-target="#collapseCategories" 
-              aria-expanded="true" aria-controls="collapseCategories" role="button">
-            <i class="fas fa-comments"></i> Categories
-            <i class="fas fa-caret-down position-absolute top-50 end-0 translate-middle-y me-2"></i>
+          <h2 class="accordion-header position-relative p-3" id="headingCategories">
+            <span data-bs-toggle="collapse" data-bs-target="#collapseCategories" 
+                  aria-expanded="true" aria-controls="collapseCategories" role="button">
+              <i class="fas fa-comments"></i> Categories
+              <i class="fas fa-caret-down position-absolute top-50 end-0 translate-middle-y me-2"></i>
+            </span>
           </h2>
           <div id="collapseCategories" class="accordion-collapse collapse show" 
                aria-labelledby="headingCategories" data-bs-parent="#accordionMenu">
             <div class="accordion-body">
-              <a routerLink="admin/view-categories" class="d-block py-1 px-2">View Categories</a>
-              <a routerLink="admin/add-categories" class="sub_menu d-block py-1 px-2">Add Categories</a>
-              <a routerLink="admin/edit-categories" class="sub_menu d-block py-1 px-2">Edit Categories</a>
+              <a routerLink="/admin/view-categories" class="d-block py-1 px-2">View Categories</a>
+              <a routerLink="/admin/add-categories" class="sub_menu d-block py-1 px-2">Add Categories</a>
+              <a routerLink="/admin/edit-categories" class="sub_menu d-block py-1 px-2">Edit Categories</a>
             </div>
           </div>
         </div>
+        
         
 
         <!-- Jobs-SubCategories -->

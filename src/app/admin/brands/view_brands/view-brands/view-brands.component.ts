@@ -25,7 +25,7 @@ export class ViewBrandsComponent implements OnInit {
   constructor(
     private brandService: BrandService,
     private router: Router,
-    private dataService : DataService,
+    private dataService: DataService,
     private categoryService: CategoryService
   ) { };
 
@@ -45,28 +45,29 @@ export class ViewBrandsComponent implements OnInit {
     );
   }
 
-  getAllCategories(){
+  getAllCategories() {
     this.categoryService.getAllCategories().subscribe(
-      (res : any)=>{
+      (res: any) => {
         this.categories = res.data;
       },
       (error) => {
-        console.error(" Not showing Categories" , error)
+        console.error(" Not showing Categories", error)
       }
     )
   }
 
   addBrands(): void {
+    alert("you want to Add Brand")
     this.router.navigate(['admin/add-brands']);
   }
 
-  updateBrand(brand: BrandDTO){
+  updateBrand(brand: BrandDTO) {
     this.dataService.brandData = brand,
-    this.router.navigate(['admin/edit-brands']);
+      this.router.navigate(['admin/edit-brands']);
   }
 
   getCategoryName(categoryId: number): string {
-    const foundCategory = this.categories.find( category => category.categoryId === categoryId);
+    const foundCategory = this.categories.find(category => category.categoryId === categoryId);
     return foundCategory ? foundCategory.categoryName : "Unknow";
   }
 
@@ -109,5 +110,5 @@ export class ViewBrandsComponent implements OnInit {
       this.pageChange.emit(this.currentPage);
     }
   }
-  
+
 }

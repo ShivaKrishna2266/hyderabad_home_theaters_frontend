@@ -11,57 +11,64 @@ import { CategoryService } from 'src/app/services/admin/category.service';
   styleUrls: ['./add-categories.component.scss']
 })
 export class AddCategoriesComponent implements OnInit {
-   brands: BrandDTO[] =[];
-   imageURL: File | null = null;
-   categoryForm : FormGroup = this.formBuilder.group({});
+  brands: BrandDTO[] = [];
+  imageURL: File | null = null;
+  categoryForm: FormGroup = this.formBuilder.group({});
   constructor(
-            private formBuilder :FormBuilder,
-            private categoryService : CategoryService,
-            private brandService : BrandService,
-            private router: Router,
-  ){}
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService,
+    private brandService: BrandService,
+    private router: Router,
+  ) { }
 
 
-ngOnInit(): void {
-  this.getAllBrands();
-  this.categoryForm = this.formBuilder.group({
-    categoryName: ['', Validators.required],
-    description: ['', Validators.required],
-    tagline: ['', Validators.required],
-    // status: ['', Validators.required],
-    // imageUrl: ['', Validators.required],
-    brandId: ['', Validators.required],
-  })
-}
+  ngOnInit(): void {
+    this.getAllBrands();
+    this.categoryForm = this.formBuilder.group({
+      categoryName: ['', Validators.required],
+      description: ['', Validators.required],
+      tagline: ['', Validators.required],
+      status: ['', Validators.required],
+      imageUrl: ['', Validators.required],
+      brandId: ['', Validators.required],
+    })
+  }
 
-  getAllBrands(){
+  getAllBrands() {
     this.brandService.getAllBrands().subscribe(
-      (res :any) =>{
-          this.brands = res.data;
+      (res: any) => {
+        this.brands = res.data;
       },
-      (error) =>{
+      (error) => {
         console.error("Brands Are not Shown ", error);
       }
     )
   }
 
-onSubmit() {
-if(this.categoryForm.valid){
-  const formData = this.categoryForm.value;
-  this.categoryService.addCategory(formData).subscribe(
-    (res :any)=>{
-     console.log("Category is added Successfully", res);
-     this.router.navigate(["/admin/view-categories"])
-    }, err => {
-      console.error("Error Adding Brand", err);
-    });
-}
+  onSubmit() {
+    if (this.categoryForm.valid && this.imageURL) {
+      const formData = this.categoryForm.value;
+      if (this.imageURL) {
+        this.categoryService.addCategory(formData, this.imageURL).subscribe(
+          (res: any) => {
+            console.log("Category is added Successfully", res);
+            this.router.navigate(["/admin/view-categories"])
+          }, err => {
+            console.error("Error Adding Brand", err);
+          });
+      }
+    }
 
-}
+  }
 
 
-onFileChange($event: Event,arg1: string) {
-  throw new Error('Method not implemented.');
+  onFileChange(event: any, fileType: string): void {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      if (fileType === "imageURL") {
+        this.imageURL = files[0];
+      }
+    }
   }
 
 
