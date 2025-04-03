@@ -37,15 +37,11 @@ export class CategoryService {
     return this.http.post<any>(this.apiUrl + "/admin/createCategory", formData, { headers })
   }
 
-  updateCategory(category: CategoryDTO): Observable<CategoryDTO>{
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.userStorageService.getToken()}`
-    });
-
-    return this.http.put<any>(this.apiUrl + "/admin/updateCategoryById/" + category.categoryId, category, {headers});
-
+  updateCategory(category: CategoryDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put<any>(this.apiUrl + "/admin/updateCategoryById/" + category.categoryId, category, { headers });
   }
 
- 
-  
+
 }

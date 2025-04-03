@@ -18,8 +18,8 @@
         </div>
 
         <div class="col-md-4 col-sm-4">
-            <label for="categoryName" class="form-label"><b>Category Name</b></label>
-            <select id="categoryId" class="form-select">
+            <label for="categoryId" class="form-label"><b>Category Name</b></label>
+            <select id="categoryId" class="form-select" [(ngModel)]="selectedCategoryId">
                 <option *ngFor="let category of filteredCategories" [value]="category.categoryId">
                     {{category.categoryName}}
                 </option>
@@ -63,8 +63,9 @@
                     <td>{{ category.tagline }}</td>
                     <td>{{ category.status }}</td>
                     <td>
-                        <button class="btn btn-icon btn-info"><i class="fas fa-edit edit-icon"
-                            (click)="updateCategory(category)"></i></button>
+                        <button class="btn btn-sm btn-primary" (click)="updateCategory(category)">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -87,6 +88,6 @@
                 </a>
             </li>
         </ul>
-        <li class="pagination justify-content-end"> Total Records: {{ totalItems }}</li>
+        <p class="text-end mt-2">Total Records: {{ totalItems }}</p>
     </nav>
 </div>

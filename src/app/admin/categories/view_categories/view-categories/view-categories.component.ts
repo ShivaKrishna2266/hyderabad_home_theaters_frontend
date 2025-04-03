@@ -14,14 +14,13 @@ import { DataService } from 'src/app/services/data/data.service';
 export class ViewCategoriesComponent implements OnInit{
   public filteredCategories: CategoryDTO[] = [];
   public brands: BrandDTO[] = [];
-  categories : CategoryDTO[] =[];
-  
   public pageSize: number = 5;
   public currentPage: number = 1;
   public totalItems: number = 0;
-  statusFilter: any;
-  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+  public statusFilter: string = '';
+  public selectedCategoryId: number | null = null;
 
+  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     private categoryService: CategoryService,
@@ -53,7 +52,7 @@ export class ViewCategoriesComponent implements OnInit{
 
   getAllCategories(): void {
     this.categoryService.getAllCategories().subscribe(
-      (res:any) => {
+      (res: any) => {
         this.filteredCategories = res.data;
         this.calculateTotalPages();
       },
@@ -68,8 +67,9 @@ export class ViewCategoriesComponent implements OnInit{
     this.router.navigate(['admin/add-categories']);
   }
 
-  updateCategory(category: CategoryDTO) {
-   this.dataService.categoryData = category;
+  updateCategory(category: CategoryDTO): void {
+    console.log('Updating Category:', category);
+    this.dataService.categoryData = category;
     this.router.navigate(['/admin/edit-categories']);
   }
 
@@ -91,7 +91,7 @@ export class ViewCategoriesComponent implements OnInit{
     if (endPage - startPage < maxVisiblePages - 1) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
-    
+
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }

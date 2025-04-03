@@ -1,0 +1,50 @@
+<div class="container">
+    <section class="edit-subCategories">
+        <div class="card-header mt-5 p-2">
+            <h1 class="mt-3"><b>Edit Sub Categories</b></h1>
+        </div>
+    </section>
+
+    <div class="card p-4  mt-4 mb-3">
+        <div class="row justify-content-center mt-3 mb-3">
+            <div class="col-md-6 col-sm-6">
+                <label for="subCategoryName" class="form-label">Sub Category Name</label>
+                <input type="text" name="subCategoryName" id="subCategoryName" [(ngModel)]="subCategories.subCategoryName" class="form-control" required>
+            </div>
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="categoryId" class="form-label"><b>Category Name</b></label>
+                <select name="categoryId" id="categoryId" class="form-control" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.categoryId">
+                        {{ category.categoryName }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="productId" class="form-label"><b>Product Name</b></label>
+                <select name="productId" id="productId" class="form-control" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.categoryId">
+                        {{ category.categoryName }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="description" class="form-label"><b> Description</b></label>
+                <textarea id="description" name="description" class="form-control"
+                    [(ngModel)]="subCategories.description" required></textarea>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="tagline" class="form-label"><b>Tag Line</b></label>
+                <input type="text" id="tagline" name="tagline" class="form-control" [(ngModel)]="subCategories.tagline"
+                    required>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

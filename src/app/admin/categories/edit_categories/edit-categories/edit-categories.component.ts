@@ -12,72 +12,54 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./edit-categories.component.scss']
 })
 export class EditCategoriesComponent implements OnInit{
-  category! : CategoryDTO;
+  categories: CategoryDTO = {} as CategoryDTO;
   brands: BrandDTO[] = [];
 
   constructor(
-    private categoryService: CategoryService,  // Fixed the incorrect variable name
-    private brandService: BrandService,  // Fixed the incorrect variable name
+    private categoryService: CategoryService,
+    private brandService: BrandService,
     private router: Router,
     private dataService: DataService
   ) {}
 
   ngOnInit(): void {
-    this.category = this.dataService.categoryData;
-    this.getAllCategories();
+    const categoryData = this.dataService.categoryData;
+    if (categoryData) {
+      this.categories = categoryData;
+    }
     this.getAllBrands();
   }
 
   onSubmit(): void {
-    if (!this.category.categoryName || !this.category.brandId) { // Fixed validation check
-      alert('Please fill all required fields.');
+    if (!this.categories.categoryName || !this.categories.brandId) {
+      alert('Please fill all required fields: Category Name and Brand Name.');
       return;
     }
 
-    if (confirm('Are you sure you want to update this category?')) {
-      this.categoryService.updateCategory(this.category).subscribe(
-        (res: any) => {
-          console.log('Category Successfully updated');
-          alert('Category updated successfully!');
-          this.router.navigate(["/admin/view-categories"]); // Corrected navigation
-        },
-        (error: any) => {
-          console.error('Error:', error);
-          alert('Failed to update category. Please try again.');
-        }
-      );
-    }
-  }
-
-  // onSubmit():void{
-  //   if(this.category){
-  //     this.categoryService.updateCategory(this.category).subscribe(
-  //       (res:any)=>{
-  //         this.router.navigate(['/admin/view-category']);
-  //       }
-  //     )
-  //   }
-
-  // }
-
-  getAllBrands(): void {
-    this.brandService.getAllBrands().subscribe(
+    this.categoryService.updateCategory(this.categories).subscribe(
       (res: any) => {
-        this.brands = res.data || [];
+        console.log('Category Successfully updated:', res);
+        alert('Category updated successfully!');
+        this.router.navigate(['/admin/view-categories']);
       },
-      (error) => {
-        console.log("Brands are not shown", error);
+      (error: any) => {
+        console.error('Error updating category:', error);
+        alert(`Failed to update category. ${error.message || 'Unknown error'}`);
       }
     );
   }
 
-  getAllCategories(): void {
-    this.categoryService.getAllCategories().subscribe(
+  getAllBrands(): void {
+    this.brandService.getAllBrands().subscribe(
       (res: any) => {
-        this.category = res.data || {} as CategoryDTO; // Fixed assignment to prevent type issues
+        if (res && res.data) {
+          this.brands = res.data;
+        } else {
+          console.warn('No brands found.');
+        }
       },
       (error) => {
-        console.log("Categories are not shown", error);
+        console.error("Error fetching brands:", error);
       }
     );
   }
