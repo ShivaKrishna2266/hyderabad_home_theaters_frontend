@@ -63,9 +63,14 @@
                     <td>{{product.productPrice}}</td>
                     <td>{{product.productRank}}</td>
                     <td>{{product.productSku}}</td>
-                    <td>{{product.imageURL}}</td>
+                    <td><img src="../../../../../assets/brand_images/{{product.imageURL}}" alt="Cover Image"
+                        style="width: 50px; height: auto;"></td>
                     <td>{{product.status}}</td>
-                    <td><i class="fa fa-edit"></i></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="updateProduct(product)">
+                            <i class="fa fa-edit"></i> 
+                        </button>
+                    </td>
                 </tr>
             </tbody>
 

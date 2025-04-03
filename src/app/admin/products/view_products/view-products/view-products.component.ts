@@ -8,6 +8,7 @@ import { BrandService } from 'src/app/services/admin/brand.service';
 import { CategoryService } from 'src/app/services/admin/category.service';
 import { ProductService } from 'src/app/services/admin/product.service';
 import { SubCategoryService } from 'src/app/services/admin/sub-category.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-view-products',
@@ -32,6 +33,7 @@ export class ViewProductsComponent implements OnInit {
     private brandServices :BrandService,
     private categoryService :CategoryService,
     private subCategoryService : SubCategoryService,
+    private dataService: DataService,
 
   ) { };
 
@@ -89,6 +91,11 @@ export class ViewProductsComponent implements OnInit {
   addProduct() {
     alert("Please confirm if you want to add the product.");
     this.router.navigate(['admin/add-products']);
+  }
+
+  updateProduct(product :ProductDTO){
+    this.dataService.productData = product;
+    this.router.navigate(['admin/edit-products']);
   }
 
 
