@@ -12,6 +12,9 @@ import { EditCategoriesComponent } from './categories/edit_categories/edit-categ
 import { ViewProductsComponent } from './products/view_products/view-products/view-products.component';
 import { AddProductsComponent } from './products/add_produtcs/add-products/add-products.component';
 import { EditProductsComponent } from './products/edit_products/edit-products/edit-products.component';
+import { ViewSubCategoryComponent } from './sub_category/view_sub_category/view-sub-category/view-sub-category.component';
+import { AddSubCategoryComponent } from './sub_category/add_sub_category/add-sub-category/add-sub-category.component';
+import { EditSubCategoryComponent } from './sub_category/edit_sub_category/edit-sub-category/edit-sub-category.component';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { EditProductsComponent } from './products/edit_products/edit-products/ed
     ViewProductsComponent,
     AddProductsComponent,
     EditProductsComponent,
+    ViewSubCategoryComponent,
+    AddSubCategoryComponent,
+    EditSubCategoryComponent,
   ],
   imports: [
     CommonModule,

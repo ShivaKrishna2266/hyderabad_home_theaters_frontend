@@ -5,34 +5,34 @@
         </div>
     </section>
 
-    <div class="card mt-5 mb-5">
+    <div class="card mt-5 mb-5 p-4">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6 form-group">
                 <label for="categoryName" class="form-label"><b>Category Name</b></label>
-                <input type="text" name="categoryName" id="categoryName" class="form-control" [(ngModel)]="category.categoryName" >
+                <input type="text" id="categoryName" [(ngModel)]="categories.categoryName" class="form-control" required>
             </div>
-            
-            <div class="col-md-6 col-sm-6">
+
+            <div class="col-md-6 col-sm-6 form-group">
                 <label for="brandId" class="form-label"><b>Brand Name</b></label>
-                <select name="brandId" id="brandId" class="form-control" [(ngModel)]="category.brandId" > 
+                <select id="brandId" class="form-select" [(ngModel)]="categories.brandId" required>
                     <option value="" disabled selected>Select Brand</option>
                     <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}</option>
                 </select>
             </div>
 
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6 form-group">
                 <label for="description" class="form-label"><b>Description</b></label>
-                <textarea name="description" id="description" class="form-control" [(ngModel)]="category.description" ></textarea>
+                <textarea id="description" class="form-control" [(ngModel)]="categories.description" required></textarea>
             </div>
 
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6 form-group">
                 <label for="tagline" class="form-label"><b>Tag Line</b></label>
-                <input type="text" name="tagline" id="tagline" class="form-control" [(ngModel)]="category.tagline" >
+                <input type="text" id="tagline" class="form-control" [(ngModel)]="categories.tagline" required>
             </div>
 
-            <div class="col-md-6 col-sm-12 mb-3">
+            <div class="col-md-6 col-sm-12 form-group mb-3">
                 <label for="status" class="form-label"><b>Status</b></label>
-                <select name="status" id="status" class="form-control" [(ngModel)]="category.status" >
+                <select id="status" class="form-select" [(ngModel)]="categories.status" required>
                     <option value="" disabled selected>Select Status</option>
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="INACTIVE">INACTIVE</option>
