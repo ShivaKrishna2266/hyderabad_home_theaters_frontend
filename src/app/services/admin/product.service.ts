@@ -25,15 +25,28 @@ export class ProductService {
     return this.http.get<any>(this.apiUrl + "/admin/getAllProducts" , {headers})
    }
 
-   addProduct(product: ProductDTO,  imageFile: File): Observable<ProductDTO> {
-    const formData: FormData = new FormData();
-    formData.append('productImageFile', imageFile); // ✅ Must match backend param name
-    formData.append('productDTO', JSON.stringify(product)); // ✅ Must match backend param name
+  //  addProduct(product: ProductDTO,  imageFile: File): Observable<ProductDTO> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('productImageFile', imageFile); // ✅ Must match backend param name
+  //   formData.append('productDTO', JSON.stringify(product)); // ✅ Must match backend param name
 
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  //   return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
+  // }
+
+  addProduct(product: ProductDTO, imageFile: File): Observable<ProductDTO> {
+    const formData: FormData = new FormData();
+    formData.append('productDTO', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    formData.append('productImageFile', imageFile);
+  
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     });
+  
     return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
   }
 

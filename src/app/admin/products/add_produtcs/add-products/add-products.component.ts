@@ -49,13 +49,9 @@ export class AddProductsComponent implements OnInit {
       productRank: ['', Validators.required],
       productSku: ['', Validators.required],
       status: ['', Validators.required],
-      // imageName: ['', Validators.required],
-      imageURL: ['', Validators.required],
       originalPrice: ['', Validators.required],
       discountedPrice: ['', Validators.required],
       discountPercentage: ['', Validators.required],
-      // taxPercentage: ['', Validators.required],
-      // currency: ['', Validators.required],
       color: ['', Validators.required],
       size: ['', Validators.required],
       weight: ['', Validators.required],
@@ -116,12 +112,19 @@ export class AddProductsComponent implements OnInit {
     }
 
   }
+  // onFileChange(event: any, fileType: string): void {
+  //   const files: FileList = event.target.files;
+  //   if (files.length > 0) {
+  //     if (fileType === 'imageURL') {
+  //       this.imageURL = files[0];
+  //     }
+  //   }
+  // }
+
   onFileChange(event: any, fileType: string): void {
-    const files: FileList = event.target.files;
-    if (files.length > 0) {
-      if (fileType === 'imageURL') {
-        this.imageURL = files[0];
-      }
+    const file: File = event.target.files[0];
+    if (file && fileType === 'imageURL') {
+      this.imageURL = file;
     }
   }
 
