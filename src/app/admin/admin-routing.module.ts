@@ -14,6 +14,9 @@ import { EditProductsComponent } from './products/edit_products/edit-products/ed
 import { ViewSubCategoryComponent } from './sub_category/view_sub_category/view-sub-category/view-sub-category.component';
 import { AddSubCategoryComponent } from './sub_category/add_sub_category/add-sub-category/add-sub-category.component';
 import { EditSubCategoryComponent } from './sub_category/edit_sub_category/edit-sub-category/edit-sub-category.component';
+import { ViewTestimonialComponent } from './testimonial/view-testimonial/view-testimonial.component';
+import { AddTestimonialComponent } from './testimonial/add-testimonial/add-testimonial.component';
+import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-testimonial.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -30,6 +33,9 @@ const routes: Routes = [
     { path: 'view-subCategory', component:ViewSubCategoryComponent},
     { path: 'add-subCategory', component: AddSubCategoryComponent},
     { path: 'edit-subCategory', component: EditSubCategoryComponent},
+    { path: 'view-testimonial', component: ViewTestimonialComponent},
+    { path: 'add-testimonial', component: AddTestimonialComponent},
+    { path: 'edit-testimonial', component: EditTestimonialComponent},
   ] 
 }
 ];
