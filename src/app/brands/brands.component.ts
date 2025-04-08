@@ -138,4 +138,7 @@ export class BrandsComponent implements OnInit {
     this.dataLoaderService.addToCart(product);
     this.router.navigate(['/cart']);
   }
+  viewProductDetails(product: any) {
+    this.router.navigate(['/view-details'], { state: { product } });
+  }
 }

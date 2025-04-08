@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
+import { CartService } from 'src/app/services/cart/cart.service';
 import { DataLoaderService } from 'src/app/services/data_loader/data-loader.service';
 
 @Component({
@@ -14,14 +15,22 @@ export class HeaderComponent implements OnInit {
   subCategories: SubCategoryDTO[] = [];
   categoryId: string | null = null;
   selectedCategoryId: number | null = null;  // Renamed to avoid method conflict
+  cartCount: number = 0;
+  
 
   constructor(
     private dataLoaderService: DataLoaderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService : CartService
   ) {}
 
   ngOnInit(): void {
     this.getAllCategories();
+
+    this.cartService.cart$.subscribe(items => {
+    this.cartCount = items.reduce((total, item) => total + item.quantity, 0);
+  });
+
     
     this.route.paramMap.subscribe(params => {
       this.categoryId = params.get('categoryId'); // Ensure 'categoryId' matches your route configuration
@@ -68,5 +77,11 @@ export class HeaderComponent implements OnInit {
         console.error('Error fetching subcategories:', error);
       }
     );
+  }
+
+  getCartCount(): number {
+    // Example: if you store cart items in localStorage
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    return cart.length;
   }
 }

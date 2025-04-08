@@ -1,4 +1,3 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="container py-5">
   <h1 class="mb-5"><b>Your Shopping Cart</b></h1>
@@ -8,25 +7,26 @@
       <div class="card mb-4">
         <div class="card-body">
           <div *ngIf="cartItems.length > 0; else noCartItems">
-            <div *ngFor="let item of cartItems">
+            <div *ngFor="let item of cartItems; let i = index">
               <div class="row cart-item mb-3">
                 <div class="col-md-3">
-                  <img [src]="item.productImage || defaultImage" alt="{{ item.productName }}" class="img-fluid rounded" />
+                  <img src="../../assets/boss-home-theater-system.webp" alt="">
+                  <!-- <img [src]="item.productImage || defaultImage" alt="{{ item.productName }}" class="img-fluid rounded" /> -->
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                   <h5 class="card-title">{{ item.productName }}</h5>
                   <p class="text-muted">Category: {{ item.category || 'General' }}</p>
                 </div>
-                <div class="col-md-2">
-                  <div class="input-group">
-                    <button class="btn btn-outline-secondary btn-sm" type="button">-</button>
-                    <input style="max-width:100px" type="text" class="form-control form-control-sm text-center quantity-input" value="1">
-                    <button class="btn btn-outline-secondary btn-sm" type="button">+</button>
+                <div class="col-md-3">
+                  <div class="input-group ">
+                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="decreaseQuantity(i)">-</button>
+                  <input style="max-width:50px" type="text" class="form-control form-control-sm text-center" [value]="item.quantity" readonly/>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="increaseQuantity(i)">+</button>
                   </div>
                 </div>
                 <div class="col-md-2 text-end">
                   <p class="fw-bold">₹{{ item.productPrice }}</p>
-                  <button class="btn btn-sm btn-outline-danger">
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteItem(i)">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
@@ -43,7 +43,7 @@
 
       <!-- Continue Shopping -->
       <div class="text-start mb-4">
-        <a routerLink="/products" class="btn btn-outline-primary">
+        <a routerLink="/brands" class="btn btn-outline-primary">
           <i class="bi bi-arrow-left me-2"></i>Continue Shopping
         </a>
       </div>
@@ -71,7 +71,7 @@
             <strong>Total</strong>
             <strong>₹{{ getSubtotal() + 10 + 20 }}</strong>
           </div>
-          <button class="btn btn-primary w-100">Proceed to Checkout</button>
+          <button class="btn btn-primary w-100" (click)="checkOut()">Proceed to Checkout</button>
         </div>
       </div>
 
