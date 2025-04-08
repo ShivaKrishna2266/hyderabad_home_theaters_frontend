@@ -31,6 +31,8 @@ import { RefundPolicyComponent } from './policy_links/refund-policy/refund-polic
 import { ReturnPolicyComponent } from './policy_links/return-policy/return-policy.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
+import { ViewDetailsComponent } from './view-details/view-details.component';
 
 
 
@@ -57,6 +59,8 @@ import { CartComponent } from './cart/cart.component';
     RefundPolicyComponent,
     ReturnPolicyComponent,
     CartComponent,
+    CheckoutFormComponent,
+    ViewDetailsComponent,
     
     
     

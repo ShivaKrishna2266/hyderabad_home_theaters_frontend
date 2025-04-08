@@ -19,6 +19,8 @@ import { ReturnPolicyComponent } from './policy_links/return-policy/return-polic
 import { ShippingPolicyComponent } from './policy_links/shipping-policy/shipping-policy.component';
 import { TermsOfServiceComponent } from './policy_links/terms-of-service/terms-of-service.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
+import { ViewDetailsComponent } from './view-details/view-details.component';
 
 
 
@@ -46,6 +48,9 @@ const routes: Routes = [
   { path: 'shipping-policy', component:ShippingPolicyComponent},
   { path: 'terms-of-service', component:TermsOfServiceComponent},
   { path: 'cart', component:CartComponent},
+  { path: 'checkout-form', component:CheckoutFormComponent},
+  { path: 'view-details', component:ViewDetailsComponent},
+
 
 
 

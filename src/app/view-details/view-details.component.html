@@ -1,0 +1,25 @@
+<!-- Include Animate.css in your index.html or angular.json -->
+<!-- CDN link (add to index.html head): -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<!-- Product UI -->
+<div *ngIf="product" class="container mt-4">
+  <div class="card shadow-lg animate__animated animate__fadeInUp">
+
+    <img src="../../assets/boss-home-theater-system.webp" class="card-img-top" alt="Product Image"> 
+    <!-- <img [src]="product.productImage || 'https://via.placeholder.com/300'" class="card-img-top" alt="Product Image"> -->
+    <div class="card-body">
+      <h3 class="card-title animate__animated animate__fadeInDown">{{ product.productName }}</h3>
+      <p class="card-text animate__animated animate__fadeInLeft">
+        {{ product.productDescription || 'No description available.' }}
+      </p>
+      <h4 class="text-success animate__animated animate__zoomIn">Price: ₹{{ product.productPrice }}</h4>
+      <p class="text-muted animate__animated animate__lightSpeedInRight">Rank: {{ product.productRank }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- No Product Fallback -->
+<div *ngIf="!product" class="container mt-4">
+  <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
+</div>

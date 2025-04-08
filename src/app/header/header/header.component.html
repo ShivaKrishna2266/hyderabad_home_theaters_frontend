@@ -1,10 +1,20 @@
-<div>
+<div class="">
   <nav class="navbar navbar-expand-lg justify-content-center">
-    <div class="container-fluid">
+    <div class="container-fluid mt-2 mb-2">
       <a class="navbar-brand" routerLink="/"></a>
-      <div class="logo mt-2">
+      <!-- <div class="logo mt-2">
         <p><b>Big sale Live upto 50% Off On AV Receivers</b></p>
-      </div>
+      </div> -->
+      <div class="col-md-4 col-sm-12 mt-2 text-center text-md-left">
+        <div class="inquiry mt-2">
+            <b>For Course Enquiry : <i class="fas fa-phone mr-3"></i> +91 6300384953</b>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12 mt-2 text-center text-md-left">
+        <div class="mail mt-2">
+            <b>Mail : <i class="fas fa-envelope mr-3"></i> shiva@gmail.com</b>
+        </div>
+    </div>
     </div>
   </nav>
 </div>
@@ -25,9 +35,30 @@
     <div class="login">
       <a class="" routerLink="/login"><i class="fas fa-user"></i></a>
     </div>
-    <div class="cart">
-      <a class="" routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+
+    <div class="cart position-relative">
+      <a routerLink="/cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ cartCount }}
+        </span>
+      </a>
     </div>
+
+    <div class="cart position-relative">
+      <a routerLink="/cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span *ngIf=" let count of cartCount > 0"
+              class="cart-count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ count }}
+        </span>
+      </a>
+    </div>
+    
+    
+    <!-- <div class="cart">
+      <a class="" routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+    </div> -->
   </div>
 </nav>
 
