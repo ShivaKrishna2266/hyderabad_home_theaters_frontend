@@ -16,9 +16,9 @@
         <div class="col-md-3 col-sm-6" *ngFor="let brand of displayedBrands">
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg text-center">
+
+              <img src="../.././assets/brand_images/karnaSurya.jpeg" alt="{{ brand.brandName }}" class="category-img">
               <h3 class="card-title"><b>{{ brand.brandName }}</b></h3>
-              <img src="../.././assets/Buystack_AVR-X1800H_Image_StudioF_NA.webp" alt="{{ brand.brandName }}"
-                class="category-img">
               <p class="card-text"><b>{{ brand.brandDescription }}</b></p>
               <button (click)="router.navigate(['/brands', brand.brandId])" class="btn btn-primary">View
                 Products</button>
@@ -31,29 +31,57 @@
       <div class="text-center mt-3">
         <i class="fa fa-angle-left pagination-shadow" (click)="prevPage()" [class.disabled]="currentPage === 1"></i>
         <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
-        <i class="fa fa-angle-right pagination-shadow" (click)="nextPage()" [class.disabled]="currentPage >= totalPages"></i>
-      </div>  
+        <i class="fa fa-angle-right pagination-shadow" (click)="nextPage()"
+          [class.disabled]="currentPage >= totalPages"></i>
+      </div>
     </div>
   </div>
 
   <!-- Show Products only when a brand is selected -->
   <div *ngIf="brandId">
     <button class="btn btn-secondary mb-3" (click)="showBrands()">Back to Brands</button>
-    <h1 class="text-center mt-3 mb-3">
+    <!-- <h1 class="text-center mt-3 mb-3">
       <b>Show All Products</b> <span *ngIf="brandName">- {{ brandName }}</span>
+      <h3 class="text-right"><b>Total Products : {{ products.length }}</b></h3>
+    </h1> -->
+
+    <h1 class="text-center mt-3 mb-3">
+      <b>Show All Products</b>
+      <span *ngIf="brandName">- {{ brandName }}</span>
     </h1>
+    <h3 class="text-end me-3"><b>Total Products : {{ products.length }}</b></h3>
+
     <div *ngIf="products.length > 0; else noData">
       <div class="row mt-4 mb-4">
         <div class="col-md-4" *ngFor="let product of products" class="col-md-3 col-sm-6">
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg">
-              <h3 class="card-title text-center"><b>{{ product.productName }}</b></h3>
-              <img src="../.././assets/boss-home-theater-system.webp" alt="{{ product.productName }}"
-                class="category-img">
-              <p class="card-text"><strong>Price:</strong> ₹{{ product.productPrice }}</p>
-              <p class="card-text"><strong>Rating:</strong> ⭐⭐⭐⭐ {{ product.productRank }}</p>
-              <p class="card-text"><strong>Stock Quantity:</strong> {{ product.stockQuantity }}</p>
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxIZWFkcGhvbmVzfGVufDB8MHx8fDE3Mjk1MDkzMjV8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
+                class="card-img-top" alt="Product Image">
+
+              <!-- <img src="../.././assets/boss-home-theater-system.webp" alt="{{ product.productName }}" class="category-img"> -->
+              <div class="p-2">
+                <h5 class="card-title"><b>{{ product.productName }}</b></h5>
+                <p class="card-text">High-quality wireless with noise cancellation technology.</p>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="h5 mb-0">₹{{ product.productPrice }}</span>
+                  <div class="rating">⭐⭐⭐⭐<small class="text-muted">({{ product.productRank }})</small>
+                  </div>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#productModal">Quick View</button>
+                  <!-- <button class="btn btn-outline-secondary" (click)="router.navigate(['/cart'])" type="button"
+                    id="addToCartBtn">Add to Cart</button> -->
+
+                    <button class="btn btn-outline-secondary" (click)="addToCart(product)" type="button">
+                      Add to Cart
+                    </button>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>

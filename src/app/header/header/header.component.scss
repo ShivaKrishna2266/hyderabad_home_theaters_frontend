@@ -79,6 +79,7 @@
 
 .nav-item {
   margin: 0 8px;
+
   /* Adds spacing between the nav items */
 }
 
@@ -89,7 +90,7 @@
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  display: block !important;
+  // display: block !important;
   visibility: hidden;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -103,6 +104,10 @@
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
+}
+
+.nav-item.dropdown:hover .custom-dropdown {
+  animation: fadeSlide 0.3s ease-in-out forwards;
 }
 
 .dropdown-item {
@@ -126,7 +131,5 @@
     transform: translateY(0);
   }
 }
+//===========================================//
 
-.nav-item.dropdown:hover .custom-dropdown {
-  animation: fadeSlide 0.3s ease-in-out forwards;
-}

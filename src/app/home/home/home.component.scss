@@ -310,3 +310,13 @@
 }
 
 //===========chat box================= //
+
+.testimonial-img {
+  width: 10px;               /* smaller width */
+  height: 10px;              /* smaller height */
+  object-fit: cover;
+  border-radius: 50%;        /* ensures circular shape */
+  border: 3px solid #007bff; /* optional blue border */
+  margin: 0 auto;            /* center image */
+  display: block;
+}

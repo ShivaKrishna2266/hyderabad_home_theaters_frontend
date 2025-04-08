@@ -30,6 +30,7 @@ import { ShippingPolicyComponent } from './policy_links/shipping-policy/shipping
 import { RefundPolicyComponent } from './policy_links/refund-policy/refund-policy.component';
 import { ReturnPolicyComponent } from './policy_links/return-policy/return-policy.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -55,6 +56,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ShippingPolicyComponent,
     RefundPolicyComponent,
     ReturnPolicyComponent,
+    CartComponent,
     
     
     
