@@ -15,12 +15,12 @@ export class BrandsComponent implements OnInit {
   brands: BrandDTO[] = [];
   products: ProductDTO[] = [];
   brandId: number | null = null;
-  brandName: string | null = null;
+  brandName: string = '';
   displayedBrands: BrandDTO[] = [];
 
   itemsPerPage = 8;
   currentPage = 1;
-  totalPages = Math.ceil(this.brands.length / this.itemsPerPage);
+  totalPages = 0;
 
 
   constructor(
@@ -40,7 +40,7 @@ export class BrandsComponent implements OnInit {
       } else {
         this.brandId = null;
         this.products = [];
-        this.brandName = null;
+        this.brandName = '';
       }
     });
 
@@ -48,22 +48,22 @@ export class BrandsComponent implements OnInit {
 
   getBrandName(brandId: number): void {
     if (!brandId) {
-      this.brandName = null;
+      this.brandName = '';
       return;
     }
   
     this.dataLoaderService.getBrandById(brandId).subscribe({
       next: (brand) => {
+        console.log("Fetched brand:", brand);
         if (brand && brand.brandName) {
           this.brandName = brand.brandName;
         } else {
-          console.warn(`Brand name not found for ID: ${brandId}`);
-          this.brandName = null; // Avoid showing "Unknown Brand" unnecessarily
+          this.brandName = '';
         }
       },
       error: (error) => {
         console.error('Error fetching brand name:', error);
-        this.brandName = null; // Set to null instead of "Unknown Brand"
+        this.brandName = '';
       }
     });
   }
@@ -72,6 +72,8 @@ export class BrandsComponent implements OnInit {
     this.dataLoaderService.getAllBrands().subscribe(
       (res: any) => {
         this.brands = res?.data || [];
+         // 👇 FIX: Recalculate totalPages after brands are loaded
+        this.totalPages = Math.ceil(this.brands.length / this.itemsPerPage);
         this.updateDisplayedBrands();
       },
       (error) => {
@@ -100,7 +102,7 @@ export class BrandsComponent implements OnInit {
 
   showBrands(): void {
     this.brandId = null;
-    this.brandName = null;
+    this.brandName = '';
     this.products = [];
     this.router.navigate(['/brands']);
   }
@@ -122,5 +124,18 @@ export class BrandsComponent implements OnInit {
       this.currentPage--;
       this.updateDisplayedBrands();
     }
+  }
+
+
+  // addToCart(product: any) {
+  //   // this.cartService.addToCart(product);
+  //   this.router.navigate(['/cart']);
+  // }
+
+
+
+  addToCart(product: any) {
+    this.dataLoaderService.addToCart(product);
+    this.router.navigate(['/cart']);
   }
 }
