@@ -3,10 +3,12 @@
   text-align: center;
   color: white;
 }
+
 .image-container img {
   width: 100%;
   height: 400px;
 }
+
 .overlay-text {
   position: absolute;
   top: 90%;
@@ -35,51 +37,51 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  width: 110%;
   height: 100%;
   background-color: #fff;
 }
 
 
-.row .col-md-3:nth-of-type(1) .card:hover {
-  background-color: #e1f90d; /* Light Red */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(1) .card:hover {
+//   background-color: #e1f90d; /* Light Red */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(2) .card:hover {
-  background-color: #93e4e2; /* Light Green */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(2) .card:hover {
+//   background-color: #93e4e2; /* Light Green */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(3) .card:hover {
-  background-color: #e784cc; /* Light Blue */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(3) .card:hover {
+//   background-color: #e784cc; /* Light Blue */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(4) .card:hover {
-  background-color: #b9b7c3; /* Light Yellow */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(4) .card:hover {
+//   background-color: #b9b7c3; /* Light Yellow */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(5) .card:hover {
-  background-color: #e0e6ab; /* Light Red */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(5) .card:hover {
+//   background-color: #e0e6ab; /* Light Red */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(6) .card:hover {
-  background-color: #58eeeb; /* Light Green */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(6) .card:hover {
+//   background-color: #58eeeb; /* Light Green */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(7) .card:hover {
-  background-color: #aeecaf; /* Light Blue */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(7) .card:hover {
+//   background-color: #aeecaf; /* Light Blue */
+//   color: #000;
+// }
 
-.row .col-md-3:nth-of-type(8) .card:hover {
-  background-color: #c6c5c9; /* Light Yellow */
-  color: #000;
-}
+// .row .col-md-3:nth-of-type(8) .card:hover {
+//   background-color: #c6c5c9; /* Light Yellow */
+//   color: #000;
+// }
 
 .card h3 {
   font-size: 18px;
@@ -94,7 +96,7 @@
 }
 
 .hover-bg:hover {
-  background-color: #aef922;
+  // background-color: #aef922;
   transform: scale(1.05);
 }
 
@@ -119,7 +121,7 @@
   transition: color 0.3s ease;
 }
 
-.hover-bg:hover h4,
+// .hover-bg:hover h4,
 .hover-bg:hover p {
   color: #007bff;
 }
@@ -141,4 +143,49 @@
   color: #ccc;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-to-cart-btn {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .add-to-cart-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-title {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.card-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  /* Adjust based on how close you want it */
+  height: 2px;
+  width: 0;
+  background-color: #000;
+  /* Change color if needed */
+  transition: width 0.3s ease;
+}
+
+.card-title:hover::after {
+  width: 100%;
 }
