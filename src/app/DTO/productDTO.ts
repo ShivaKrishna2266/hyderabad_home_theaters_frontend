@@ -23,4 +23,5 @@ export interface ProductDTO{
     dimensions: string;           // String (e.g., "10x5x3 cm")
     material: string;             // String (e.g., "Cotton", "Metal")
     warrantyPeriod: number;       // Should be a number (e.g., 12 for months, 2 for years)
+    description:string;
 }

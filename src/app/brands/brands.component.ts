@@ -30,7 +30,6 @@ export class BrandsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAllBrands();
     this.route.paramMap.subscribe(params => {
       const id = params.get('brandId');
       if (id) {
@@ -44,35 +43,36 @@ export class BrandsComponent implements OnInit {
       }
     });
 
+    this.getAllBrands();
   }
 
   getBrandName(brandId: number): void {
-    if (!brandId) {
-      this.brandName = '';
-      return;
-    }
-  
     this.dataLoaderService.getBrandById(brandId).subscribe({
-      next: (brand) => {
-        console.log("Fetched brand:", brand);
+      next: (response) => {
+        console.log('API response for getBrandById:', response);
+
+        // Adjust this based on the actual structure of your response
+        const brand = response?.data;
+        this.brandName = brand?.brandName || 'Unknown Brand';
+
         if (brand && brand.brandName) {
           this.brandName = brand.brandName;
         } else {
-          this.brandName = '';
+          this.brandName = 'Unknown Brand';
         }
       },
       error: (error) => {
         console.error('Error fetching brand name:', error);
-        this.brandName = '';
+        this.brandName = 'Unknown Brand';
       }
     });
   }
+
 
   getAllBrands(): void {
     this.dataLoaderService.getAllBrands().subscribe(
       (res: any) => {
         this.brands = res?.data || [];
-         // 👇 FIX: Recalculate totalPages after brands are loaded
         this.totalPages = Math.ceil(this.brands.length / this.itemsPerPage);
         this.updateDisplayedBrands();
       },
@@ -125,15 +125,6 @@ export class BrandsComponent implements OnInit {
       this.updateDisplayedBrands();
     }
   }
-
-
-  // addToCart(product: any) {
-  //   // this.cartService.addToCart(product);
-  //   this.router.navigate(['/cart']);
-  // }
-
-
-
   addToCart(product: any) {
     this.dataLoaderService.addToCart(product);
     this.router.navigate(['/cart']);

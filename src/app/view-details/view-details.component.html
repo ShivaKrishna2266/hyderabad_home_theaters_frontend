@@ -1,25 +1,132 @@
-<!-- Include Animate.css in your index.html or angular.json -->
-<!-- CDN link (add to index.html head): -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-<!-- Product UI -->
+<!-- product-details.component.html -->
 <div *ngIf="product" class="container mt-4">
-  <div class="card shadow-lg animate__animated animate__fadeInUp">
+  <div class="p-4">
+    <div class="row">
+      <!-- Fixed Image Column -->
+      <div class="col-md-6 d-flex justify-content-center align-items-start">
+        <img src="https://m.media-amazon.com/images/I/71v1Rl3RBUL.jpg" class="product-image" alt="Product Image" />
+      </div>
 
-    <img src="../../assets/boss-home-theater-system.webp" class="card-img-top" alt="Product Image"> 
-    <!-- <img [src]="product.productImage || 'https://via.placeholder.com/300'" class="card-img-top" alt="Product Image"> -->
-    <div class="card-body">
-      <h3 class="card-title animate__animated animate__fadeInDown">{{ product.productName }}</h3>
-      <p class="card-text animate__animated animate__fadeInLeft">
-        {{ product.productDescription || 'No description available.' }}
-      </p>
-      <h4 class="text-success animate__animated animate__zoomIn">Price: ₹{{ product.productPrice }}</h4>
-      <p class="text-muted animate__animated animate__lightSpeedInRight">Rank: {{ product.productRank }}</p>
+      <!-- Scrollable Product Info -->
+      <div class="col-md-6 product-info">
+        <h3>{{ getBrandName(product.brandId) }}– Redefining Strength and Style</h3>
+        <h2>{{ product.productName }}</h2>
+        <div class="mb-2 text-success">
+          <strong>Price:</strong> ₹{{ product.productPrice }}
+          <span class="text-muted ms-2">
+            Original: <del>₹{{ product.originalPrice }}</del>
+          </span>
+          <span class="badge bg-warning text-dark ms-2">
+            {{ product.discountPercentage }}% OFF
+          </span>
+        </div>
+        <div class="mb-2 text-danger"><strong>Discounted Price:</strong> ₹{{ product.discountedPrice }}</div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <p>Quantity (1 in cart)</p>
+            <button class="btn btn-outline-secondary btn-sm" type="button"
+              (click)="decreaseQuantity(product)">-</button>
+            <input style="max-width:50px" type="text" class="form-control form-control-sm text-center"
+              [value]="product.stockQuantity" readonly />
+            <button class="btn btn-outline-secondary btn-sm" type="button"
+              (click)="increaseQuantity(product)">+</button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12 mb-2">
+            <div class="action-card">
+              <button class="btn btn-outline-secondary w-100" (click)="addToCart(product)" type="button">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        
+          <div class="col-md-12 mb-2">
+            <div class="action-card">
+              <button class="btn btn-outline-danger w-100" type="button">
+                Buy it Now
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <p>
+          Step into the world of innovation and craftsmanship with {{ product.productName }},
+          a remarkable product that blends industrial-grade strength with modern elegance.
+          Designed for performance, precision, and durability.
+        </p>
+        <hr>
+
+        <h3>🛠 Built to Last</h3>
+        <p>
+          Crafted from premium-grade {{ product.material }}, {{ product.productName }} is engineered for long-term
+          endurance and resilience.
+          Its sturdy {{ product.weight }} kg build ensures stability, while its compact dimensions of
+          {{ product.dimensions }} make it versatile for any setup.
+        </p>
+        <hr>
+
+        <h3>🎨 Bold Aesthetics</h3>
+        <p>
+          Make a bold statement with {{ product.productName }}'s signature {{ product.color }} finish—sophisticated and
+          futuristic.
+        </p>
+        <hr>
+
+        <h3>📦 Technical Specifications</h3>
+        <ul>
+          <li>Version: {{ product.productName }}</li>
+          <li>SKU: {{ product.productSku }}</li>
+          <li>Color: {{ product.color }}</li>
+          <li>Material: {{ product.material }}</li>
+          <li>Size: {{ product.size }}</li>
+          <li>Weight: {{ product.weight }} kg</li>
+          <li>Dimensions: {{ product.dimensions }}</li>
+          <li>Warranty: {{ product.warrantyPeriod }} Months</li>
+          <li>Rank: {{ product.productRank }}</li>
+        </ul>
+        <hr>
+
+        <h3>💸 Smart Value</h3>
+        <p>
+          Originally priced at ₹{{ product.originalPrice }}, {{ product.productName }} is now available for just ₹{{
+          product.productPrice }}.
+          Discounted price: ₹{{ product.discountedPrice }} ({{ product.discountPercentage }}% off).
+        </p>
+        <hr>
+
+        <h3>✅ Availability</h3>
+        <ul>
+          <li>In Stock: {{ product.stockQuantity > 0 ? 'Yes' : 'No' }}</li>
+          <li>Status:
+            <span [ngClass]="product.status ? 'badge bg-success' : 'badge bg-danger'">
+              {{ product.status ? 'Available' : 'Unavailable' }}
+            </span>
+          </li>
+          <li>Category ID: {{ product.categoryId }}</li>
+          <li>SubCategory ID: {{ product.subCategoryId }}</li>
+        </ul>
+        <hr>
+
+        <h3>🛡 Warranty & Support</h3>
+        <p>
+          Every unit is backed by a {{ product.warrantyPeriod }}-month warranty.
+          Our customer support is always ready to assist.
+        </p>
+        <hr>
+
+        <h3>Why Choose {{ product.productName }}?</h3>
+        <p>
+          If you're looking for a product that becomes a feature in your space—both in style and performance—{{
+          product.productName }} is your match.
+        </p>
+        <hr>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- No Product Fallback -->
+<!-- Fallback -->
 <div *ngIf="!product" class="container mt-4">
   <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
 </div>
