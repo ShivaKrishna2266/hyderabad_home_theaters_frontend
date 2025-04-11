@@ -11,6 +11,7 @@ export interface ProductDTO{
     categoryId: number,
     brandId: number,
     subCategoryId: number,
+    reviewId: number,
 
     originalPrice: number;        // Should be a number for proper calculations
     discountedPrice: number;      // Should be a number
