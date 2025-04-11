@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductDTO } from 'src/app/DTO/productDTO';
+import { ReviewDTO } from 'src/app/DTO/reviewDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { environment } from 'src/environments/environments';
 
@@ -55,6 +56,19 @@ export class DataLoaderService {
   getAllTestimonial(): Observable<any>{
     return this.http.get<any>(this.apiUrl + "/data/getAllTestimonials");
   }
+
+  getAllReviews(): Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllReviews");
+  }
+
+  getProductReviews(productId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/data/getProductReviews/${productId}/reviews`);
+  }
+
+  createReview(reviewData: ReviewDTO): Observable<ReviewDTO> {
+    return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, reviewData);
+  }
+  
 
 
   //=====================CART=======================================//

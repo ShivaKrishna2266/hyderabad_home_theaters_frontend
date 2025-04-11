@@ -40,7 +40,7 @@
               </button>
             </div>
           </div>
-        
+
           <div class="col-md-12 mb-2">
             <div class="action-card">
               <button class="btn btn-outline-danger w-100" type="button">
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        
+
         <p>
           Step into the world of innovation and craftsmanship with {{ product.productName }},
           a remarkable product that blends industrial-grade strength with modern elegance.
@@ -123,6 +123,233 @@
         <hr>
       </div>
     </div>
+  </div>
+
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <h1><b>Product Reviews</b></h1>
+    </div>
+
+    <div class="d-flex justify-content-center p-2">
+      <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#reviewModal">
+        <i class="bi bi-pencil-square"></i> Write a review
+      </button>
+      <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#questionModal">
+        <i class="bi bi-chat-text-fill"></i> Ask a Question
+      </button>
+    </div>
+    <!-- Add Review Pop Up -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h1 class="d-flex justify-content-center">Share your thoughts</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+
+          <div class="modal-body">
+            <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
+            <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" id="reviewForm">
+
+              <!-- Name -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name" required>
+              </div>
+            
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" required>
+              </div>
+            
+              <!-- Review Text -->
+              <div class="mb-3">
+                <label for="review" class="form-label">Your Review</label>
+                <textarea class="form-control" id="review" formControlName="review" rows="3" placeholder="Write your review here..." required></textarea>
+              </div>
+              <!-- Rateing -->
+              <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="star-rating">
+                  <ng-container *ngFor="let star of [1,2,3,4,5]">
+                    <i class="fa" [ngClass]="{
+                        'fa-star': star <= reviewForm.get('rating')?.value,
+                        'fa-star-o': star > reviewForm.get('rating')?.value
+                      }"
+                      (click)="setRating(star)" style="cursor: pointer; font-size: 24px; color: gold;"></i>
+                  </ng-container>
+                </div>
+              </div>
+            
+              <!-- Modal Footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Submit Review</button>
+              </div>
+            
+            </form>
+            
+      </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Quasion Pop Up -->
+    <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="questionModalLabel">Ask a Question</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="questionForm">
+
+              <!-- Name -->
+              <div class="mb-3">
+                <label for="questionName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="questionName" placeholder="Your name" required>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="questionEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="questionEmail" placeholder="name@example.com" required>
+                <p>We'll send you an email to verify this question came from you.</p>
+              </div>
+
+              <!-- Question -->
+              <div class="mb-3">
+                <label for="questionText" class="form-label">Your Question</label>
+                <textarea class="form-control" id="questionText" rows="3" placeholder="Ask your question..."
+                  required></textarea>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="questionForm">Submit Question</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Show All  Reviews  -->
+    <div *ngIf="reviews && reviews.length > 0; else noReviews" class="container my-4">
+      <h4 class="mb-3">All Reviews</h4>
+      <h4 class="mb-3 text-end">Total: {{ reviews.length }}</h4>
+
+      <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let group of chunkedReviews; let i = index" [class.active]="i === 0">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+              <div class="col" *ngFor="let review of group">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ review.name }}</h5>
+                    <div class="text-warning mb-2">★★★★☆ {{ review.rating }}</div>
+                    <p class="card-text">{{ review.review }}</p>
+                  </div>
+                  <div class="card-footer bg-white">
+                    <div class="d-flex flex-wrap gap-2">
+                      <!-- <ng-container *ngIf="review.image?.length > 0; else noImages">
+                        <img *ngFor="let img of review.image" [src]="img" class="img-thumbnail" style="width: 100px" alt="uploaded"/>
+                        </ng-container> -->
+                      <ng-template #noImages>
+                        <small class="text-muted">No images uploaded</small>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Fallback -->
+    <ng-template #noReviews>
+      <div class="container my-4 text-center text-muted">
+        <h5>No reviews available.</h5>
+      </div>
+    </ng-template>
+
+    <!-- All Quastion & Answers -->
+
+    <div class="container my-5">
+      <h4 class="mb-3">Customer Questions & Answers</h4>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        <!-- Question 1 -->
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Alice Johnson</h5>
+              <p class="card-text">
+                Does this product come with a warranty?
+              </p>
+            </div>
+            <div class="card-footer bg-white">
+              <div class="d-flex flex-wrap gap-2">
+                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
+                  alt="uploaded image">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Michael Brown</h5>
+              <p class="card-text">
+                Can this be used outdoors? How is it in rainy weather?
+              </p>
+            </div>
+            <div class="card-footer bg-white">
+              <div class="d-flex flex-wrap gap-2">
+                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
+                  alt="uploaded image">
+                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
+                  alt="uploaded image">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more static questions below as needed -->
+
+      </div>
+    </div>
+
+
+
+
+
   </div>
 </div>
 
