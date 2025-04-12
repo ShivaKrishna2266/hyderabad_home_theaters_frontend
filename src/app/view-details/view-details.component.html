@@ -154,23 +154,6 @@
             <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
             <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" id="reviewForm">
 
-              <!-- Name -->
-              <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name" required>
-              </div>
-            
-              <!-- Email -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" required>
-              </div>
-            
-              <!-- Review Text -->
-              <div class="mb-3">
-                <label for="review" class="form-label">Your Review</label>
-                <textarea class="form-control" id="review" formControlName="review" rows="3" placeholder="Write your review here..." required></textarea>
-              </div>
               <!-- Rateing -->
               <div class="mb-3">
                 <label class="form-label">Rating</label>
@@ -179,21 +162,60 @@
                     <i class="fa" [ngClass]="{
                         'fa-star': star <= reviewForm.get('rating')?.value,
                         'fa-star-o': star > reviewForm.get('rating')?.value
-                      }"
-                      (click)="setRating(star)" style="cursor: pointer; font-size: 24px; color: gold;"></i>
+                      }" (click)="setRating(star)" style="cursor: pointer; font-size: 24px; color: gold;"></i>
                   </ng-container>
                 </div>
               </div>
-            
+
+              <!-- headline -->
+              <div class="mb-3">
+                <label for="headline" class="form-label">Headline</label>
+                <input type="text" name="headline" id="headline" class="form-control" formControlName="headline"
+                  placeholder="Headline" required>
+              </div>
+
+              <!-- Name -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name"
+                  required>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                  placeholder="name@example.com" required>
+              </div>
+
+              <!-- Review Text -->
+              <div class="mb-3">
+                <label for="review" class="form-label">Your Review</label>
+                <textarea class="form-control" id="review" name="review" formControlName="review" rows="3"
+                  placeholder="Write your review here..." required></textarea>
+              </div>
+
+              <!-- File -->
+              <div class="mb-3">
+                <label for="image" class="form-label required-label">Upload Image</label>
+                <input type="file" name="image" id="image" class="form-control" formControlName="image" (change)="onFileChange($event, 'image')" accept="image/*" class="form-control ">
+               </div>
+
+               <!-- <div class="col-md-6 col-sm-12 mb-3">
+                <label for="imageURL" class="form-label required-label"><b>Brand Image</b></label>
+               <input type="file" id="imageURL" name="imageURL" formControlName="imageURL" (change)="onFileChange($event, 'imageURL')" accept="imageURL/*" class="form-control ">
+              </div>  -->
+
+
               <!-- Modal Footer -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Submit Review</button>
               </div>
-            
+
             </form>
-            
-      </div>
+
+          </div>
 
         </div>
       </div>
@@ -255,26 +277,46 @@
           <div class="carousel-item" *ngFor="let group of chunkedReviews; let i = index" [class.active]="i === 0">
             <div class="row row-cols-1 row-cols-md-2 g-4">
               <div class="col" *ngFor="let review of group">
-                <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow rounded-4 border-0">
                   <div class="card-body">
-                    <h5 class="card-title">{{ review.name }}</h5>
-                    <div class="text-warning mb-2">★★★★☆ {{ review.rating }}</div>
-                    <p class="card-text">{{ review.review }}</p>
-                  </div>
-                  <div class="card-footer bg-white">
-                    <div class="d-flex flex-wrap gap-2">
-                      <!-- <ng-container *ngIf="review.image?.length > 0; else noImages">
-                        <img *ngFor="let img of review.image" [src]="img" class="img-thumbnail" style="width: 100px" alt="uploaded"/>
-                        </ng-container> -->
-                      <ng-template #noImages>
-                        <small class="text-muted">No images uploaded</small>
-                      </ng-template>
+                    <h5 class="card-title text-primary fw-bold">{{ review.name }}</h5>
+
+                    <div class="text-warning mb-2 fs-5">
+                      ★★★★☆ <span class="text-muted fs-6 ms-1">({{ review.rating }})</span><p class="card-text text-dark fw-semibold">{{ review.headline }}</p>
+                    </div>
+                    <p class="card-text text-secondary">{{ review.review }}</p>
+
+                    <div class="text-muted small mt-3">
+                      <div><strong>Date:</strong> {{ review.createdDate }}</div>
+                      <p class="card-text text-muted">
+                        <i class="bi bi-calendar-check"></i>
+                        {{ review.createdDate | date: 'medium' }}
+                      </p>
+                      <div><strong>Email:</strong> {{ review.email }}</div>
+                      <div><strong>Status:</strong> {{ review.status }}</div>
                     </div>
                   </div>
+
+                  <!-- Template to show when there are no images -->
+                  <ng-template #noImages>
+                    <small class="text-muted">No images uploaded</small>
+                  </ng-template>
+
+                  <!-- Card Footer with uploaded images -->
+                  <div class="card-footer bg-light border-0 rounded-bottom-4">
+                    <div class="d-flex flex-wrap gap-2">
+                      <ng-container *ngIf="review.image && review.image.length > 0; else noImages">
+                        <img *ngFor="let img of review.image" [src]="img" class="img-thumbnail rounded shadow-sm"
+                          style="width: 80px; height: 80px; object-fit: cover" alt="uploaded" />
+                      </ng-container>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
           </div>
+
         </div>
 
         <!-- Controls -->
