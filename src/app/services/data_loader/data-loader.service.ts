@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductDTO } from 'src/app/DTO/productDTO';
+import { QuestionDTO } from 'src/app/DTO/questionDTO';
 import { ReviewDTO } from 'src/app/DTO/reviewDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { environment } from 'src/environments/environments';
@@ -65,20 +66,29 @@ export class DataLoaderService {
     return this.http.get<any>(`${this.apiUrl}/data/getProductReviews/${productId}/reviews`);
   }
 
-  // createReview(reviewData: ReviewDTO,image: File): Observable<ReviewDTO> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('reviewImageFile', image); // ✅ Must match backend param name
-  //   // formData.append('reviewDTO', JSON.stringify(reviewData)); // ✅ Must match backend param name
-  //   return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, formData);
-  // }
-  createReview(reviewData: ReviewDTO, image: File): Observable<ReviewDTO> {
+  createReview(reviewData: ReviewDTO, image: File): Observable<any> {
     const formData: FormData = new FormData();
-    formData.append('reviewImageFile', image); // ✅ Must match backend parameter name
-    formData.append('reviewDTO', new Blob([JSON.stringify(reviewData)], { type: 'application/json' })); // ✅ Proper way to send JSON in FormData
+    formData.append('reviewDTO', JSON.stringify(reviewData)); // 👈 Must match backend's @RequestPart("reviewDTO")
+    formData.append('reviewImageFile', image); // 👈 Must match backend's @RequestPart("reviewImageFile")
   
-    return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, formData);
+    return this.http.post<any>(`${this.apiUrl}/data/createReview`, formData);
   }
-  
+
+  getAllQuestions(): Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllQuestions");
+  }
+
+  createQuestion(questionData: QuestionDTO, image: File): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('questionDTO', JSON.stringify(questionData)); // 👈 Must match backend's @RequestPart("reviewDTO")
+    formData.append('questionImageFile', image); // 👈 Must match backend's @RequestPart("reviewImageFile")
+
+    return this.http.post<any>(this.apiUrl + "/data/createQuestion", formData);
+  }
+
+  getProductQuestion(productId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/data/getProductQuestion/${productId}/question`);
+  }
   
 
 

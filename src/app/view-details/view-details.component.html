@@ -145,13 +145,13 @@
 
           <div class="modal-header">
 
-            <h1 class="d-flex justify-content-center">Share your thoughts</h1>
+            <h2 class="d-flex justify-content-center">Share your thoughts</h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
 
           <div class="modal-body">
-            <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
+            <h4 class="modal-title" id="reviewModalLabel"><b>Write a Review</b></h4>
             <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" id="reviewForm">
 
               <!-- Rateing -->
@@ -198,25 +198,17 @@
               <!-- File -->
               <div class="mb-3">
                 <label for="image" class="form-label required-label">Upload Image</label>
-                <input type="file" name="image" id="image" class="form-control" formControlName="image" (change)="onFileChange($event, 'image')" accept="image/*" class="form-control ">
-               </div>
-
-               <!-- <div class="col-md-6 col-sm-12 mb-3">
-                <label for="imageURL" class="form-label required-label"><b>Brand Image</b></label>
-               <input type="file" id="imageURL" name="imageURL" formControlName="imageURL" (change)="onFileChange($event, 'imageURL')" accept="imageURL/*" class="form-control ">
-              </div>  -->
-
+                <input type="file" name="image" id="image" class="form-control" formControlName="image"
+                  (change)="onFileChange($event, 'image')" accept="image/*" class="form-control ">
+              </div>
 
               <!-- Modal Footer -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Submit Review</button>
               </div>
-
             </form>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -227,107 +219,119 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title" id="questionModalLabel">Ask a Question</h5>
+            <h2 class="modal-title" id="questionModalLabel"><b>Ask a Question</b></h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
-            <form id="questionForm">
+            <form [formGroup]="questionForm" (ngSubmit)="questionSubmit()" id="questionForm">
 
               <!-- Name -->
               <div class="mb-3">
-                <label for="questionName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="questionName" placeholder="Your name" required>
+                <label for="userName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="userName" name="userName" formControlName="userName"
+                  placeholder="Your name" required>
               </div>
 
               <!-- Email -->
               <div class="mb-3">
-                <label for="questionEmail" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="questionEmail" placeholder="name@example.com" required>
+                <label for="userEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="userEmail" name="userEmail" formControlName="userEmail"
+                  placeholder="name@example.com" required>
                 <p>We'll send you an email to verify this question came from you.</p>
               </div>
 
               <!-- Question -->
               <div class="mb-3">
-                <label for="questionText" class="form-label">Your Question</label>
-                <textarea class="form-control" id="questionText" rows="3" placeholder="Ask your question..."
-                  required></textarea>
+                <label for="question" class="form-label">Your Question</label>
+                <textarea class="form-control" id="question" rows="3" name="question" formControlName="question"
+                  placeholder="Ask your question..." required></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="image" class="form-label required-label">Upload Image</label>
+                <input type="file" name="image" id="image" class="form-control" formControlName="image"
+                  (change)="onFileChange($event, 'image')" accept="image/*" class="form-control ">
+              </div>
+
+              <!-- ✅ Modal Footer (inside form for proper submit) -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" [disabled]="questionForm.invalid">Submit Question</button>
               </div>
 
             </form>
           </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="questionForm">Submit Question</button>
-          </div>
-
         </div>
       </div>
     </div>
-    <hr>
 
+    <hr>
     <!-- Show All  Reviews  -->
     <div *ngIf="reviews && reviews.length > 0; else noReviews" class="container my-4">
-      <h4 class="mb-3">All Reviews</h4>
-      <h4 class="mb-3 text-end">Total: {{ reviews.length }}</h4>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0 underline" style="cursor: pointer;" (click)="toggleReviews()">All Reviews</h4>
+        <h4 class="mb-0 text-end underline">Total: {{ reviews.length }}</h4>
+      </div>
+      <!-- Show/hide review section -->
+      <div *ngIf="showAllReviews">
+        <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let group of chunkedReviews; let i = index" [class.active]="i === 0">
+              <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col" *ngFor="let review of group">
+                  <div class="card h-100 shadow rounded-4 border-0">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary fw-bold">{{ review.name }}</h5>
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="text-warning fs-5 me-2">
+                          <ng-container *ngFor="let star of [1,2,3,4,5]">
+                            <i class="fa"
+                              [ngClass]="{ 'fa-star': star <= review.rating, 'fa-star-o': star > review.rating }"></i>
+                          </ng-container>
+                        </span>
+                        <span class="text-muted fs-6 ms-1 me-3">({{ review.rating }})</span>
+                        <p class="card-text text-dark fw-semibold mb-0">{{ review.headline }}</p>
+                      </div>
+                      <p class="card-text text-secondary">{{ review.review }}</p>
 
-      <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item" *ngFor="let group of chunkedReviews; let i = index" [class.active]="i === 0">
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-              <div class="col" *ngFor="let review of group">
-                <div class="card h-100 shadow rounded-4 border-0">
-                  <div class="card-body">
-                    <h5 class="card-title text-primary fw-bold">{{ review.name }}</h5>
-
-                    <div class="text-warning mb-2 fs-5">
-                      ★★★★☆ <span class="text-muted fs-6 ms-1">({{ review.rating }})</span><p class="card-text text-dark fw-semibold">{{ review.headline }}</p>
+                      <div class="text-muted small mt-3">
+                        <div><strong>Date:</strong> {{ review.createdDate | date: 'medium' }}</div>
+                        <div><strong>Email:</strong> {{ review.email }}</div>
+                        <div><strong>Status:</strong> {{ review.status }}</div>
+                      </div>
                     </div>
-                    <p class="card-text text-secondary">{{ review.review }}</p>
 
-                    <div class="text-muted small mt-3">
-                      <div><strong>Date:</strong> {{ review.createdDate }}</div>
-                      <p class="card-text text-muted">
-                        <i class="bi bi-calendar-check"></i>
-                        {{ review.createdDate | date: 'medium' }}
-                      </p>
-                      <div><strong>Email:</strong> {{ review.email }}</div>
-                      <div><strong>Status:</strong> {{ review.status }}</div>
+                    <ng-template #noImages>
+                      <small class="text-muted">No images uploaded</small>
+                    </ng-template>
+
+                    <div class="card-footer bg-light border-0 rounded-bottom-4">
+                      <div class="d-flex flex-wrap gap-2">
+                        <ng-container *ngIf="review.image && review.image.length > 0; else noImages">
+                          <img src="../../assets/review_images/{{review.image}}" alt="Cover Image"
+                            style="width: 200px; height: auto;">
+                        </ng-container>
+                      </div>
                     </div>
+
                   </div>
-
-                  <!-- Template to show when there are no images -->
-                  <ng-template #noImages>
-                    <small class="text-muted">No images uploaded</small>
-                  </ng-template>
-
-                  <!-- Card Footer with uploaded images -->
-                  <div class="card-footer bg-light border-0 rounded-bottom-4">
-                    <div class="d-flex flex-wrap gap-2">
-                      <ng-container *ngIf="review.image && review.image.length > 0; else noImages">
-                        <img *ngFor="let img of review.image" [src]="img" class="img-thumbnail rounded shadow-sm"
-                          style="width: 80px; height: 80px; object-fit: cover" alt="uploaded" />
-                      </ng-container>
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
     </div>
 
@@ -337,64 +341,52 @@
         <h5>No reviews available.</h5>
       </div>
     </ng-template>
+    <hr>
 
     <!-- All Quastion & Answers -->
-
-    <div class="container my-5">
-      <h4 class="mb-3">Customer Questions & Answers</h4>
-
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-
-        <!-- Question 1 -->
-        <div class="col">
-          <div class="card h-100 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Alice Johnson</h5>
-              <p class="card-text">
-                Does this product come with a warranty?
-              </p>
-            </div>
-            <div class="card-footer bg-white">
-              <div class="d-flex flex-wrap gap-2">
-                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
-                  alt="uploaded image">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Question 2 -->
-        <div class="col">
-          <div class="card h-100 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Michael Brown</h5>
-              <p class="card-text">
-                Can this be used outdoors? How is it in rainy weather?
-              </p>
-            </div>
-            <div class="card-footer bg-white">
-              <div class="d-flex flex-wrap gap-2">
-                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
-                  alt="uploaded image">
-                <img src="https://via.placeholder.com/100" class="img-thumbnail" style="width: 100px;"
-                  alt="uploaded image">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Add more static questions below as needed -->
-
+    <div class=" my-5">
+      <h2 class="d-flex justify-content-center mb-3 "><b>Customer Questions & Answers</b></h2>
+      <!-- Toggle Button -->
+      <div *ngIf="questions && questions.length > 0"
+        class="d-flex justify-content-between align-items-center container my-4">
+        <h4 class="mb-0 underline" style="cursor: pointer;" (click)="showQuestions = !showQuestions">All Questions</h4>
+        <h4 class="mb-0 text-end underline">Total: {{ questions.length }}</h4>
       </div>
+      <!-- Questions Grid or Fallback -->
+      <ng-container *ngIf="questions && questions.length > 0; else noQuestions">
+        <div *ngIf="showQuestions" class="row row-cols-1 row-cols-md-1 g-4">
+          <div class="col" *ngFor="let question of questions">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">{{ question.userName }}</h5>
+                <p class="card-text">{{ question.question }}</p>
+                <p *ngIf="question.answer" class="text-success">
+                  <strong>Answer:</strong> {{ question.answer }}
+                </p>
+              </div>
+              <ng-template #noImages>
+                <small class="text-muted">No images uploaded</small>
+              </ng-template>
+
+              <div class="card-footer bg-light border-0 rounded-bottom-4">
+                <div class="d-flex flex-wrap gap-2">
+                  <ng-container *ngIf="question.image && question.image.length > 0; else noImages">
+                    <img src="../../assets/question_images/{{question.image}}" alt="Cover Image"
+                      style="width: 200px; height: auto;">
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Fallback Template -->
+      <ng-template #noQuestions>
+        <div class="alert alert-info mt-4">No questions available.</div>
+      </ng-template>
     </div>
-
-
-
-
-
   </div>
 </div>
-
 <!-- Fallback -->
 <div *ngIf="!product" class="container mt-4">
   <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
