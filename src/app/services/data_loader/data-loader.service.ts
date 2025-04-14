@@ -65,9 +65,20 @@ export class DataLoaderService {
     return this.http.get<any>(`${this.apiUrl}/data/getProductReviews/${productId}/reviews`);
   }
 
-  createReview(reviewData: ReviewDTO): Observable<ReviewDTO> {
-    return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, reviewData);
+  // createReview(reviewData: ReviewDTO,image: File): Observable<ReviewDTO> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('reviewImageFile', image); // ✅ Must match backend param name
+  //   // formData.append('reviewDTO', JSON.stringify(reviewData)); // ✅ Must match backend param name
+  //   return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, formData);
+  // }
+  createReview(reviewData: ReviewDTO, image: File): Observable<ReviewDTO> {
+    const formData: FormData = new FormData();
+    formData.append('reviewImageFile', image); // ✅ Must match backend parameter name
+    formData.append('reviewDTO', new Blob([JSON.stringify(reviewData)], { type: 'application/json' })); // ✅ Proper way to send JSON in FormData
+  
+    return this.http.post<ReviewDTO>(`${this.apiUrl}/data/createReview`, formData);
   }
+  
   
 
 

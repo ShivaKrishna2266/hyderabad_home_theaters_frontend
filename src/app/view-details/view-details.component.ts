@@ -22,7 +22,9 @@ export class ViewDetailsComponent implements OnInit {
   chunkedReviews: ReviewDTO[][] = [];
   productId!: number;
   reviewForm: FormGroup = this.formBuilder.group({});
+
   @ViewChild('closeBtn') closeBtn!: ElementRef;
+  image: File | null = null;
 
   constructor(private router: Router,
     private dataLoaderService: DataLoaderService,
@@ -31,6 +33,7 @@ export class ViewDetailsComponent implements OnInit {
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.product = navigation?.extras?.state?.['product'];
+
   };
 
   ngOnInit(): void {
@@ -38,24 +41,28 @@ export class ViewDetailsComponent implements OnInit {
       ...item,
       quantity: item.quantity || 1
     }));
-  
+
     const routeId = this.route.snapshot.paramMap.get('id');
     if (routeId) {
       this.productId = +routeId;
     } else if (this.product) {
       this.productId = this.product.productId;
     }
-  
+
     this.reviewForm = this.formBuilder.group({
+      headline: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.required],
       review: ['', Validators.required],
+      rating: ['', Validators.required],
+      image: ['', Validators.required],
+      // image: [], 
       productId: [null]
     });
-  
+
     // ✅ Patch productId into the form
     this.reviewForm.patchValue({ productId: this.productId });
-  
+
     this.getAllBrands();
     this.getAllProducts();
     this.getAllReview();
@@ -122,10 +129,15 @@ export class ViewDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.reviewForm.valid) {
-      const reviewData = this.reviewForm.value;
+    if (this.reviewForm.valid && this.image) {
+      const reviewData = {
+        ...this.reviewForm.value,
+        image: this.image  // ✅ Include the image if needed in payload
+      };
+  
       console.log("✅ Payload Sent:", reviewData); // Debugging
-      this.dataLoaderService.createReview(reviewData).subscribe({
+  
+      this.dataLoaderService.createReview(reviewData, this.image).subscribe({
         next: (res: any) => {
           alert("✅ Review Added Successfully");
           console.log("✅ Review Added Successfully", res);
@@ -137,15 +149,27 @@ export class ViewDetailsComponent implements OnInit {
           console.error("❌ Error Adding Review", err);
         }
       });
+  
     } else {
-      console.warn("⚠️ Form is invalid. Please check the inputs.");
+      console.warn("⚠️ Form is invalid or image not selected.");
       this.reviewForm.markAllAsTouched(); // highlight invalid fields
     }
   }
+  
   setRating(star: number): void {
     this.reviewForm.get('rating')?.setValue(star);
   }
-  
+
+  onFileChange(event: any, fileType: string): void {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      if (fileType === 'image') {
+        this.image = files[0];
+      }
+    }
+
+  }
+
 }
 
 
