@@ -179,7 +179,7 @@ button.btn {
   border-top-right-radius: 20px;
   justify-content: center;
 }
-.modal-header h1 {
+.modal-header h2 {
   font-size: 1.8rem;
   font-weight: bold;
   animation: bounceIn 1s;
@@ -229,4 +229,7 @@ button.btn {
 .img-thumbnail {
   border: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.underline {
+  text-decoration: underline;
 }

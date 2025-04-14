@@ -90,7 +90,7 @@
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  // display: block !important;
+  display: block !important;
   visibility: hidden;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -142,3 +142,6 @@
   padding: 4px 6px;
   color: white;
 }
+
+
+

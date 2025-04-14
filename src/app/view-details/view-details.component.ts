@@ -5,6 +5,7 @@ import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { BrandDTO } from '../DTO/brandDTO';
 import { ReviewDTO } from '../DTO/reviewDTO';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuestionDTO } from '../DTO/questionDTO';
 
 @Component({
   selector: 'app-view-details',
@@ -17,25 +18,25 @@ export class ViewDetailsComponent implements OnInit {
   product!: ProductDTO;
   cartItems: any[] = [];
   products: ProductDTO[] = [];
-
   reviews: ReviewDTO[] = [];
   chunkedReviews: ReviewDTO[][] = [];
-  productId!: number;
-  reviewForm: FormGroup = this.formBuilder.group({});
 
-  @ViewChild('closeBtn') closeBtn!: ElementRef;
+  questions: QuestionDTO[] = [];
   image: File | null = null;
-
+  productId!: number;
+  showAllReviews: boolean = false;
+  showQuestions: boolean = true;
+  reviewForm: FormGroup = this.formBuilder.group({});
+  questionForm: FormGroup = this.formBuilder.group({});
+  @ViewChild('closeBtn') closeBtn!: ElementRef;
   constructor(private router: Router,
-    private dataLoaderService: DataLoaderService,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-  ) {
+              private dataLoaderService: DataLoaderService,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+  ){
     const navigation = this.router.getCurrentNavigation();
     this.product = navigation?.extras?.state?.['product'];
-
   };
-
   ngOnInit(): void {
     this.cartItems = this.dataLoaderService.getCartItems().map(item => ({
       ...item,
@@ -56,16 +57,24 @@ export class ViewDetailsComponent implements OnInit {
       review: ['', Validators.required],
       rating: ['', Validators.required],
       image: ['', Validators.required],
-      // image: [], 
       productId: [null]
     });
-
     // ✅ Patch productId into the form
     this.reviewForm.patchValue({ productId: this.productId });
+
+    this.questionForm = this.formBuilder.group({
+      userName: ['', Validators.required],
+      userEmail: ['', Validators.required],
+      question: ['', Validators.required],
+      image: ['', Validators.required],
+      productId: [null]
+    });
+     this.questionForm.patchValue({ productId: this.productId});
 
     this.getAllBrands();
     this.getAllProducts();
     this.getAllReview();
+    this.getAllQuestions();
   }
 
 
@@ -84,7 +93,6 @@ export class ViewDetailsComponent implements OnInit {
     const foundBrand = this.brands.find(brand => brand.brandId === brandId);
     return foundBrand ? foundBrand.brandName : 'Unknown';
   }
-
 
   getAllProducts(): void {
     this.dataLoaderService.getAllProducts().subscribe((data: ProductDTO[]) => {
@@ -107,6 +115,9 @@ export class ViewDetailsComponent implements OnInit {
     this.dataLoaderService.addToCart(product);
     this.router.navigate(['/cart']);
   }
+  setRating(star: number): void {
+    this.reviewForm.get('rating')?.setValue(star);
+  }
 
   getAllReview() {
     this.dataLoaderService.getProductReviews(this.productId).subscribe(
@@ -120,6 +131,18 @@ export class ViewDetailsComponent implements OnInit {
     );
   }
 
+  getAllQuestions() {
+    this.dataLoaderService.getProductQuestion(this.productId).subscribe(
+      (res: any) => {
+        this.questions = res.data || [];
+        // this.chunkedQuestions = this.chunkArray1(this.questions, 2);
+      },
+      (error) => {
+        console.log('Question not shown', error);
+      }
+    );
+  }
+
   chunkArray(arr: ReviewDTO[], chunkSize: number): ReviewDTO[][] {
     const result: ReviewDTO[][] = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
@@ -128,38 +151,37 @@ export class ViewDetailsComponent implements OnInit {
     return result;
   }
 
+  chunkArray1(arr: QuestionDTO[], chunkSize: number): QuestionDTO[][] {
+    const result: QuestionDTO[][] = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      result.push(arr.slice(i, i + chunkSize));
+    }
+    return result;
+  }
+
   onSubmit() {
     if (this.reviewForm.valid && this.image) {
-      const reviewData = {
-        ...this.reviewForm.value,
-        image: this.image  // ✅ Include the image if needed in payload
-      };
-  
-      console.log("✅ Payload Sent:", reviewData); // Debugging
-  
-      this.dataLoaderService.createReview(reviewData, this.image).subscribe({
-        next: (res: any) => {
-          alert("✅ Review Added Successfully");
-          console.log("✅ Review Added Successfully", res);
-          this.reviewForm.reset();  
-          this.getAllReview();
-          this.closeBtn.nativeElement.click(); // ✅ Close popup 
-        },
-        error: (err) => {
-          console.error("❌ Error Adding Review", err);
-        }
-      });
-  
+      const reviewdData = this.reviewForm.value;
+      console.log("Payload Sent:", reviewdData); // 🔍 Debugging
+      if (this.image) {
+        this.dataLoaderService.createReview(reviewdData, this.image).subscribe(
+          (res: any) => {
+            alert("✅ Review Added Successfully");
+            console.log("✅ Review Added Successfully", res);
+            this.reviewForm.reset();
+            this.getAllReview();
+            this.closeBtn.nativeElement.click(); // ✅ Close popup 
+          },
+          err => {
+            console.error("Error Adding Review", err);
+          }
+        );
+      }
     } else {
       console.warn("⚠️ Form is invalid or image not selected.");
       this.reviewForm.markAllAsTouched(); // highlight invalid fields
     }
   }
-  
-  setRating(star: number): void {
-    this.reviewForm.get('rating')?.setValue(star);
-  }
-
   onFileChange(event: any, fileType: string): void {
     const files: FileList = event.target.files;
     if (files.length > 0) {
@@ -167,11 +189,32 @@ export class ViewDetailsComponent implements OnInit {
         this.image = files[0];
       }
     }
-
+  }
+  questionSubmit(){
+    if(this.questionForm.valid && this.image){
+      const questionData = this.questionForm.value;
+      console.log("Payload Sent:", questionData); // 🔍 Debugging
+      if (this.image) {
+      this.dataLoaderService.createQuestion(questionData,this.image).subscribe(
+        (res: any) =>{
+          alert("✅ Question Added Successfully");
+            console.log("✅ Question Added Successfully", res);
+            this.questionForm.reset();
+            this.getAllQuestions();
+            this.closeBtn.nativeElement.click(); // ✅ Close popup 
+          },
+          err => {
+            console.error("Error Adding Question", err);
+          }
+        );
+      }
+    } else {
+      console.warn("⚠️ Form is invalid or image not selected.");
+      this.reviewForm.markAllAsTouched(); // highlight invalid fields
+    }
+  }
+  toggleReviews() {
+    this.showAllReviews = !this.showAllReviews;
   }
 
 }
-
-
-
-
