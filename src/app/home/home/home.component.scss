@@ -1,53 +1,13 @@
-/* Carousel container */
-#imageCarousel {
-  max-width: 100%;
-  margin: auto;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 0px;
-  overflow: hidden;
-}
-
-/* Carousel images */
-.carousel-inner img {
-  height: 400px;
-  /* Adjust height as needed */
-  object-fit: cover;
-  /* Ensure images fill the area without distortion */
-  border-radius: 0px;
-}
-
-/* Carousel controls */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 15px;
-  border-radius: 50%;
-}
-
-/* Carousel indicators */
-.carousel-indicators li {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 2px solid white;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.carousel-indicators .active {
-  background-color: white;
-}
-
-/* Smooth transition */
 .carousel-inner {
-  transition: transform 0.1s ease-in-out;
+  height: 500px; /* Or any height you prefer */
+  aspect-ratio: 16 / 9; /* or 4 / 3 or whatever fits your design */
 }
 
-.service {
-  position: relative;
-  background: #f7f7f8;
-  padding: 60px 0;
+.carousel-item video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
-
 // ============card===============//
 .card {
   border: 1px solid #fefbfb;

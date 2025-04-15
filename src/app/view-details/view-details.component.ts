@@ -26,6 +26,12 @@ export class ViewDetailsComponent implements OnInit {
   productId!: number;
   showAllReviews: boolean = false;
   showQuestions: boolean = true;
+  selectedQuestionIndex = -1;
+  // pageNestion//
+  questionsPerPage = 4;
+  currentPage = 1;
+
+
   reviewForm: FormGroup = this.formBuilder.group({});
   questionForm: FormGroup = this.formBuilder.group({});
   @ViewChild('closeBtn') closeBtn!: ElementRef;
@@ -216,5 +222,23 @@ export class ViewDetailsComponent implements OnInit {
   toggleReviews() {
     this.showAllReviews = !this.showAllReviews;
   }
+  toggleQuestion(index: number) {
+    this.selectedQuestionIndex = this.selectedQuestionIndex === index ? -1 : index;
+  }
+
+  
+get paginatedQuestions() {
+  const start = (this.currentPage - 1) * this.questionsPerPage;
+  return this.questions.slice(start, start + this.questionsPerPage);
+}
+
+get totalPages() {
+  return Math.ceil(this.questions.length / this.questionsPerPage);
+}
+
+changePage(page: number) {
+  this.currentPage = page;
+  this.selectedQuestionIndex = -1; // collapse open answers
+}
 
 }
