@@ -38,8 +38,15 @@ export class DataLoaderService {
      return this.http.get<any>(this.apiUrl + "/data/getAllCategories");
   }
 
+  getCategoryById(categoryId: number): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/data/getCategoryById/${categoryId}`);
+  }
   getSubCategoryByCategory(categoryId: number): Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/data/getSubCategoryByCategory/${categoryId}`)
+  } 
+
+  getProductByCategory(categoryId: number): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/data/getProductByCategory/${categoryId}`)
   } 
 
   getAllGeneralSettings() : Observable<any>{

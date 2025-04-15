@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { SubCategoryDTO } from '../DTO/subCategoryDTO';
 import { CategoryDTO } from '../DTO/categoryDTO';
+import { ProductDTO } from '../DTO/productDTO';
 
 @Component({
   selector: 'app-categories',
@@ -13,11 +14,13 @@ export class CategoriesComponent implements OnInit {
   categories: CategoryDTO[] = [];
   categoryId: number | null = null;
   subCategories: SubCategoryDTO[] = [];
+  products: ProductDTO[] = [];
+  categoryName: string = '';
   displayedCategoriess: CategoryDTO[] = [];
   
   itemsPerPage = 8;
   currentPage = 1;
-  totalPages = Math.ceil(this.categories.length / this.itemsPerPage);
+  totalPages = 0;
 
 
 
@@ -35,19 +38,45 @@ export class CategoriesComponent implements OnInit {
       const id = parmas.get('categoryId');
       if (id) {
         this.categoryId = Number(id);
-        this.getSubCategoryByCategory(this.categoryId);
+        this.getProductByCategory(this.categoryId);
+        this.getCategoryName(this.categoryId);
       } else {
         this.categoryId = null;
-        this.subCategories = []; // Reset if no category is selected
+        this.products = []; // Reset if no category is selected
+        this.categoryName = '';
       }
     });
   }
+
+  getCategoryName(categoryId: number): void {
+    this.dataLoaderService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+        console.log('API response for getCategoryById:', response);
+
+        // Adjust this based on the actual structure of your response
+        const category = response?.data;
+        this.categoryName = category?.categoryName || 'Unknown Brand';
+
+        if (category && category.categoryName) {
+          this.categoryName = category.categoryName;
+        } else {
+          this.categoryName = 'Unknown Category';
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching category name:', error);
+        this.categoryName = 'Unknown Category';
+      }
+    });
+  }
+
 
   getAllCategories(): void {
     this.dataLoaderService.getAllCategories().subscribe(
       (res: any) => {
         if (res) {
           this.categories = res.data || res;
+          this.totalPages = Math.ceil(this.categories.length / this.itemsPerPage);
           this.updateDisplayedCategoriess();
         } else {
           console.log("No Categories are not found");
@@ -61,31 +90,31 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  getSubCategoryByCategory(categoryId: number): void {
-    this.dataLoaderService.getSubCategoryByCategory(categoryId).subscribe(
+  getProductByCategory(categoryId: number): void {
+    this.dataLoaderService.getProductByCategory(categoryId).subscribe(
       (res: any) => {
         if (res && res.data) {
-          this.subCategories = res.data;         
+          this.products = res.data;         
         } else {
-          console.warn('No subcategories found for category ID:', categoryId);
-          this.subCategories = []; // Ensure the array is reset if no data is received
+          console.warn('No product found for category ID:', categoryId);
+          this.products = []; // Ensure the array is reset if no data is received
         }
       },
       (error) => {
-        console.error('Error fetching subcategories:', error);
-        this.subCategories = []; // Reset on error to avoid stale data
+        console.error('Error fetching products:', error);
+        this.products = []; // Reset on error to avoid stale data
       }
     );
   }
 
 
-  filterSubcategories(): void {
-    this.subCategories = this.subCategories.filter(sub => sub.categoryId === this.categoryId);
+  filterProducts(): void {
+    this.products = this.products.filter(sub => sub.categoryId === this.categoryId);
   }
 
   showCategories(): void {
     this.categoryId = null;
-    this.subCategories = [];
+    this.products = [];
     this.router.navigate(['/categories']);
   }
 
@@ -107,5 +136,9 @@ export class CategoriesComponent implements OnInit {
       this.currentPage--;
       this.updateDisplayedCategoriess();
     }
+  }
+
+  viewProductDetails(product: any) {
+    this.router.navigate(['/view-details'], { state: { product } });
   }
 }

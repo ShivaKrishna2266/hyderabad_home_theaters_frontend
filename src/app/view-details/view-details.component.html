@@ -297,9 +297,9 @@
                       <p class="card-text text-secondary">{{ review.review }}</p>
 
                       <div class="text-muted small mt-3">
-                        <div><strong>Date:</strong> {{ review.createdDate | date: 'medium' }}</div>
-                        <div><strong>Email:</strong> {{ review.email }}</div>
-                        <div><strong>Status:</strong> {{ review.status }}</div>
+                        <div><strong><b>Date:</b></strong> {{ review.createdDate | date: 'medium' }}</div>
+                        <div><strong><b>Email:</b></strong> {{ review.email }}</div>
+                        <div><strong><b>Status:</b></strong> {{ review.status }}</div>
                       </div>
                     </div>
 
@@ -342,52 +342,136 @@
       </div>
     </ng-template>
     <hr>
-
     <!-- All Quastion & Answers -->
-    <div class=" my-5">
-      <h2 class="d-flex justify-content-center mb-3 "><b>Customer Questions & Answers</b></h2>
-      <!-- Toggle Button -->
+    <ng-container *ngIf="questions && questions.length > 0; ">
+      <h2 class="d-flex justify-content-center mb-3">
+        <b>Customer Questions & Answers</b>
+      </h2>
+
+      <!-- Toggle All Questions Button -->
       <div *ngIf="questions && questions.length > 0"
         class="d-flex justify-content-between align-items-center container my-4">
-        <h4 class="mb-0 underline" style="cursor: pointer;" (click)="showQuestions = !showQuestions">All Questions</h4>
+        <h4 class="mb-0 underline" style="cursor: pointer;" (click)="showQuestions = !showQuestions">
+          All Questions
+        </h4>
         <h4 class="mb-0 text-end underline">Total: {{ questions.length }}</h4>
       </div>
-      <!-- Questions Grid or Fallback -->
-      <ng-container *ngIf="questions && questions.length > 0; else noQuestions">
-        <div *ngIf="showQuestions" class="row row-cols-1 row-cols-md-1 g-4">
-          <div class="col" *ngFor="let question of questions">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">{{ question.userName }}</h5>
-                <p class="card-text">{{ question.question }}</p>
-                <p *ngIf="question.answer" class="text-success">
+      <div *ngIf="showQuestions" class="row row-cols-1 row-cols-md-1 g-4">
+        <div class="col" *ngFor="let question of paginatedQuestions; let i = index">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <!-- Clickable Question Text with Dropdown Icon -->
+              <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;"
+                (click)="toggleQuestion((currentPage - 1) * questionsPerPage + i)">
+                <p class="card-text fw-bold mb-0 text-primary">
+                  Q: {{ question.question }}
+                </p>
+                <i class="bi"
+                  [ngClass]="selectedQuestionIndex === (currentPage - 1) * questionsPerPage + i ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              </div>
+
+              <!-- Show details -->
+              <div *ngIf="selectedQuestionIndex === (currentPage - 1) * questionsPerPage + i" class="mt-3">
+                <h3 class="mb-1"><strong>Name:</strong> {{ question.userName }}</h3>
+                <p *ngIf="question.answer" class="text-success mb-2">
                   <strong>Answer:</strong> {{ question.answer }}
                 </p>
-              </div>
-              <ng-template #noImages>
-                <small class="text-muted">No images uploaded</small>
-              </ng-template>
 
-              <div class="card-footer bg-light border-0 rounded-bottom-4">
-                <div class="d-flex flex-wrap gap-2">
-                  <ng-container *ngIf="question.image && question.image.length > 0; else noImages">
-                    <img src="../../assets/question_images/{{question.image}}" alt="Cover Image"
-                      style="width: 200px; height: auto;">
-                  </ng-container>
+                <div class="card-footer bg-light border-0 rounded-bottom-4 p-2">
+                  <div class="d-flex flex-wrap gap-2">
+                    <ng-container *ngIf="question.image && question.image.length > 0; else noImages">
+                      <img [src]="'../../assets/question_images/' + question.image" alt="Question Image"
+                        style="width: 200px; height: auto;">
+                    </ng-container>
+                    <ng-template #noImages>
+                      <small class="text-muted">No images uploaded</small>
+                    </ng-template>
+                  </div>
                 </div>
               </div>
+              <!-- End details -->
             </div>
           </div>
         </div>
-      </ng-container>
-      <!-- Fallback Template -->
-      <ng-template #noQuestions>
-        <div class="alert alert-info mt-4">No questions available.</div>
-      </ng-template>
-    </div>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.active]="currentPage === i + 1">
+              <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </ng-container>
+  </div>
+<!-- Fallback -->
+  <div *ngIf="!product" class="container mt-4">
+    <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
   </div>
 </div>
-<!-- Fallback -->
-<div *ngIf="!product" class="container mt-4">
-  <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
-</div>
+  <!-- Shop By Categories -->
+  <div class="text-center my-5">
+    <h1 class="fw-bold mb-2">Shop by Category</h1>
+    <h4 class="text-muted">
+      You're only a click away from incredible Hyderabad Home Theaters sound.
+    </h4>
+    <h1>Show All Categories</h1>
+  </div>
+
+  <!--  always trusted --> 
+  <div class="text-center ">
+    <div class="trusted mt-5 ">
+      <h1 class="fw-bold mt-3 ">Often first, always trusted</h1>
+      <h4 class="text-muted mb-5">
+        Cutting-edge technology. Premium sound quality. 11+ years of experience.
+      </h4>
+      <div class="row justify-content-center gx-5">
+        <!-- Card 1 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+          <div class=" p-3 rounded">
+            <div class="feature-image mb-3">
+              <img
+                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw9faaad17/key-pages/homepage/customer-support.svg"
+                alt="Customer Service" class="img-fluid rounded">
+            </div>
+            <h3 class="fw-semibold">Outstanding Customer Service</h3>
+            <h5 class="text-muted">Our customer service team is ready to help.</h5>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+          <div class="p-3  rounded">
+            <div class="feature-image mb-3">
+              <img
+                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw1eb5eb73/key-pages/homepage/handcrafted.svg"
+                alt="Trusted Experts" class="img-fluid rounded">
+            </div>
+            <h3 class="fw-semibold">Trusted Experts</h3>
+            <h5 class="text-muted">Our experience means reliable recommendations.</h5>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+          <div class=" p-3 rounded">
+            <div class="feature-image mb-3">
+              <img
+                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dwdc6fd9d2/key-pages/homepage/sustainability.svg"
+                alt="Premium Quality" class="img-fluid rounded">
+            </div>
+            <h3 class="fw-semibold">Premium Quality</h3>
+            <h5 class="text-muted">Top-tier sound systems for all homes.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
