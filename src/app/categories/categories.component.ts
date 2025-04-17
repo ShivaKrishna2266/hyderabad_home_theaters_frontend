@@ -15,12 +15,36 @@ export class CategoriesComponent implements OnInit {
   categoryId: number | null = null;
   subCategories: SubCategoryDTO[] = [];
   products: ProductDTO[] = [];
+  filteredProducts: ProductDTO[] = [];
   categoryName: string = '';
   displayedCategoriess: CategoryDTO[] = [];
+
+  searchTerm: string = '';
+
+
   
   itemsPerPage = 8;
   currentPage = 1;
   totalPages = 0;
+
+ // Filter properties
+ searchName: string = '';
+ selectedPriceRange: any = null;
+ // priceRanges = [
+ //   { label: '₹100 - ₹499.99', from: 100, to: 499.99 },
+ //   { label: '₹500 - ₹999.99', from: 500, to: 999.99 },
+ //   { label: '₹1,000 - ₹1,499.99', from: 1000, to: 1499.99 },
+ //   { label: '₹1,500 - ₹1,999.99', from: 1500, to: 1999.99 },
+ //   { label: '₹2,000 - ₹2,499.99', from: 2000, to: 2499.99 },
+ //   { label: '₹2,500 - ₹4,999.99', from: 2500, to: 4999.99 },
+ //   { label: '₹5,000 - ₹9,999.99', from: 5000, to: 9999.99 }
+ // ];
+ priceRanges = [
+   { label: 'Under ₹1000', min: 0, max: 1000 },
+   { label: '₹1000 - ₹5000', min: 1000, max: 5000 },
+   { label: '₹5000 - ₹10000', min: 5000, max: 10000 },
+   { label: 'Above ₹10000', min: 10000, max: Infinity }
+ ];
 
 
 
@@ -31,6 +55,8 @@ export class CategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.displayedCategoriess = this.categories;
 
     this.getAllCategories();
 
@@ -43,10 +69,19 @@ export class CategoriesComponent implements OnInit {
       } else {
         this.categoryId = null;
         this.products = []; // Reset if no category is selected
+        this.filteredProducts =[];
         this.categoryName = '';
       }
     });
   }
+
+  
+filterCategories() {
+  const term = this.searchTerm.toLowerCase();
+  this.displayedCategoriess = this.categories.filter(category =>
+    category.categoryName.toLowerCase().includes(term)
+  );
+}
 
   getCategoryName(categoryId: number): void {
     this.dataLoaderService.getCategoryById(categoryId).subscribe({
@@ -94,27 +129,41 @@ export class CategoriesComponent implements OnInit {
     this.dataLoaderService.getProductByCategory(categoryId).subscribe(
       (res: any) => {
         if (res && res.data) {
-          this.products = res.data;         
+          this.products = res.data;
+          this.filteredProducts = [...this.products]; // Initialize filteredProducts
         } else {
-          console.warn('No product found for category ID:', categoryId);
+          console.warn('No products found for category ID:', categoryId);
           this.products = []; // Ensure the array is reset if no data is received
+          this.filteredProducts = [];
         }
       },
       (error) => {
         console.error('Error fetching products:', error);
         this.products = []; // Reset on error to avoid stale data
+        this.filteredProducts = [];
       }
     );
   }
 
 
   filterProducts(): void {
-    this.products = this.products.filter(sub => sub.categoryId === this.categoryId);
+    this.filteredProducts = this.products.filter(product =>
+      product.productName.toLowerCase().includes(this.searchName.toLowerCase()) &&
+      (!this.selectedPriceRange ||
+        (product.productPrice >= this.selectedPriceRange.min &&
+          product.productPrice <= this.selectedPriceRange.max))
+    );
+  }
+
+  applySelectedPriceRange(): void {
+    this.filterProducts();
   }
 
   showCategories(): void {
     this.categoryId = null;
     this.products = [];
+    this.categoryName = '';
+    this.filteredProducts = [];
     this.router.navigate(['/categories']);
   }
 
