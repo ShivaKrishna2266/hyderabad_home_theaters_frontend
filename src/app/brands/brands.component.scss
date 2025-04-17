@@ -21,6 +21,15 @@
   font-weight: bold;
 }
 
+.col-6 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.underline-text {
+  text-decoration: underline;
+}
+
 
 
 .card {
@@ -125,6 +134,12 @@
 .hover-bg:hover p {
   color: #007bff;
 }
+
+.rating .fa {
+  color: gold;
+  font-size: 1.2rem;
+}
+
 
 
 .pagination-shadow {
