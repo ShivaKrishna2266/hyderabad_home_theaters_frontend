@@ -115,13 +115,21 @@
                 </div>
               </div>
 
-              <button class="btn btn-danger add-to-cart-btn" type="button">
+              <button class="btn btn-danger add-to-cart-btn" (click)="addToCart(product)" type="button">
                 Add to Cart
               </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    
+    <!-- Pagination Controls -->
+    <div class="text-center mt-3">
+      <i class="fa fa-angle-left pagination-shadow" (click)="prevPage()" [class.disabled]="currentPage === 1"></i>
+      <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+      <i class="fa fa-angle-right pagination-shadow" (click)="nextPage()"
+        [class.disabled]="currentPage >= totalPages"></i>
     </div>
 
     <ng-template #noData>
