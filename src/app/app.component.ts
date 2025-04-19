@@ -55,6 +55,10 @@ export class AppComponent implements OnInit {
     return this.userStorageService.getUserRole();
   }
 
+  // getRole(): string | null {
+  //   const user = this.userStorageService.getUserRole();
+  //   return user?.role || null; // ROLE_ADMIN or ROLE_USER
+  // }
   getCurrentRoute(): string {
     return this.router.url;
   }
@@ -92,4 +96,6 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+  
 }

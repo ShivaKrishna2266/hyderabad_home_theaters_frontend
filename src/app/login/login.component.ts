@@ -47,7 +47,7 @@ export class LoginComponent {
           } else if (res.role === 'ROLE_USER') {
             this.router.navigateByUrl('/user/dashboard');
           } else {
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('/home');
           }
         }
       },

@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'login', component:LoginComponent},
   { path: 'register', component:RegisterComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
   { path: 'brands', component:BrandsComponent},
   { path: 'brands/:brandId', component: BrandsComponent },
   { path: 'categories', component:CategoriesComponent},
