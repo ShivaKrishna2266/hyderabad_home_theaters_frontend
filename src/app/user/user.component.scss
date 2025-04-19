@@ -1,0 +1,10 @@
+.blink-text {
+    animation: blink 1s step-start infinite;
+    color: red; /* danger color */
+}
+
+@keyframes blink {
+    50% {
+        visibility: hidden;
+    }
+}

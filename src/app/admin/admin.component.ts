@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
+  cardVisible = false;
+  closeTimeout: any;
+
   constructor(
     private userStorageService:UserStorageService,
      private router: Router) {}
@@ -25,5 +28,23 @@ export class AdminComponent implements OnInit {
   logout() {
     this.userStorageService.singOut();
     this.router.navigate(['/login']);
+  }
+
+  hideCard() {
+    this.resetCloseTimer(); // Clear any existing timeout
+    this.closeTimeout = setTimeout(() => {
+      this.cardVisible = false;
+    }, 3000);
+  }
+
+  showCard() {
+    this.cardVisible = true;
+    this.resetCloseTimer();
+  }
+
+  resetCloseTimer() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+    }
   }
 }

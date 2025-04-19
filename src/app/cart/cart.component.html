@@ -1,4 +1,3 @@
-
 <div class="container py-5">
   <h1 class="mb-5"><b>Your Shopping Cart</b></h1>
   <div class="row">
@@ -19,9 +18,12 @@
                 </div>
                 <div class="col-md-3">
                   <div class="input-group ">
-                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="decreaseQuantity(i)">-</button>
-                  <input style="max-width:50px" type="text" class="form-control form-control-sm text-center" [value]="item.quantity" readonly/>
-                  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="increaseQuantity(i)">+</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="button"
+                      (click)="decreaseQuantity(i)">-</button>
+                    <input style="max-width:50px" type="text" class="form-control form-control-sm text-center"
+                      [value]="item.quantity" readonly />
+                    <button class="btn btn-outline-secondary btn-sm" type="button"
+                      (click)="increaseQuantity(i)">+</button>
                   </div>
                 </div>
                 <div class="col-md-2 text-end">

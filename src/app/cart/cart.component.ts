@@ -28,6 +28,9 @@ export class CartComponent implements OnInit {
       return total + (item.productPrice * item.quantity);
     }, 0);
   }
+  // getSubtotal() {
+  //   return this.cartItems.reduce((total, item) => total + item.productPrice * item.quantity, 0);
+  // }
 
   deleteItem(index: number) {
     this.cartItems.splice(index, 1);
@@ -43,7 +46,17 @@ export class CartComponent implements OnInit {
     }
 }
 
-  checkOut(){
-    this.router.navigate(['/checkout-form']);
-  }
+checkOut() {
+  const subtotal = this.getSubtotal();
+  const shipping = 10;
+  const tax = 20;
+  const total = subtotal + shipping + tax;
+
+  this.dataLoaderService.setCart(this.cartItems, total);
+  this.router.navigate(['/checkout-form']);
+}
+
+  // checkOut(){
+  //   this.router.navigate(['/checkout-form']);
+  // }
 }

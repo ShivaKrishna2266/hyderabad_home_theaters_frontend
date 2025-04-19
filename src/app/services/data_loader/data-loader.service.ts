@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environments';
 export class DataLoaderService {
 
   private cartItems: any[] = [];
+  private total: number = 0;
 
   private apiUrl = environment.apiUrl;
   constructor(
@@ -111,5 +112,20 @@ export class DataLoaderService {
 
   clearCart() {
     this.cartItems = [];
+  }
+
+  setCart(items: any[], total: number) {
+    this.cartItems = items;
+    this.total = total;
+  }
+
+  getCart() {
+    return { items: this.cartItems, total: this.total };
+  }
+
+  // ==================Order=====================//
+
+  submitOrder(data: any): Observable<any> {
+    return this.http.post(this.apiUrl, data);
   }
 }

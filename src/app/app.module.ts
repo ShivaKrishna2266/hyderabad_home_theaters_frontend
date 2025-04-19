@@ -33,6 +33,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
+import { UserModule } from "./user/user.module";
+
+
 
 
 
@@ -75,9 +78,9 @@ import { ViewDetailsComponent } from './view-details/view-details.component';
     FormsModule,
     AdminModule,
     NgxPaginationModule,
-    MatToolbarModule
-  
-  ],
+    MatToolbarModule,
+    UserModule
+],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
