@@ -21,6 +21,7 @@ import { TermsOfServiceComponent } from './policy_links/terms-of-service/terms-o
 import { CartComponent } from './cart/cart.component';
 import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'cart', component:CartComponent},
   { path: 'checkout-form', component:CheckoutFormComponent},
   { path: 'view-details', component:ViewDetailsComponent},
+  { path: 'orders', component:OrdersComponent},
 
 
 

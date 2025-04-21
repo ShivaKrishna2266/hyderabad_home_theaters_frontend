@@ -5,6 +5,7 @@ import { BrandDTO } from '../DTO/brandDTO';
 import { ProductDTO } from '../DTO/productDTO';
 import { ProductService } from '../services/product/product.service';
 import { DataLoaderService } from '../services/data_loader/data-loader.service';
+import { CartService } from '../services/cart/cart.service';
 
 @Component({
   selector: 'app-brands',
@@ -47,7 +48,8 @@ export class BrandsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router: Router,
-    private dataLoaderService: DataLoaderService
+    private dataLoaderService: DataLoaderService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -166,7 +168,7 @@ export class BrandsComponent implements OnInit {
   }
 
   addToCart(product: any) {
-    this.dataLoaderService.addToCart(product);
+    this.cartService.addToCart(product);
     this.router.navigate(['/cart']);
   }
 

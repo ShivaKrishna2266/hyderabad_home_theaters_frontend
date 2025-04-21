@@ -4,6 +4,7 @@ import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { SubCategoryDTO } from '../DTO/subCategoryDTO';
 import { CategoryDTO } from '../DTO/categoryDTO';
 import { ProductDTO } from '../DTO/productDTO';
+import { CartService } from '../services/cart/cart.service';
 
 @Component({
   selector: 'app-categories',
@@ -51,7 +52,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router: Router,
-    private dataLoaderService: DataLoaderService
+    private dataLoaderService: DataLoaderService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -187,7 +189,7 @@ filterCategories() {
     }
   }
   addToCart(product: any) {
-    this.dataLoaderService.addToCart(product);
+    this.cartService.addToCart(product);
     this.router.navigate(['/cart']);
   }
 

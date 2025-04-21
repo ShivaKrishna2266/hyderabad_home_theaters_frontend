@@ -34,6 +34,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
 import { UserModule } from "./user/user.module";
+import { OrdersComponent } from './orders/orders.component';
 
 
 
@@ -64,6 +65,7 @@ import { UserModule } from "./user/user.module";
     CartComponent,
     CheckoutFormComponent,
     ViewDetailsComponent,
+    OrdersComponent,
     
     
     
