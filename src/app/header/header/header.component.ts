@@ -14,31 +14,28 @@ export class HeaderComponent implements OnInit {
   categories: CategoryDTO[] = [];
   subCategories: SubCategoryDTO[] = [];
   categoryId: string | null = null;
-  selectedCategoryId: number | null = null;  // Renamed to avoid method conflict
+  selectedCategoryId: number | null = null;
   cartCount: number = 0;
-  
 
   constructor(
     private dataLoaderService: DataLoaderService,
     private route: ActivatedRoute,
-    private cartService : CartService
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     this.getAllCategories();
 
-    this.cartService.cart$.subscribe(items => {
-    this.cartCount = items.reduce((total, item) => total + item.quantity, 0);
-  });
+    this.cartService.cartItems$.subscribe(items => {
+      this.cartCount = items.reduce((total, item) => total + item.quantity, 0);
+    });
 
-    
     this.route.paramMap.subscribe(params => {
-      this.categoryId = params.get('categoryId'); // Ensure 'categoryId' matches your route configuration
-      
+      this.categoryId = params.get('categoryId');
       if (this.categoryId) {
         const categoryIdNum = Number(this.categoryId);
         if (!isNaN(categoryIdNum)) {
-          this.selectedCategoryId = categoryIdNum;  // Update selected category
+          this.selectedCategoryId = categoryIdNum;
           this.getSubCategoryByCategory(categoryIdNum);
         } else {
           console.error('Invalid category ID:', this.categoryId);
@@ -58,14 +55,14 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  selectCategory(categoryId: number): void {  // Fixed method name conflict
+  selectCategory(categoryId: number): void {
     this.selectedCategoryId = categoryId;
     this.getSubCategoryByCategory(categoryId);
   }
 
-  getCategoryName(categoryId: number): string {  // Fixed method name
+  getCategoryName(categoryId: number): string {
     const category = this.categories.find(b => b.categoryId === categoryId);
-    return category?.categoryName ?? 'Unknown'; // More concise and safer
+    return category?.categoryName ?? 'Unknown';
   }
 
   getSubCategoryByCategory(categoryId: number) {
@@ -77,11 +74,5 @@ export class HeaderComponent implements OnInit {
         console.error('Error fetching subcategories:', error);
       }
     );
-  }
-
-  getCartCount(): number {
-    // Example: if you store cart items in localStorage
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    return cart.length;
   }
 }

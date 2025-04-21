@@ -1,173 +1,145 @@
-<div class="container mt-5 mb-5">
-  <div class="py-5 text-center">
-    <h2 class="premium-title">Checkout Summary</h2>
-    <p class="lead text-muted">Secure & Smooth Payment Experience</p>
-  </div>
+<div class="container-fluid page-header py-5"></div>
 
-  <div class="row g-5">
-    <!-- CART SECTION -->
-    <!-- <div class="container py-5"> -->
-    <div class="col-md-5 col-lg-4 order-md-last">
-      <div class="premium-section premium-shadow">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your Cart</span>
-          <span class="badge premium-badge rounded-pill">{{ cartItems.length }}</span>
-        </h4>
-
-        <ul class="list-group mb-3">
-          <ng-container *ngFor="let item of cartItems">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">{{ item.productName }}</h6>
-                <small class="text-muted">{{ item.category || 'General' }}</small>
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <h1 class="mb-4">Billing details</h1>
+    <form action="#">
+      <div class="row g-5">
+        <!-- Left Column - Billing Details -->
+        <div class="col-md-6 col-lg-6 col-xl-7">
+          <div class="row">
+            <div class="col-md-6 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">First Name<sup>*</sup></label>
+                <input type="text" class="form-control" required>
               </div>
-              <span class="text-muted">₹{{ item.productPrice * item.quantity }}</span>
-            </li>
-          </ng-container>
-
-          <!-- Promo code section -->
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <small>{{ appliedPromo || 'None' }}</small>
             </div>
-            <span class="text-success">−₹{{ discountAmount || 0 }}</span>
-          </li>
-
-          <!-- Total price -->
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (INR)</span>
-            <strong>₹{{ getSubtotal() - (discountAmount || 0) }}</strong>
-          </li>
-        </ul>
-
-        <!-- Promo code input section -->
-        <div class="mb-3">
-          <label for="promoCode" class="form-label">Promo Code</label>
-          <input type="text" id="promoCode" class="form-control" formControlName="promoCode"
-            placeholder="Enter your promo code" />
-          <div *ngIf="appliedPromo === 'Invalid'" class="text-danger mt-1">
-            Invalid promo code
+            <div class="col-md-6 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">Last Name<sup>*</sup></label>
+                <input type="text" class="form-control" required>
+              </div>
+            </div>
           </div>
-          <div *ngIf="appliedPromo && appliedPromo !== 'Invalid'" class="text-success mt-1">
-            Promo applied: {{ appliedPromo }} (₹{{ discountAmount }} off)
+
+          <div class="form-item">
+            <label class="form-label my-3">Company Name<sup>*</sup></label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Address<sup>*</sup></label>
+            <input type="text" class="form-control" placeholder="House Number, Street Name" required>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Town/City<sup>*</sup></label>
+            <input type="text" class="form-control" required>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Country<sup>*</sup></label>
+            <input type="text" class="form-control" required>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
+            <input type="text" class="form-control" required>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Mobile<sup>*</sup></label>
+            <input type="tel" class="form-control" required>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label my-3">Email Address<sup>*</sup></label>
+            <input type="email" class="form-control" required>
+          </div>
+
+          <div class="form-check my-3">
+            <input type="checkbox" class="form-check-input" id="Account-1" name="createAccount">
+            <label class="form-check-label" for="Account-1">Create an account?</label>
+          </div>
+
+          <hr>
+
+          <div class="form-check my-3">
+            <input type="checkbox" class="form-check-input" id="Address-1" name="differentAddress">
+            <label class="form-check-label" for="Address-1">Ship to a different address?</label>
+          </div>
+
+          <div class="form-item">
+            <textarea name="orderNotes" class="form-control" rows="5" placeholder="Order Notes (Optional)"></textarea>
           </div>
         </div>
 
-        <button type="button" class="btn btn-outline-primary" (click)="applyPromo()">Apply Promo</button>
+        <!-- Right Column - Order Summary -->
+        <div class="col-md-6 col-lg-6 col-xl-5">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Products</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of cartItems">
+                  <tr>
+                    <td>
+                      <img src="" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                    </td>
+                    <td class="py-5">{{ item.product.productName }}</td>
+                    <td class="py-5">{{ item.product.productPrice }}</td>
+                    <td class="py-5">{{ item.quantity }}</td>
+                    <td class="py-5">{{ item.product.productPrice * item.quantity }}</td>
+                  </tr>
+                </ng-container>
 
+                <tr>
+                  <td></td>
+                  <td class="py-5">Shipping</td>
+                  <td colspan="3" class="py-5">
+                    <div class="form-check text-start">
+                      <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-1" name="shippingOption" value="Free">
+                      <label class="form-check-label" for="Shipping-1">Free Shipping</label>
+                    </div>
+                    <div class="form-check text-start">
+                      <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-2" name="shippingOption" value="Flat">
+                      <label class="form-check-label" for="Shipping-2">Flat rate: ₹0.00</label>
+                    </div>
+                    <div class="form-check text-start">
+                      <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-3" name="shippingOption" value="Pickup">
+                      <label class="form-check-label" for="Shipping-3">Local Pickup: ₹0.00</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td class="py-5 text-uppercase">Total Amount:</td>
+                  <td colspan="2"></td>
+                  <td class="py-5">
+                    <div class="total">
+                      <h4>₹{{ totalAmount }}</h4>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+            <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" (click)="initiatePayment()">
+              Place Order
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- </div> -->
-
-
-    <!-- BILLING SECTION -->
-    <div class="col-md-7 col-lg-8">
-      <div class="premium-section premium-shadow">
-        <h4 class="mb-3">Billing Details</h4>
-        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" formControlName="firstName" id="firstName"
-                placeholder="First name" />
-            </div>
-
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" formControlName="lastName" id="lastName"
-                placeholder="Last name" />
-            </div>
-
-            <div class="col-12">
-              <label for="username" class="form-label">Username</label>
-              <div class="input-group">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" formControlName="username" id="username"
-                  placeholder="Username" />
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" formControlName="email" id="email"
-                placeholder="you@example.com" />
-            </div>
-
-            <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" formControlName="address" id="address"
-                placeholder="1234 Main St" />
-            </div>
-
-            <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" formControlName="address2" id="address2"
-                placeholder="Apartment or suite" />
-            </div>
-
-            <div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" formControlName="country" id="country">
-                <option value="">Choose...</option>
-                <option>India</option>
-                <option>United States</option>
-              </select>
-            </div>
-
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" formControlName="state" id="state">
-                <option value="">Choose...</option>
-                <option>Telangana</option>
-                <option>California</option>
-              </select>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" formControlName="zip" id="zip" placeholder="Zip" />
-            </div>
-          </div>
-
-          <hr class="my-4" />
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" formControlName="sameAddress" id="sameAddress" />
-            <label class="form-check-label" for="sameAddress">Shipping address is the same as my billing address</label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" formControlName="saveInfo" id="saveInfo" />
-            <label class="form-check-label" for="saveInfo">Save this information for next time</label>
-          </div>
-
-          <hr class="my-4" />
-
-          <h4 class="mb-3">Payment</h4>
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
-                formControlName="paymentMethod" value="credit" />
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
-                formControlName="paymentMethod" value="debit" />
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                formControlName="paymentMethod" value="paypal" />
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
-          </div>
-
-          <hr class="my-4" />
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Place Order</button>
-        </form>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
