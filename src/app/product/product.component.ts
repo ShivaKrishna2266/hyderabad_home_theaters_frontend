@@ -3,6 +3,7 @@ import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { ProductDTO } from '../DTO/productDTO';
 import { BrandDTO } from '../DTO/brandDTO';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../services/cart/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -37,6 +38,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private dataLoaderService: DataLoaderService,
+    private cartService: CartService,
     public router: Router,
     private route: ActivatedRoute,
   ) {};
@@ -108,7 +110,7 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(product: ProductDTO): void {
-    this.dataLoaderService.addToCart(product);
+    this.cartService.addToCart(product);
     this.router.navigate(['/cart']);
   }
 

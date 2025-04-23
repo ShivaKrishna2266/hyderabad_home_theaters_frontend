@@ -1,5 +1,6 @@
 export interface UserProfileDTO{
 
+    userId: number;
     fullName: string;
     firstName: string;
     username: string;

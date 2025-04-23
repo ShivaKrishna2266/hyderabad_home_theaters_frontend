@@ -21,7 +21,8 @@ export class OrderService {
   private error: string | undefined;
 
   // Get profile and user info from localStorage
-  profile: any = JSON.parse(UserStorageService.getProfile());
+  // profile : any = JSON.parse(UserStorageService.getProfile());
+  profile: any = UserStorageService.getProfile();
   userId: any = UserStorageService.getUserId();
   email: any = UserStorageService.getEmail();
   role: any = UserStorageService.getUserRole();
@@ -75,7 +76,8 @@ export class OrderService {
         this.options.key = data.secretKey;
         this.options.order_id = data.razorpayOrderId;
         this.options.amount = data.applicationFee;
-        this.options.prefill.name = this.profile.fullName;
+        this.options.prefill.name = this.profile?.fullName || 'Guest';
+        // this.options.prefill.name = this.profile.fullName;
         this.options.prefill.email = this.profile.email;
         this.options.prefill.contact = this.profile.mobileNumber;
 
@@ -110,7 +112,7 @@ export class OrderService {
         UserStorageService.setOrderId(data.razorpayOrderId);
 
         // Navigate to the order list after payment (optional)
-        this.router.navigateByUrl('/customer/orders');
+        this.router.navigateByUrl('/user/orders');
       },
       (err) => {
         this.error = err?.error?.message || 'Order creation failed';

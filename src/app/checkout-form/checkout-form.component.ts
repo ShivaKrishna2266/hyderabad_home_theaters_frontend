@@ -52,6 +52,6 @@ export class CheckoutFormComponent implements OnInit {
   }
   initiatePayment(): void {
     this.orderService.initiateOrder(this.totalAmount);
-    
+    alert("Order Placed Successfully")
   }
 }

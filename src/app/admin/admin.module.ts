@@ -18,6 +18,8 @@ import { EditSubCategoryComponent } from './sub_category/edit_sub_category/edit-
 import { ViewTestimonialComponent } from './testimonial/view-testimonial/view-testimonial.component';
 import { AddTestimonialComponent } from './testimonial/add-testimonial/add-testimonial.component';
 import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-testimonial.component';
+import { OrdersComponent } from './orders/orders.component';
+
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-te
     ViewTestimonialComponent,
     AddTestimonialComponent,
     EditTestimonialComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,
