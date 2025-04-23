@@ -42,6 +42,7 @@ export class LoginComponent {
         if (res && res.token && res.role) {
           this.userStorageService.saveToken(res.token);
           this.userStorageService.saveUser(res);
+          this.userStorageService.saveProfile(res.profile);
           if (res.role === 'ROLE_ADMIN') {
             this.router.navigateByUrl('/admin/admin-dashbord');
           } else if (res.role === 'ROLE_USER') {

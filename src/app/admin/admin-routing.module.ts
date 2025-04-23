@@ -17,6 +17,8 @@ import { EditSubCategoryComponent } from './sub_category/edit_sub_category/edit-
 import { ViewTestimonialComponent } from './testimonial/view-testimonial/view-testimonial.component';
 import { AddTestimonialComponent } from './testimonial/add-testimonial/add-testimonial.component';
 import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-testimonial.component';
+import { OrdersComponent } from './orders/orders.component';
+
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -36,6 +38,7 @@ const routes: Routes = [
     { path: 'view-testimonial', component: ViewTestimonialComponent},
     { path: 'add-testimonial', component: AddTestimonialComponent},
     { path: 'edit-testimonial', component: EditTestimonialComponent},
+    { path : 'orders', component : OrdersComponent},
   ] 
 }
 ];
