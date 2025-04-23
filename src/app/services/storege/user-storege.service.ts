@@ -13,8 +13,23 @@ const ORDER_ID = 'ecom-order-id';
   providedIn: 'root'
 })
 export class UserStorageService {
+  private static userKey = 'pendingRegistration';
 
   constructor() {}
+
+
+  static setPendingUser(user: any): void {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  static getPendingUser(): any {
+    const user = localStorage.getItem(this.userKey);
+    return user ? JSON.parse(user) : null;
+  }
+
+  static clearPendingUser(): void {
+    localStorage.removeItem(this.userKey);
+  }
 
   // ----- Token Handling -----
   public saveToken(token: string): void {

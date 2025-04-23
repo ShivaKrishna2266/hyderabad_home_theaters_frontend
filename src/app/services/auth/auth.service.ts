@@ -31,4 +31,9 @@ export class AuthService {
 
     return this.http.get(`${this.apiUrl}/protected-route`, { headers });
   }
+
+  verifyOtp(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/verify-otp`, userData);
+  }
 }
+

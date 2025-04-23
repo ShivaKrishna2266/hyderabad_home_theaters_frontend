@@ -1,41 +1,55 @@
-
 <div class="container-flued d-flex justify-content-center">
     <div class="card col-md-6 col-sm-6 col-lg-6 mt-5 mb-5">
-        <div class="mt-5 d-flex justify-content-center">
-            <h2><b>Create An Account</b></h2>
-        </div>
-        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form mt-2 mb">
-            <div class="mb-2">
-                <label for="username" class="form-label"><b>Your Name</b></label>
-                <input type="text" id="username" class="form-control" placeholder="Enter Name" formControlName="username" required>
-            </div>
-            <div class="mb-2">
-                <label for="email" class="form-label"><b>Your Email</b></label>
-                <input type="email" id="email" class="form-control" placeholder="Enter Email" formControlName="email">
-            </div>
-            <div class="mb-2">
-                <label for="phoneNumber" class="form-label"><b>Mobile Number</b></label>
-                <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter Number" formControlName="phoneNumber" required>
-            </div>
-            <div class="mb-2">
-                <label for="role" class="form-label" ><b>ROLE</b></label>
-                <select id="role" class="form-control" formControlName="role">
-                    <option *ngFor="let role of appUserRoles" [value]="role">{{ role }}</option>
-                </select>
-            </div>
-            <div class="mb-2">
-                <label for="password" class="form-label"><b>Password</b></label>
-                <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" required>
-            </div>
-            <div class="mb-2">
-                <label for="confirmPassword" class="form-label"><b>Re-enter Password</b></label>
-                <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter Password" formControlName="confirmPassword" required>
-            </div>
-            <div class="d-flex justify-content-center mt-5 mb-3">
-                <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Register</button>
-            </div>
-        </form>
+      <div class="mt-5 d-flex justify-content-center">
+        <h2><b>Create An Account</b></h2>
+      </div>
+      <form [formGroup]="signupForm" *ngIf="!otpSent" (ngSubmit)="onSubmit()" class="form mt-2 mb-2"> <!-- Updated -->
         
-        <h3 class="d-flex justify-content-center">Already have an account? <a routerLink="/login"> Login here</a></h3>
+        <div class="mb-2">
+          <label for="username" class="form-label"><b>Your Name</b></label>
+          <input type="text" id="username" class="form-control" placeholder="Enter Name" formControlName="username" required>
+        </div>
+        <div class="mb-2">
+          <label for="email" class="form-label"><b>Your Email</b></label>
+          <input type="email" id="email" class="form-control" placeholder="Enter Email" formControlName="email">
+        </div>
+        <div class="mb-2">
+          <label for="phoneNumber" class="form-label"><b>Mobile Number</b></label>
+          <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter Number" formControlName="phoneNumber" required>
+        </div>
+        <div class="mb-2">
+          <label for="role" class="form-label"><b>ROLE</b></label>
+          <select id="role" class="form-control" formControlName="role">
+            <option *ngFor="let role of appUserRoles" [value]="role">{{ role }}</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="password" class="form-label"><b>Password</b></label>
+          <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" required>
+        </div>
+        <div class="mb-2">
+          <label for="confirmPassword" class="form-label"><b>Re-enter Password</b></label>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter Password" formControlName="confirmPassword" required>
+        </div>
+        <div class="d-flex justify-content-center mt-5 mb-3">
+          <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Register</button> <!-- Updated -->
+        </div>
+      </form>
+  
+      <div *ngIf="otpSent">
+        <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
+            
+          <div class="mb-2">
+            <label for="otp" class="form-label"><b>Enter OTP</b></label>
+            <input type="text" id="otp" class="form-control" placeholder="Enter OTP" formControlName="otp" required>
+          </div>
+          <div class="d-flex justify-content-center mt-3 mb-3">
+            <button type="submit" class="btn btn-success" [disabled]="otpForm.invalid">Verify OTP</button>
+          </div>
+        </form>
+      </div>
+  
+      <h3 class="d-flex justify-content-center">Already have an account? <a routerLink="/login"> Login here</a></h3>
     </div>
-</div>
+  </div>
+  
