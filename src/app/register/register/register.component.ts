@@ -15,76 +15,65 @@ export class RegisterComponent implements OnInit {
   signupForm!: FormGroup;
   otpForm!: FormGroup;
   otpSent = false;
-  phoneNumber: string = '';
-  appUserRoles = ['Admin', 'User'];
+  appUserRoles: string[] = ['ROLE_ADMIN','ROLE_USER']; // You can replace with API-based dynamic roles
+  userDataForOtp: any;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private userStorageService: UserStorageService
-  ) {}
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
+      phoneNumber: ['', Validators.required],
+      role: ['USER', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
 
     this.otpForm = this.fb.group({
-      otp: ['', [Validators.required, Validators.pattern('^[0-9]{4,6}$')]]
+      otp: ['', Validators.required]
     });
   }
 
-  onSubmit(): void {
-    if (this.signupForm.invalid) {
-      alert('Please fill all fields correctly');
-      return;
+  onSubmit() {
+    if (this.signupForm.valid && this.signupForm.value.password === this.signupForm.value.confirmPassword) {
+      this.userDataForOtp = this.signupForm.value;
+      this.authService.register(this.signupForm.value).subscribe({
+        next: (res) => {
+          this.otpSent = true;
+          alert("OTP sent to your mobile number.");
+        },
+        error: (err) => {
+          alert("Failed to send OTP.");
+          console.error(err);
+        }
+      });
+    } else {
+      alert("Please fill all fields correctly.");
     }
-
-    const { password, confirmPassword } = this.signupForm.value;
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-
-    const userData = this.signupForm.value;
-
-    UserStorageService.setPendingUser(userData); // ✅ Corrected to use instance
-
-    this.authService.register(userData.phoneNumber).subscribe({
-      next: () => {
-        this.otpSent = true;
-        this.phoneNumber = userData.phoneNumber;
-      },
-      error: (err) => {
-        alert('Failed to send OTP: ' + (err.error?.message || 'Unknown error'));
-        console.error(err);
-      }
-    });
   }
 
-  onOtpSubmit(): void {
-    if (this.otpForm.invalid) {
-      alert('Please enter a valid OTP.');
-      return;
-    }
+  onOtpSubmit() {
+    const otpPayload = {
+      ...this.userDataForOtp,
+      otp: this.otpForm.value.otp
+    };
 
-    const otp = this.otpForm.value.otp;
-    const userData = UserStorageService.getPendingUser(); // ✅ Corrected to use instance
-
-    this.authService.verifyOtp({ ...userData, otp }).subscribe({
-      next: () => {
-        alert('Registration successful');
-        UserStorageService.clearPendingUser(); // ✅ Corrected to use instance
-        this.router.navigateByUrl('/login');
+    this.authService.verifyOtp(otpPayload).subscribe({
+      next: (res) => {
+        alert('Register Successfully!');
+        // Navigate based on role
+        const role = this.userDataForOtp.role;
+        if (role === 'ROLE_ADMIN') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/user']);
+        }
       },
       error: (err) => {
-        alert('OTP verification failed: ' + (err.error?.message || 'Unknown error'));
+        alert('Invalid OTP');
         console.error(err);
       }
     });
