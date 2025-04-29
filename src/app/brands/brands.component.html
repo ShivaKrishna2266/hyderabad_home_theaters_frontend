@@ -26,7 +26,13 @@
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg text-center">
 
-              <img src="../.././assets/brand_images/karnaSurya.jpeg" alt="{{ brand.brandName }}" class="category-img">
+              <!-- <img src="../.././assets/brand_images/karnaSurya.jpeg" alt="{{ brand.brandName }}" class="category-img"> -->
+
+              <img [src]="'assets/brand_images/' + brand.imageURL" alt="{{ brand.brandName }}" class="category-img">
+
+              <!-- <img [src]="'assets/brand_images/' + brand.imageURL" (error)="onImageError($event)"
+                alt="{{ brand.brandName }}" class="category-img"> -->
+
               <h4><b>{{ brand.brandName }}</b></h4>
               <p class="card-text"><b>{{ brand.brandDescription }}</b></p>
               <button (click)="router.navigate(['/brands', brand.brandId])" class="btn btn-primary">View
