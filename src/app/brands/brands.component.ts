@@ -120,12 +120,18 @@ export class BrandsComponent implements OnInit {
   }
 
 
-  filterBrands() {
-    const term = this.searchBrandName.toLowerCase();
+  filterBrands(): void {
+    const term = this.searchBrandName?.trim().toLowerCase() || '';
+    if (!term) {
+      this.displayedBrands = [...this.brands]; // Show all brands if search is empty
+      return;
+    }
+  
     this.displayedBrands = this.brands.filter(brand =>
-      brand.brandName.toLowerCase().includes(term)
+      brand.brandName?.toLowerCase().includes(term)
     );
   }
+  
   filterProducts(): void {
     this.filteredProducts = this.products.filter(product =>
       product.productName.toLowerCase().includes(this.searchName.toLowerCase()) &&

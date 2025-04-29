@@ -1,8 +1,7 @@
 <div id="carouselExampleControls " class="carousel banner-slide1" data-ride="carousel">
     <div id="scrollUp" class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100 lazyload"
-                src="https://astrovedic.co.in/wp-content/uploads/2021/01/contact-banner.jpg" alt="Image"
+            <img class="d-block w-100 lazyload" src="../../../assets/contact_us/contact-banner.jpg" alt="Image"
                 loading="lazy" />
             <div class="carousel-caption sub-banner-caption d-md-block"
                 style="text-align:left;padding-bottom: 100px;font-family: sans-serif;">
@@ -33,7 +32,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6 col-lg-4 mx-auto wow animate__animated animate__fadeInLeft" style="visibility: visible;">
+                                    <div class="col-md-6 col-lg-4 mx-auto wow animate__animated animate__fadeInLeft"
+                                        style="visibility: visible;">
                                         <div class="contact_box text-center">
                                             <a [href]="'mailto:' + generalSetting.email">
                                                 <div class="contact_icon"><i class="far fa-envelope fa-2x"></i></div>
@@ -47,13 +47,16 @@
                                     <div class="col-md-6 col-lg-4 mx-auto wow animate__animated animate__fadeInUp"
                                         style="visibility: visible; animation-name: fadeInUp;">
                                         <div class="contact_box text-center">
-                                            <a target="_blank" href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D">
+                                            <a target="_blank"
+                                                href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D">
                                                 <div class="contact_icon">
                                                     <i class="fas fa-map-marker-alt fa-2x"></i>
                                                 </div>
                                             </a>
                                             <div class="contact_text">
-                                                <a target="_blank" href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D" class="text-dark mt-lg-2">
+                                                <a target="_blank"
+                                                    href="https://www.google.com/maps/@17.4380325,78.488818,21z/data=!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDMxNi4wIKXMDSoASAFQAw%3D%3D"
+                                                    class="text-dark mt-lg-2">
                                                     Location: <br> {{ generalSetting.address }}
                                                 </a>
                                             </div>
@@ -82,86 +85,97 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-3 mb-5">
+        <div class="row mt-3  d-flex align-items-stretch">
+            <!-- Image Column -->
             <div class="col-md-10 col-sm-10 col-xl-6 col-lg-6 mx-auto wow animate__animated animate__fadeInLeft"
                 style="visibility: visible;">
-                <div class="contact_img mt-5 text-center">
-                    <img src="https://img.freepik.com/premium-photo/businessman-pressing-phone-button_488220-10438.jpg?w=900" alt="Image"
-                        class="img-fluid lazyload" style="width: 100%;" loading="lazy">
+                <div class="h-100 d-flex align-items-center justify-content-center">
+                    <img src="../../../assets/contact_us/businessman-pressing-phone-button_488220-10438.avif"
+                        alt="Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;"
+                        loading="lazy">
                 </div>
             </div>
             <div class="mt-5 col-md-10 col-sm-10 col-xl-6 col-lg-6 mx-auto wow animate__animated animate__fadeInRight"
                 style="visibility: visible; animation-name: fadeInRight;">
-                <div class="contactus">
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-4 col-lg-4">
-                                <div class="box text-center"
-                                    style=" padding-top: 1px;margin-bottom: 10px; margin-left: 10px;">
-                                    <h4>Contact Us</h4>
-                                </div>
-                            </div>
-                            <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()" class="w-100">
-                                <div class="col-12">
-                                    <div id="the-message"></div>
-                                    <div id="form-contact" class="form-horizontal">
-                                        <div class="form-group">
-                                            <label for="name" class="form-label required-label">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Enter Name" formControlName="name" required>
-                                            <div *ngIf="submitted && f['name'].errors" class="text-danger">Name is
-                                                required</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="emailId" class="form-label required-label">Email Address</label>
-                                            <input type="email" class="form-control" id="emailId" name="emailId"
-                                                placeholder="Enter Email Address" formControlName="emailId" required>
-                                            <div *ngIf="submitted && f['emailId'].errors" class="text-danger">Email id
-                                                is required</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-sm-4 col-md-4 mb-3">
-                                                <div class="form-group">
-                                                    <label for="countryCode" class="form-label required-label">Country
-                                                        Code</label>
-                                                    <select name="countryCode" id="countryCode" class="form-control"
-                                                        formControlName="countryCode" required>
-                                                        <option value="0">--select--</option>
-                                                        <option *ngFor="let countryCode of countryCodes"
-                                                            [value]="countryCode.countryCode">
-                                                            {{ countryCode.countryCode + " - " + countryCode.countryName}}
-                                                        </option>
-                                                    </select>
-                                                    <div *ngIf="submitted && f['countryCode'].errors"
-                                                        class="text-danger">Country Code is required</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-8 col-md-8 mb-3">
-                                                <div class="form-group">
-                                                    <label for="phoneNo" class="form-label required-label">Phone
-                                                        Number</label>
-                                                    <input type="text" class="form-control" id="phoneNo" name="phoneNo"
-                                                        placeholder="Enter Phone Number" formControlName="phoneNo"
-                                                        required>
-                                                    <div *ngIf="submitted && f['phoneNo'].errors" class="text-danger">
-                                                        Phone No is required</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="message" class="form-label required-label">Message</label>
-                                            <textarea name="message" class="form-control" id="message"
-                                                placeholder="Type Your Message Here . . ." formControlName="message"
-                                                required></textarea>
-                                            <div *ngIf="submitted && f['message'].errors" class="text-danger">Message is
-                                                required</div>
-                                        </div>
-                                        <div class="text-center mb-3">
-                                            <button type="submit" class="btn btn-danger">Send Message</button>
-                                        </div>
+                <div class="h-100 d-flex align-items-center">
+                    <div class="contactus w-100">
+                        <div class="card h-100">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4">
+                                    <div class="box text-center"
+                                        style=" padding-top: 1px;margin-bottom: 10px; margin-left: 10px;">
+                                        <h4>Contact Us</h4>
                                     </div>
                                 </div>
-                            </form>
+                                <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()" class="w-100">
+                                    <div class="col-12">
+                                        <div id="the-message"></div>
+                                        <div id="form-contact" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="name" class="form-label required-label">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="Enter Name" formControlName="name" required>
+                                                <div *ngIf="submitted && f['name'].errors" class="text-danger">Name is
+                                                    required</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="emailId" class="form-label required-label">Email
+                                                    Address</label>
+                                                <input type="email" class="form-control" id="emailId" name="emailId"
+                                                    placeholder="Enter Email Address" formControlName="emailId"
+                                                    required>
+                                                <div *ngIf="submitted && f['emailId'].errors" class="text-danger">Email
+                                                    id
+                                                    is required</div>
+                                            </div>
+                                            <div class="row">
+                                                <!-- <div class="col-12 col-sm-4 col-md-4 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="countryCode"
+                                                            class="form-label required-label">Country
+                                                            Code</label>
+                                                        <select name="countryCode" id="countryCode" class="form-control"
+                                                            formControlName="countryCode" required>
+                                                            <option value="0">--select--</option>
+                                                            <option *ngFor="let countryCode of countryCodes"
+                                                                [value]="countryCode.countryCode">
+                                                                {{ countryCode.countryCode + " - " +
+                                                                countryCode.countryName}}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="submitted && f['countryCode'].errors"
+                                                            class="text-danger">Country Code is required</div>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-12 col-sm-12 col-md-12 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="phoneNo" class="form-label required-label">Phone
+                                                            Number</label>
+                                                        <input type="text" class="form-control" id="phoneNo"
+                                                            name="phoneNo" placeholder="Enter Phone Number"
+                                                            formControlName="phoneNo" required>
+                                                        <div *ngIf="submitted && f['phoneNo'].errors"
+                                                            class="text-danger">
+                                                            Phone No is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message" class="form-label required-label">Message</label>
+                                                <textarea name="message" class="form-control" id="message"
+                                                    placeholder="Type Your Message Here . . ." formControlName="message"
+                                                    required></textarea>
+                                                <div *ngIf="submitted && f['message'].errors" class="text-danger">
+                                                    Message is
+                                                    required</div>
+                                            </div>
+                                            <div class="text-center mb-3">
+                                                <button type="submit" class="btn btn-danger">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,8 +184,6 @@
     </div>
 </section>
 <div class="map">
-    <iframe
-    src="https://www.google.com/maps?q=Mahatma+Gandhi+Road,+Secunderabad,+India&output=embed"
-        width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-        tabindex="0"></iframe>
+    <iframe src="https://www.google.com/maps?q=Mahatma+Gandhi+Road,+Secunderabad,+India&output=embed" width="100%"
+        height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 </div>

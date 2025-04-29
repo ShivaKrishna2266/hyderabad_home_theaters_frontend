@@ -16,10 +16,14 @@
           <div class="input-group">
             <input [type]="hidePassword ? 'password' : 'text'" class="form-control" placeholder="Password"
               formControlName="password" />
-            <div type="button" (click)="togglePasswordVisibility()" class="icon-container">
-              <i [ngClass]="hidePassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                <i [ngClass]="hidePassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
             </div>
           </div>
+
         </div>
         <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" style="color: red;">
           Password is required

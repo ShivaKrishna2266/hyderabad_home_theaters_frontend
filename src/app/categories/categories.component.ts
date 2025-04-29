@@ -23,29 +23,29 @@ export class CategoriesComponent implements OnInit {
   searchTerm: string = '';
 
 
-  
+
   itemsPerPage = 8;
   currentPage = 1;
   totalPages = 0;
 
- // Filter properties
- searchName: string = '';
- selectedPriceRange: any = null;
- // priceRanges = [
- //   { label: '₹100 - ₹499.99', from: 100, to: 499.99 },
- //   { label: '₹500 - ₹999.99', from: 500, to: 999.99 },
- //   { label: '₹1,000 - ₹1,499.99', from: 1000, to: 1499.99 },
- //   { label: '₹1,500 - ₹1,999.99', from: 1500, to: 1999.99 },
- //   { label: '₹2,000 - ₹2,499.99', from: 2000, to: 2499.99 },
- //   { label: '₹2,500 - ₹4,999.99', from: 2500, to: 4999.99 },
- //   { label: '₹5,000 - ₹9,999.99', from: 5000, to: 9999.99 }
- // ];
- priceRanges = [
-   { label: 'Under ₹1000', min: 0, max: 1000 },
-   { label: '₹1000 - ₹5000', min: 1000, max: 5000 },
-   { label: '₹5000 - ₹10000', min: 5000, max: 10000 },
-   { label: 'Above ₹10000', min: 10000, max: Infinity }
- ];
+  // Filter properties
+  searchName: string = '';
+  selectedPriceRange: any = null;
+  // priceRanges = [
+  //   { label: '₹100 - ₹499.99', from: 100, to: 499.99 },
+  //   { label: '₹500 - ₹999.99', from: 500, to: 999.99 },
+  //   { label: '₹1,000 - ₹1,499.99', from: 1000, to: 1499.99 },
+  //   { label: '₹1,500 - ₹1,999.99', from: 1500, to: 1999.99 },
+  //   { label: '₹2,000 - ₹2,499.99', from: 2000, to: 2499.99 },
+  //   { label: '₹2,500 - ₹4,999.99', from: 2500, to: 4999.99 },
+  //   { label: '₹5,000 - ₹9,999.99', from: 5000, to: 9999.99 }
+  // ];
+  priceRanges = [
+    { label: 'Under ₹1000', min: 0, max: 1000 },
+    { label: '₹1000 - ₹5000', min: 1000, max: 5000 },
+    { label: '₹5000 - ₹10000', min: 5000, max: 10000 },
+    { label: 'Above ₹10000', min: 10000, max: Infinity }
+  ];
 
 
 
@@ -71,19 +71,19 @@ export class CategoriesComponent implements OnInit {
       } else {
         this.categoryId = null;
         this.products = []; // Reset if no category is selected
-        this.filteredProducts =[];
+        this.filteredProducts = [];
         this.categoryName = '';
       }
     });
   }
 
-  
-filterCategories() {
-  const term = this.searchTerm.toLowerCase();
-  this.displayedCategoriess = this.categories.filter(category =>
-    category.categoryName.toLowerCase().includes(term)
-  );
-}
+
+  filterCategories() {
+    const term = this.searchTerm.toLowerCase();
+    this.displayedCategoriess = this.categories.filter(category =>
+      category.categoryName.toLowerCase().includes(term)
+    );
+  }
 
   getCategoryName(categoryId: number): void {
     this.dataLoaderService.getCategoryById(categoryId).subscribe({
