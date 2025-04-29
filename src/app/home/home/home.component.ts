@@ -4,6 +4,7 @@ import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { TestimonialDTO } from 'src/app/DTO/testimonialDTO';
+import { CartService } from 'src/app/services/cart/cart.service';
 import { DataLoaderService } from 'src/app/services/data_loader/data-loader.service';
 
 @Component({
@@ -107,6 +108,7 @@ Math: any;
 
   constructor(
               private dataLoaderService: DataLoaderService,
+              private cartService : CartService,
               public router: Router,
   ) {}
 
@@ -275,7 +277,7 @@ Math: any;
 
   // Add Cart//
   addToCart(product: any) {
-    this.dataLoaderService.addToCart(product);
+    this.cartService.addToCart(product);
     this.router.navigate(['/cart']);
   }
   viewProductDetails(product: any) {

@@ -12,7 +12,7 @@
                     <label for="productName" class="form-label"><b>Product Name</b></label>
                     <input type="text" id="productName" name="productName" class="form-control" formControlName="productName">
                 </div>
-
+        
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="brandId" class="form-label"><b>Brand Name</b></label>
                     <select id="brandId" class="form-control" formControlName="brandId">
@@ -20,7 +20,7 @@
                         <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}</option>
                     </select>
                 </div>
-
+        
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="categoryId" class="form-label"><b>Category Name</b></label>
                     <select id="categoryId" class="form-control" formControlName="categoryId">
@@ -28,7 +28,7 @@
                         <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }}</option>
                     </select>
                 </div>
-
+        
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="subCategoryId" class="form-label"><b>SubCategory Name</b></label>
                     <select id="subCategoryId" class="form-control" formControlName="subCategoryId">
@@ -36,7 +36,7 @@
                         <option *ngFor="let subCategory of subCategories" [value]="subCategory.subCategoryId">{{ subCategory.subCategoryName }}</option>
                     </select>
                 </div>
-
+        
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="status" class="form-label"><b>Status</b></label>
                     <select id="status" class="form-control" formControlName="status">
@@ -45,78 +45,82 @@
                         <option value="inactive">INACTIVE</option>
                     </select>
                 </div>
-
+        
                 <div class="col-md-6 col-sm-12 mb-3">
-                    <label for="imageURL" class="form-label required-label"><b>Product Image</b></label>
+                    <label for="imageURL" class="form-label"><b>Product Image</b></label>
                     <input type="file" id="imageURL" name="imageURL" (change)="onFileChange($event, 'imageURL')" accept="image/*" class="form-control" required>
-                    <!-- <input type="file" id="imageURL" name="imageURL" formControlName="imageURL" (change)="onFileChange($event, 'imageURL')" accept="image/*" class="form-control"> -->
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="productPrice" class="form-label"><b>Price</b></label>
                     <input type="number" id="productPrice" class="form-control" formControlName="productPrice">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="productRank" class="form-label"><b>Rank</b></label>
                     <input type="number" id="productRank" class="form-control" formControlName="productRank">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="productSku" class="form-label"><b>SKU</b></label>
                     <input type="text" id="productSku" class="form-control" formControlName="productSku">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="originalPrice" class="form-label"><b>Original Price</b></label>
                     <input type="number" id="originalPrice" class="form-control" formControlName="originalPrice">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="discountedPrice" class="form-label"><b>Discounted Price</b></label>
                     <input type="number" id="discountedPrice" class="form-control" formControlName="discountedPrice">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="discountPercentage" class="form-label"><b>Discount Percentage</b></label>
                     <input type="number" id="discountPercentage" class="form-control" formControlName="discountPercentage">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="color" class="form-label"><b>Color</b></label>
                     <input type="color" id="color" class="form-control" formControlName="color">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="size" class="form-label"><b>Size</b></label>
                     <input type="text" id="size" class="form-control" formControlName="size">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="weight" class="form-label"><b>Weight</b></label>
                     <input type="number" id="weight" class="form-control" formControlName="weight">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="dimensions" class="form-label"><b>Dimensions</b></label>
                     <input type="text" id="dimensions" class="form-control" formControlName="dimensions">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="material" class="form-label"><b>Material</b></label>
                     <input type="text" id="material" class="form-control" formControlName="material">
                 </div>
-
+        
                 <div class="col-md-4 col-sm-4 mb-3">
                     <label for="warrantyPeriod" class="form-label"><b>Warranty Period (Months)</b></label>
                     <input type="number" id="warrantyPeriod" class="form-control" formControlName="warrantyPeriod">
                 </div>
-
+        
+                <div class="col-md-12 col-sm-12 mb-3">
+                    <label for="description" class="form-label"><b>Description</b></label>
+                    <textarea id="description" class="form-control" formControlName="description"></textarea>
+                </div>
+        
                 <div class="text-center mt-4">
-                    <!-- <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Submit</button> -->
                     <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || !imageURL">Submit</button>
                 </div>
             </div>
         </form>
+        
     </div>
 </div>
