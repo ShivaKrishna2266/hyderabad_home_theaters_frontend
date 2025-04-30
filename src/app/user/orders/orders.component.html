@@ -1,8 +1,22 @@
+<div *ngIf="loading">Loading orders...</div>
 
-<div class="container">
-    <div class="alert alert-info text-red  text-center w-100  mt-5  p-4">
-      <h2>Order Placed Successfully</h2>
-      <p>Your order ID is: {{ orderId }}</p>
-      </div>
-      </div>
-    
+<div *ngIf="!loading && userOrders.length > 0">
+  <h3>Your Orders</h3>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let order of userOrders">
+      <strong>Order ID:</strong> {{ order.orderId }}<br>
+      <!-- <strong>Date:</strong> {{ order.orderDate | date: 'mediumDate' }}<br> -->
+      <strong>Total:</strong> ₹{{ order.amount }}<br>
+      <strong>Customer:</strong> {{ order.customerName }}<br>
+      <strong>Status:</strong> {{ order.orderStatus }}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!loading && userOrders.length === 0">
+  <p>No orders found.</p>
+</div>
+
+<div *ngIf="!loading && errorMessage" class="text-danger">
+  {{ errorMessage }}
+</div>
