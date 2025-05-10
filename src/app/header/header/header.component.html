@@ -2,30 +2,84 @@
   <nav class="navbar navbar-expand-lg justify-content-center">
     <div class="container-fluid mt-1 mb-1">
       <a class="navbar-brand" routerLink="/"></a>
+
       <div class="col-md-4 col-sm-12 mt-2 text-start text-md-right">
-        <b>For Enquiry : <i class="fas fa-phone mr-3"></i> +91 6300384953</b>
+        <b>For Enquiry : <i class="fas fa-phone mr-2"></i>+91 8639234351</b>
       </div>
+
       <div class="logo mt-2">
         <p><b>Big sale Live upto 50% Off On AV Receivers</b></p>
       </div>
 
       <div class="col-md-4 col-sm-12 mt-2 text-center text-md-end">
-        <a href="https://www.youtube.com/@hometheatreshyderabad6088?app=desktop" target="_blank">
-          <h3><b><i class="fab fa-youtube fa-2x" style="color: #141212;"></i></b></h3>
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@hometheatreshyderabad6088?app=desktop" target="_blank" class="mx-2">
+          <i class="fab fa-youtube fa-2x" style="color: #141212;"></i>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/hometheatershyderabad/?hl=en" target="_blank" class="mx-2">
+          <i class="fab fa-instagram fa-2x" style="color: #141212;"></i>
+        </a>
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/yourprofile" target="_blank" class="mx-2">
+          <i class="fab fa-facebook fa-2x" style="color: #141212;"></i>
+        </a>
+        <!-- Twitter -->
+        <a href="https://www.twitter.com/yourprofile" target="_blank" class="mx-2">
+          <i class="fab fa-twitter fa-2x" style="color: #141212;"></i>
         </a>
       </div>
     </div>
   </nav>
 </div>
 
+
 <nav class="container-fluid navbar-expand-lg bg-light">
   <div class="d-flex justify-content-between align-items-center">
-    <!-- Search bar -->
+    <!-- Search Icon Trigger -->
     <form class="cart my-2 my-lg-0">
-      <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit"></button> -->
+      <i class="fa-solid fa-magnifying-glass" style="cursor: pointer;" data-bs-toggle="modal"
+        data-bs-target="#searchModal">
+      </i>
     </form>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Search Products</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control" placeholder="Search by brand, category, or product name"
+              [(ngModel)]="searchTerm" (input)="onSearch()" name="search" />
+
+            <!-- <ul class="list-group mt-3">
+              <li *ngFor="let p of filteredProducts"
+                class="list-group-item d-flex justify-content-between align-items-center" (click)="onSelectProduct()">
+                {{ p.productName }}
+                <span class="badge bg-primary">{{ getCategoryName(p.categoryId) }}</span>
+              </li>
+            </ul> -->
+
+            <ul class="list-group mt-3">
+              <li *ngFor="let p of filteredProducts"
+              class="list-group-item d-flex justify-content-between align-items-center"
+              (click)="onSelectProduct(p.productId)">
+            {{ p.productName }}
+            <span class="badge bg-primary">{{ getCategoryName(p.categoryId) }}</span>
+          </li>
+            </ul>
+            
+
+            <p *ngIf="filteredProducts.length === 0 && searchTerm" class="text-muted mt-2">No results found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="logo_2 text-center mt-2">
       <img src="../../../assets/company_loga.avif" alt="HYD Home Theater" class="img-fluid">
     </div>
@@ -42,21 +96,6 @@
       </a>
     </div>
 
-
-    <!-- <div class="cart position-relative">
-      <a routerLink="/cart">
-        <i class="fas fa-shopping-cart"></i>
-        <span *ngIf=" let count of cartCount > 0"
-          class="cart-count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{ count }}
-        </span>
-      </a>
-    </div> -->
-
-
-    <!-- <div class="cart">
-      <a class="" routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
-    </div> -->
   </div>
 </nav>
 
@@ -93,9 +132,9 @@
         </ul>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="#"><b>Discount</b></a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" routerLink="/design-services"><b>Services</b></a>
       </li>

@@ -51,6 +51,8 @@ const routes: Routes = [
   { path: 'cart', component:CartComponent},
   { path: 'checkout-form', component:CheckoutFormComponent},
   { path: 'view-details', component:ViewDetailsComponent},
+  { path: 'view-details/:id', component: ViewDetailsComponent },
+
 
   
 

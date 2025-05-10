@@ -17,26 +17,26 @@ import { DataService } from 'src/app/services/data/data.service';
 })
 export class ViewProductsComponent implements OnInit {
   filteredproducts: ProductDTO[] = [];
+  products: ProductDTO[] = [];  // Store all products to filter
+  productNameFilter: string = '';  // Filter by product name
+  statusFilter: string = '';       // Filter by product status
   brands: BrandDTO[] = [];
   categories: CategoryDTO[] = [];
   subCategories: SubCategoryDTO[] = [];
-
-
 
   public pageSize: number = 5;
   public currentPage: number = 1;
   public totalItems: number = 0;
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+
   constructor(
     private productService: ProductService,
     private router: Router,
-    private brandServices :BrandService,
-    private categoryService :CategoryService,
-    private subCategoryService : SubCategoryService,
+    private brandServices: BrandService,
+    private categoryService: CategoryService,
+    private subCategoryService: SubCategoryService,
     private dataService: DataService,
-
-  ) { };
-
+  ) { }
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -45,16 +45,16 @@ export class ViewProductsComponent implements OnInit {
     this.getAllSubCategories();
   }
 
-
   getAllProducts() {
     this.productService.getAllProducts().subscribe(
       (res: any) => {
-        this.filteredproducts = res.data;
+        this.products = res.data;  // Save the full list of products
+        this.applyFilters();        // Apply filters when products are fetched
       },
       (error) => {
         console.log("Product Not Shown", error);
       }
-    )
+    );
   }
 
   getAllBrands() {
@@ -63,10 +63,11 @@ export class ViewProductsComponent implements OnInit {
         this.brands = res.data;
       },
       (error) => {
-        console.log("Brand is  Not Shown", error);
+        console.log("Brand is Not Shown", error);
       }
-    )
+    );
   }
+
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe(
       (res: any) => {
@@ -75,8 +76,9 @@ export class ViewProductsComponent implements OnInit {
       (error) => {
         console.log("Category is Not Shown", error);
       }
-    )
+    );
   }
+
   getAllSubCategories() {
     this.subCategoryService.getAllSubCategories().subscribe(
       (res: any) => {
@@ -85,7 +87,7 @@ export class ViewProductsComponent implements OnInit {
       (error) => {
         console.log("SubCategory is Not Shown", error);
       }
-    )
+    );
   }
 
   addProduct() {
@@ -93,12 +95,10 @@ export class ViewProductsComponent implements OnInit {
     this.router.navigate(['admin/add-products']);
   }
 
-  updateProduct(product :ProductDTO){
+  updateProduct(product: ProductDTO) {
     this.dataService.productData = product;
     this.router.navigate(['admin/edit-products']);
   }
-
-
 
   getBrandName(brandId: number): string {
     const foundBrand = this.brands.find(brand => brand.brandId === brandId);
@@ -115,19 +115,33 @@ export class ViewProductsComponent implements OnInit {
     return foundSubCategory ? foundSubCategory.subCategoryName : 'Unknown';
   }
 
+  // Apply filters based on product name and status
+  applyFilters(): void {
+  this.filteredproducts = this.products.filter(product => {
+    const matchesProductName = this.productNameFilter
+      ? product.productName.toLowerCase().includes(this.productNameFilter.toLowerCase())
+      : true;
+
+    // Check if product.status is a string or boolean and compare accordingly
+    const matchesStatus = this.statusFilter
+      ? (typeof product.status === 'string'
+        ? product.status.toLowerCase() === this.statusFilter.toLowerCase()
+        : product.status === (this.statusFilter === 'Active'))
+      : true;
+
+    return matchesProductName && matchesStatus;
+  });
+
+  this.calculateTotalPages();
+}
 
 
-
+  // Calculate total pages after applying the filter
   calculateTotalPages() {
-    if (this.filteredproducts) {
-      this.totalItems = this.filteredproducts.length;
-    } else {
-      this.totalItems = 0;
-    }
+    this.totalItems = this.filteredproducts.length;
   }
 
   getTotalPages(): number {
-    this.calculateTotalPages();
     return Math.ceil(this.totalItems / this.pageSize);
   }
 

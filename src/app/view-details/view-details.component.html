@@ -21,17 +21,17 @@
           </span>
         </div>
         <div class="mb-2 text-danger"><strong>Discounted Price:</strong> ₹{{ product.discountedPrice }}</div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <div class="input-group">
             <p>Quantity (1 in cart)</p>
-            <button class="btn btn-outline-secondary btn-sm" type="button"
-              (click)="decreaseQuantity(product)">-</button>
+            <div *ngFor="let product of products; let i = index">
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="decreaseQuantity(i)">-</button>
             <input style="max-width:50px" type="text" class="form-control form-control-sm text-center"
               [value]="product.stockQuantity" readonly />
-            <button class="btn btn-outline-secondary btn-sm" type="button"
-              (click)="increaseQuantity(product)">+</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="increaseQuantity(i)">+</button>
+            </div>
           </div>
-        </div>
+        </div> -->
         <div class="row mt-3">
           <div class="col-md-12 mb-2">
             <div class="action-card">
@@ -41,13 +41,13 @@
             </div>
           </div>
 
-          <div class="col-md-12 mb-2">
+          <!-- <div class="col-md-12 mb-2">
             <div class="action-card">
-              <button class="btn btn-outline-danger w-100" type="button">
+              <button class="btn btn-outline-danger w-100"(click)="checkOut()" type="button">
                 Buy it Now
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <p>
@@ -414,64 +414,101 @@
       </div>
     </ng-container>
   </div>
-<!-- Fallback -->
+  <!-- Fallback -->
   <div *ngIf="!product" class="container mt-4">
     <p class="text-danger animate__animated animate__shakeX">No product found to show.</p>
   </div>
 </div>
-  <!-- Shop By Categories -->
-  <div class="text-center my-5">
-    <h1 class="fw-bold mb-2">Shop by Category</h1>
-    <h4 class="text-muted">
-      You're only a click away from incredible Hyderabad Home Theaters sound.
-    </h4>
-    <h1>Show All Categories</h1>
+<!-- Shop By Categories -->
+<div class="text-center my-5">
+  <h1 class="fw-bold mb-2">Shop by Category</h1>
+  <h4 class="text-muted">
+    You're only a click away from incredible Hyderabad Home Theaters sound.
+  </h4>
+  <!-- Show All Categories -->
+  <div class="top_winning_products mb-2 mt-5">
+    <div class="container text-center mt-4">
+      <h2><b>Discover Our Most Popular Categories</b></h2>
+      <div class="row">
+        <div *ngFor="let category of paginatedCategories" class="col-md-3 col-sm-6">
+          <div class="h-100 p-3 animate__animated animate__fadeInRight">
+            <!-- <div class="card hover-bg text-center"> -->
+            <div class="card hover-bg">
+              <div class="image">
+                <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
+                  class="image">
+              </div>
+              <h4 class="card-title" type="button"><b>{{ category.categoryName }}</b></h4>
+              <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p> -->
+              <p class="card-text"><strong></strong> {{ category.tagline }}</p>
+              <button (click)="router1.navigate(['/categories', category.categoryId])"
+                class="btn btn-primary add-to-cart-btn">
+                View All {{category.categoryName}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination-buttons">
+        <span (click)="prevPage2()" [class.disabled]="currentCategoryPage === 1">
+          <i class="fa fa-arrow-left fa-1x"></i>
+        </span>
+        <span class="page-info">
+          Page {{ currentCategoryPage }} of {{ totalCategoryPages }}
+        </span>
+        <span (click)="nextPage2()" [class.disabled]="currentCategoryPage >= totalCategoryPages">
+          <i class="fa fa-arrow-right fa-1x"></i>
+        </span>
+      </div>
+      <button class="btn btn-primary mt-3 mb-3" routerLink="/categories">View All categories</button>
+    </div>
   </div>
+</div>
 
-  <!--  always trusted --> 
-  <div class="text-center ">
-    <div class="trusted mt-5 ">
-      <h1 class="fw-bold mt-3 ">Often first, always trusted</h1>
-      <h4 class="text-muted mb-5">
-        Cutting-edge technology. Premium sound quality. 11+ years of experience.
-      </h4>
-      <div class="row justify-content-center gx-5">
-        <!-- Card 1 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-          <div class=" p-3 rounded">
-            <div class="feature-image mb-3">
-              <img
-                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw9faaad17/key-pages/homepage/customer-support.svg"
-                alt="Customer Service" class="img-fluid rounded">
-            </div>
-            <h3 class="fw-semibold">Outstanding Customer Service</h3>
-            <h5 class="text-muted">Our customer service team is ready to help.</h5>
+<!--  always trusted -->
+<div class="text-center ">
+  <div class="trusted mt-5 ">
+    <h1 class="fw-bold mt-3 ">Often first, always trusted</h1>
+    <h4 class="text-muted mb-5">
+      Cutting-edge technology. Premium sound quality. 11+ years of experience.
+    </h4>
+    <div class="row justify-content-center gx-5">
+      <!-- Card 1 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class=" p-3 rounded">
+          <div class="feature-image mb-3">
+            <img
+              src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw9faaad17/key-pages/homepage/customer-support.svg"
+              alt="Customer Service" class="img-fluid rounded">
           </div>
+          <h3 class="fw-semibold">Outstanding Customer Service</h3>
+          <h5 class="text-muted">Our customer service team is ready to help.</h5>
         </div>
-        <!-- Card 2 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-          <div class="p-3  rounded">
-            <div class="feature-image mb-3">
-              <img
-                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw1eb5eb73/key-pages/homepage/handcrafted.svg"
-                alt="Trusted Experts" class="img-fluid rounded">
-            </div>
-            <h3 class="fw-semibold">Trusted Experts</h3>
-            <h5 class="text-muted">Our experience means reliable recommendations.</h5>
+      </div>
+      <!-- Card 2 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="p-3  rounded">
+          <div class="feature-image mb-3">
+            <img
+              src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dw1eb5eb73/key-pages/homepage/handcrafted.svg"
+              alt="Trusted Experts" class="img-fluid rounded">
           </div>
+          <h3 class="fw-semibold">Trusted Experts</h3>
+          <h5 class="text-muted">Our experience means reliable recommendations.</h5>
         </div>
-        <!-- Card 3 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-          <div class=" p-3 rounded">
-            <div class="feature-image mb-3">
-              <img
-                src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dwdc6fd9d2/key-pages/homepage/sustainability.svg"
-                alt="Premium Quality" class="img-fluid rounded">
-            </div>
-            <h3 class="fw-semibold">Premium Quality</h3>
-            <h5 class="text-muted">Top-tier sound systems for all homes.</h5>
+      </div>
+      <!-- Card 3 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class=" p-3 rounded">
+          <div class="feature-image mb-3">
+            <img
+              src="https://www.denon.com/on/demandware.static/-/Library-Sites-denon_northamerica_shared/default/dwdc6fd9d2/key-pages/homepage/sustainability.svg"
+              alt="Premium Quality" class="img-fluid rounded">
           </div>
+          <h3 class="fw-semibold">Premium Quality</h3>
+          <h5 class="text-muted">Top-tier sound systems for all homes.</h5>
         </div>
       </div>
     </div>
   </div>
+</div>

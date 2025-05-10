@@ -22,5 +22,6 @@ export class UserComponent implements OnInit {
     this.userStorageService.singOut();
     this.router.navigateByUrl('/login');
   }
+  
 
 }

@@ -1,0 +1,81 @@
+<div class="container">
+  <section class="view-reviews">
+    <div class="card-header mt-5 p-2">
+      <h1 class="mt-3"><b>View All Reviews</b></h1>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="row mt-4 mb-3">
+    <div class="col-md-4 mb-3">
+      <label for="reviewStatus" class="form-label"><b>Status</b></label>
+      <select class="form-select" [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
+        <option [ngValue]="null">All</option>
+        <option value="Approved">Approved</option>
+        <option value="Pending">Pending</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="product" class="form-label"><b>Product</b></label>
+      <select class="form-select" [(ngModel)]="selectedProductId" (ngModelChange)="applyFilters()">
+        <option [ngValue]="null">All Products</option>
+        <option *ngFor="let product of products" [ngValue]="product.productId">
+          {{ product.productName }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Reviews Table -->
+  <div class="table-responsive mt-4">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Sn.No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Rating</th>
+          <th>Headline</th>
+          <th>Review</th>
+          <th>Status</th>
+          <th>Product</th>
+          <th>Created Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let review of reviews let i = index">
+          <td>{{ i + 1 + (currentPage - 1) * pageSize }}</td>
+          <td>{{ review.name }}</td>
+          <td>{{ review.email }}</td>
+          <td>{{ review.rating }}</td>
+          <td>{{ review.headline }}</td>
+          <td>{{ review.review }}</td>
+          <td>{{ review.status }}</td>
+          <td>{{ getProductName(review.productId) }}</td>
+          <td>{{ review.createdDate | date: 'short' }}</td>
+        </tr>
+        <tr *ngIf="filteredReviews.length === 0">
+          <td colspan="9" class="text-center">No reviews found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Review pagination">
+    <ul class="pagination justify-content-end">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">&laquo;</a>
+      </li>
+      <li *ngFor="let page of getPageArray()" class="page-item" [class.active]="page === currentPage">
+        <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">&raquo;</a>
+      </li>
+    </ul>
+    <p class="text-end mt-2">Total Reviews: {{ totalItems }}</p>
+  </nav>
+</div>

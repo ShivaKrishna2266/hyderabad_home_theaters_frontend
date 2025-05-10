@@ -4,7 +4,7 @@ export interface OrderDTO{
     razorpayPaymentId: string;
     razorpayOrderId: string;
     razorpaySignature: string;
-    customerName: string;
+    username: string;
     email: string;
     mobileNumber: string;
     amount: string;

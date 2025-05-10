@@ -135,6 +135,39 @@
   padding: 4px 6px;
   color: white;
 }
+// =============Search form====================//
+.cart i.fa-magnifying-glass {
+  font-size: 1.4rem;
+  color: #333;
+  transition: color 0.3s ease;
+}
 
+.cart i.fa-magnifying-glass:hover {
+  color: #007bff;
+}
 
+#searchModal .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
 
+#searchModal .modal-header {
+  background-color: #f8f9fa;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+#searchModal .modal-body input.form-control {
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+#searchModal .list-group-item {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#searchModal .list-group-item:hover {
+  background-color: #f1f1f1;
+}
