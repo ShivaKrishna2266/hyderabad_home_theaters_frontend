@@ -12,14 +12,17 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./view-brands.component.scss']
 })
 export class ViewBrandsComponent implements OnInit {
-  public filteredBrands: BrandDTO[] = [];
-  categories: CategoryDTO[] = [];
+ public brands: BrandDTO[] = [];             // Full list
+  public filteredBrands: BrandDTO[] = [];     // Filtered result for display
+  public categories: CategoryDTO[] = [];
 
-
+  public selectedBrandId: number | null = null;
+  public selectedStatus: string | null = null;
 
   public pageSize: number = 5;
   public currentPage: number = 1;
   public totalItems: number = 0;
+
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
@@ -27,7 +30,7 @@ export class ViewBrandsComponent implements OnInit {
     private router: Router,
     private dataService: DataService,
     private categoryService: CategoryService
-  ) { };
+  ) { }
 
   ngOnInit(): void {
     this.getAllBrands();
@@ -37,10 +40,11 @@ export class ViewBrandsComponent implements OnInit {
   getAllBrands() {
     this.brandService.getAllBrands().subscribe(
       (res: { data: BrandDTO[] }) => {
-        this.filteredBrands = res.data;
+        this.brands = res.data;
+        this.applyFilters(); // Apply filters after data is loaded
       },
       (error) => {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching brands:', error);
       }
     );
   }
@@ -51,37 +55,49 @@ export class ViewBrandsComponent implements OnInit {
         this.categories = res.data;
       },
       (error) => {
-        console.error(" Not showing Categories", error)
+        console.error("Error fetching categories", error)
       }
-    )
+    );
+  }
+
+ applyFilters() {
+  this.currentPage = 1;
+
+  this.filteredBrands = this.brands.filter(brand => {
+    const matchesBrand = this.selectedBrandId ? brand.brandId === this.selectedBrandId : true;
+    const matchesStatus = this.selectedStatus
+      ? brand.status?.toLowerCase().trim() === this.selectedStatus.toLowerCase().trim()
+      : true;
+
+    return matchesBrand && matchesStatus;
+  });
+
+  this.totalItems = this.filteredBrands.length;
+}
+
+
+  getCategoryName(categoryId: number): string {
+    const found = this.categories.find(category => category.categoryId === categoryId);
+    return found ? found.categoryName : "Unknown";
   }
 
   addBrands(): void {
-    alert("you want to Add Brand")
     this.router.navigate(['admin/add-brands']);
   }
 
-  updateBrand(brand: BrandDTO) {
-    this.dataService.brandData = brand,
-      this.router.navigate(['admin/edit-brands']);
+  updateBrand(brand: BrandDTO): void {
+    this.dataService.brandData = brand;
+    this.router.navigate(['admin/edit-brands']);
   }
 
-  getCategoryName(categoryId: number): string {
-    const foundCategory = this.categories.find(category => category.categoryId === categoryId);
-    return foundCategory ? foundCategory.categoryName : "Unknow";
-  }
-
-
-  calculateTotalPages() {
-    if (this.filteredBrands) {
-      this.totalItems = this.filteredBrands.length;
-    } else {
-      this.totalItems = 0;
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.getTotalPages()) {
+      this.currentPage = page;
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   getTotalPages(): number {
-    this.calculateTotalPages();
     return Math.ceil(this.totalItems / this.pageSize);
   }
 
@@ -103,12 +119,4 @@ export class ViewBrandsComponent implements OnInit {
 
     return pages;
   }
-
-  onPageChange(page: number): void {
-    if (page >= 1 && page <= this.getTotalPages()) {
-      this.currentPage = page;
-      this.pageChange.emit(this.currentPage);
-    }
-  }
-
 }

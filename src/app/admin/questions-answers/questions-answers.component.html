@@ -1,0 +1,56 @@
+<div class="container">
+  <h2 class="mt-4"><b>All Questions</b></h2>
+
+  <!-- Filters -->
+  <div class="row mt-3 mb-4">
+    <div class="col-md-4">
+      <label class="form-label"><b>Status</b></label>
+      <select class="form-select" [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
+        <option [ngValue]="null">All</option>
+        <option value="Approved">Approved</option>
+        <option value="Pending">Pending</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label"><b>Product</b></label>
+      <select class="form-select" [(ngModel)]="selectedProductId" (ngModelChange)="applyFilters()">
+        <option [ngValue]="null">All Products</option>
+        <option *ngFor="let product of products" [ngValue]="product.productId">{{ product.productName }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Questions Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>SN</th>
+          <th>User Name</th>
+          <th>User Email</th>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Product</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let q of filteredQuestions; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ q.userName }}</td>
+          <td>{{ q.userEmail }}</td>
+          <td>{{ q.question }}</td>
+          <td>{{ q.answer }}</td>
+          <td>
+            <img *ngIf="q.image" [src]="q.image" alt="Question Image" width="60" height="60" />
+          </td>
+          <td>{{ q.status }}</td>
+          <!-- <td>{{ q.productId?.productName }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

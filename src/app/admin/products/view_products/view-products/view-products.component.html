@@ -22,13 +22,12 @@
         </div>
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="productName" class="form-label"><b>Product Name</b></label>
-            <select id="productName" class="form-select" name="productName">
-                <option value=""></option>
-            </select>
+            <input id="productName" class="form-control" [(ngModel)]="productNameFilter" (ngModelChange)="applyFilters()">
         </div>
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="status" class="form-label"><b>Product Status</b></label>
-            <select name="status" id="status" class="form-select">
+            <select name="status" id="status" class="form-select" [(ngModel)]="statusFilter" (ngModelChange)="applyFilters()">
+                <option value="">All</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
             </select>
@@ -41,12 +40,11 @@
                 <tr>
                     <th>S.NO</th>
                     <th>Product Name</th>
-                    <!-- <th>Description</th> -->
                     <th>Brand Name</th>
                     <th>Category Name</th>
-                    <th>Sub Category name</th>
+                    <th>Sub Category Name</th>
                     <th>Price</th>
-                    <th>Rank</th>
+                    <th>Rating</th>
                     <th>SKU</th>
                     <th>Image</th>
                     <th>Status</th>
@@ -55,28 +53,27 @@
             </thead>
             <tbody>
                 <tr *ngFor="let product of filteredproducts.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
-                    <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
-                    <td>{{product.productName}}</td>
-                    <td>{{getBrandName(product.brandId)}}</td>
-                    <td>{{getCategoryName(product.categoryId)}}</td>
-                    <td>{{getSubCategoryName(product.subCategoryId)}}</td>
-                    <td>{{product.productPrice}}</td>
-                    <td>{{product.productRank}}</td>
-                    <td>{{product.productSku}}</td>
-                    <td><img src="../../../../../assets/brand_images/{{product.imageURL}}" alt="Cover Image"
-                        style="width: 50px; height: auto;"></td>
-                    <td>{{product.status}}</td>
+                    <td>{{ i + 1 + (currentPage - 1) * pageSize }}</td>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ getBrandName(product.brandId) }}</td>
+                    <td>{{ getCategoryName(product.categoryId) }}</td>
+                    <td>{{ getSubCategoryName(product.subCategoryId) }}</td>
+                    <td>{{ product.productPrice }}</td>
+                    <td>{{ product.productRank }}</td>
+                    <td>{{ product.productSku }}</td>
+                    <td><img src="../../../../../assets/brand_images/{{product.imageURL}}" alt="Cover Image" style="width: 50px; height: auto;"></td>
+                    <td>{{ product.status }}</td>
                     <td>
                         <button class="btn btn-sm btn-primary" (click)="updateProduct(product)">
-                            <i class="fa fa-edit"></i> 
+                            <i class="fa fa-edit"></i>
                         </button>
                     </td>
                 </tr>
             </tbody>
-
         </table>
     </div>
-    <nav aria-label="Page navigation">
+
+    <nav aria-label="Page navigation mt-5">
         <ul class="pagination justify-content-end">
             <li class="page-item" [class.disabled]="currentPage === 1">
                 <a class="page-link" aria-label="Previous" (click)="onPageChange(currentPage - 1)">
@@ -84,15 +81,14 @@
                 </a>
             </li>
             <li *ngFor="let page of getPageArray()" class="page-item" [class.active]="page === currentPage">
-                <a class="page-link">{{ page }}</a>
+                <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
             </li>
             <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
                 <a class="page-link" aria-label="Next" (click)="onPageChange(currentPage + 1)">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
-            
         </ul>
-        <li class="pagination justify-content-end"> Total Records: {{ totalItems }}</li>
+        <p class="text-end mt-2">Total Records: {{ totalItems }}</p>
     </nav>
 </div>

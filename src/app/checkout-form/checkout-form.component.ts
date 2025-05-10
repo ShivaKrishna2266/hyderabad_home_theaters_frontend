@@ -24,7 +24,15 @@ export class CheckoutFormComponent implements OnInit {
     private orderService: OrderService, 
     private paymentServicee:PaymentService,
     private router: Router
-    ) { }
+    ) {
+      const navigation = this.router.getCurrentNavigation();
+  const state = navigation?.extras?.state;
+
+  if (state) {
+    this.cartItems = state['cartItems'];
+    this.totalAmount = state['totalAmount'];
+  }
+     }
 
   ngOnInit(): void {
     this.paymentServicee.totalAmount$.subscribe((totalAmount: number) => {

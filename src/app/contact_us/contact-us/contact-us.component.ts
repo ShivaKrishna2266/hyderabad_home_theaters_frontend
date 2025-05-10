@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContactUsDTO } from 'src/app/DTO/contactUsDTO';
 import { CountryCodeDTO } from 'src/app/DTO/countryCodeDTO';
 import { GeneralSettingsDTO } from 'src/app/DTO/generalSettingsDTO';
@@ -22,6 +23,7 @@ export class ContactUsComponent implements OnInit {
   constructor(
     private dataLoaderService: DataLoaderService,
     private formBuilder: FormBuilder,
+     private snackBar: MatSnackBar,
     // private toastrService: ToastrService
   ) {}
 
@@ -42,28 +44,41 @@ export class ContactUsComponent implements OnInit {
     return this.contactUsForm.controls;
   }
 
-  onSubmit() {
-    this.submitted = true;
-    if (this.contactUsForm.valid) {
-      const contactUsData = this.contactUsForm.value;
-      this.dataLoaderService.addCountactUs(contactUsData).subscribe(
-        (res) => {
-          this.contactUsForm.reset({
-            name: '',
-            emailId: '',
-            phoneNo: '',
-            countryCode: this.countryCode,
-            message: ''
-          });
-          this.submitted = false; // Reset submission state
-          // this.toastrService.success('Thank you for contacting us, our team will get in touch with you shortly');
-        },
-        (error) => {
-          console.error('Error submitting contact form:', error);
-        }
-      );
-    }
+onSubmit() {
+  this.submitted = true;
+  if (this.contactUsForm.valid) {
+    const contactUsData = this.contactUsForm.value;
+    this.dataLoaderService.addCountactUs(contactUsData).subscribe(
+      (res) => {
+        this.contactUsForm.reset({
+          name: '',
+          emailId: '',
+          phoneNo: '',
+          countryCode: this.countryCode,
+          message: ''
+        });
+        this.submitted = false;
+
+        this.snackBar.open('Thank you for contacting us, our team will get in touch with you shortly.', 'Close', {
+          duration: 5000, // ms
+          verticalPosition: 'top', // or 'bottom'
+          horizontalPosition: 'center', // or 'start', 'end'
+          panelClass: ['success-snackbar'] // Optional custom style
+        });
+      },
+      (error) => {
+        console.error('Error submitting contact form:', error);
+        this.snackBar.open('Oops! Something went wrong. Please try again.', 'Close', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: ['error-snackbar']
+        });
+      }
+    );
   }
+}
+
 
   getAllCountryCode() {
     this.dataLoaderService.getAllCountryCodes().subscribe(

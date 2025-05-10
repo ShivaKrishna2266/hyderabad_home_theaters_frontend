@@ -10,57 +10,63 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./view-testimonial.component.scss']
 })
 export class ViewTestimonialComponent implements OnInit {
-deteleTestimonial() {
-throw new Error('Method not implemented.');
-}
-  filteredTestimonails: TestimonialDTO[] = [];
+ filteredTestimonails: TestimonialDTO[] = [];
+  nameFilter: string = '';
+  statusFilter: string = '';
 
-
-   public pageSize: number = 5;
-   public currentPage: number = 1;
-   public totalItems: number = 0;
-   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+  public pageSize: number = 5;
+  public currentPage: number = 1;
+  public totalItems: number = 0;
+  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
-              private dataService : DataService,
-              private  testimonialService : TestimonialService,
-              private router: Router,
-  ){};
-
+    private dataService: DataService,
+    private testimonialService: TestimonialService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.getAllTestimonial();
-    
-  }
-filter() {
-throw new Error('Method not implemented.');
-}
-
-
-getAllTestimonial(){
-  this.testimonialService.getAllTestimonial().subscribe(
-    (res: any)=>{
-      this.filteredTestimonails = res.data;
-    },
-    (error)=>{
-      console.log("Testimonial data Not Showing");
-    }
-  )
-}
-addtestimonail() {
-  alert("Please confirm if you want to add the Testimonial.");
-  this.router.navigate(['admin/add-testimonial']);
-}
-
-updateTestimonial(testimonial : TestimonialDTO){
-  alert("Please confirm if you want to Update the Testimonial.");
-  this.dataService.testimonialData = testimonial,
-  this.router.navigate(['admin/edit-testimonial']);
-}
-updateTestimonialStatus() {
-  throw new Error('Method not implemented.');
   }
 
+  getAllTestimonial() {
+    this.testimonialService.getAllTestimonial().subscribe(
+      (res: any) => {
+        this.filteredTestimonails = res.data;
+        this.applyFilters();  // Apply filters on initial load
+      },
+      (error) => {
+        console.log("Testimonial data Not Showing");
+      }
+    );
+  }
+
+  applyFilters() {
+    this.filteredTestimonails = this.filteredTestimonails.filter(testimonial => {
+      const matchesName = this.nameFilter
+        ? testimonial.name.toLowerCase().includes(this.nameFilter.toLowerCase())
+        : true;
+
+      const matchesStatus = this.statusFilter
+        ? testimonial.status.toLowerCase() === this.statusFilter.toLowerCase()
+        : true;
+
+      return matchesName && matchesStatus;
+    });
+
+    this.calculateTotalPages();
+  }
+
+  addtestimonail() {
+    alert("Please confirm if you want to add the Testimonial.");
+    this.router.navigate(['admin/add-testimonial']);
+  }
+
+  updateTestimonial(testimonial: TestimonialDTO) {
+    alert("Please confirm if you want to Update the Testimonial.");
+    this.dataService.testimonialData = testimonial;
+    this.router.navigate(['admin/edit-testimonial']);
+  }
 
   calculateTotalPages() {
     if (this.filteredTestimonails) {
@@ -101,4 +107,7 @@ updateTestimonialStatus() {
     }
   }
 
+  deteleTestimonial() {
+    // Handle delete functionality here
+  }
 }

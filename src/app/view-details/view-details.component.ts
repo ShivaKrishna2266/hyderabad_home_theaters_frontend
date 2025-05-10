@@ -6,6 +6,9 @@ import { BrandDTO } from '../DTO/brandDTO';
 import { ReviewDTO } from '../DTO/reviewDTO';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionDTO } from '../DTO/questionDTO';
+import { CategoryDTO } from '../DTO/categoryDTO';
+import { CartService } from '../services/cart/cart.service';
+import { PaymentService } from '../services/payment/payment.service';
 
 @Component({
   selector: 'app-view-details',
@@ -20,6 +23,10 @@ export class ViewDetailsComponent implements OnInit {
   products: ProductDTO[] = [];
   reviews: ReviewDTO[] = [];
   chunkedReviews: ReviewDTO[][] = [];
+  totalAmount: number = 0;
+
+  paginatedCategories: CategoryDTO[] = [];
+  categories: CategoryDTO[] = [];
 
   questions: QuestionDTO[] = [];
   image: File | null = null;
@@ -31,15 +38,24 @@ export class ViewDetailsComponent implements OnInit {
   questionsPerPage = 4;
   currentPage = 1;
 
+  currentProductPage: number = 1;
+  currentCategoryPage: number = 1;
+  itemsPerPage: number = 4; // Show 4 items per page
+
 
   reviewForm: FormGroup = this.formBuilder.group({});
   questionForm: FormGroup = this.formBuilder.group({});
   @ViewChild('closeBtn') closeBtn!: ElementRef;
   constructor(private router: Router,
-              private dataLoaderService: DataLoaderService,
-              private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-  ){
+    private dataLoaderService: DataLoaderService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private cartService: CartService,
+    private paymentService: PaymentService,
+
+    public router1: Router,
+
+  ) {
     const navigation = this.router.getCurrentNavigation();
     this.product = navigation?.extras?.state?.['product'];
   };
@@ -75,12 +91,69 @@ export class ViewDetailsComponent implements OnInit {
       image: ['', Validators.required],
       productId: [null]
     });
-     this.questionForm.patchValue({ productId: this.productId});
+    this.questionForm.patchValue({ productId: this.productId });
 
     this.getAllBrands();
     this.getAllProducts();
     this.getAllReview();
     this.getAllQuestions();
+
+    this.getAllCategories();
+
+
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.productId = +id;
+        this.loadProductDetails(this.productId);
+      }
+    });
+
+    // =========================================================
+
+    this.cartItems = this.cartService.getCartItems().map(item => ({
+      ...item,
+      quantity: item.quantity || 1,
+      productName: item.product.productName,
+      categoryName: item.product.categoryName,
+      productPrice: item.product.productPrice
+    }));
+  }
+
+  getSubtotal(): number {
+    return this.cartItems.reduce((total, item) => {
+      return total + (item.product.productPrice * item.quantity);
+    }, 0);
+  }
+
+  deleteItem(index: number) {
+    this.cartItems.splice(index, 1);
+    this.cartService.setCartItems(this.cartItems);
+  }
+
+  increaseQuantity(index: number): void {
+    this.cartItems[index].quantity++;
+    this.cartService.updateQuantity(this.cartItems[index].product, this.cartItems[index].quantity);
+  }
+
+  decreaseQuantity(index: number): void {
+    if (this.cartItems[index].quantity > 1) {
+      this.cartItems[index].quantity--;
+      this.cartService.updateQuantity(this.cartItems[index].product, this.cartItems[index].quantity);
+    }
+
+  }
+
+  getAllCategories(): void {
+    this.dataLoaderService.getAllCategories().subscribe(
+      (res: { data: CategoryDTO[] }) => {
+        this.categories = res.data;
+        this.updatePagination();
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
   }
 
 
@@ -107,18 +180,8 @@ export class ViewDetailsComponent implements OnInit {
     });
   }
 
-  increaseQuantity(product: any): void {
-    this.products[product].stockQuantity++;
-  }
-
-  decreaseQuantity(product: any): void {
-    if (this.products[product].stockQuantity > 1) {
-      this.products[product].stockQuantity--;
-    }
-  }
-
   addToCart(product: any) {
-    this.dataLoaderService.addToCart(product);
+    this.cartService.addToCart(product);
     this.router.navigate(['/cart']);
   }
   setRating(star: number): void {
@@ -196,14 +259,14 @@ export class ViewDetailsComponent implements OnInit {
       }
     }
   }
-  questionSubmit(){
-    if(this.questionForm.valid && this.image){
+  questionSubmit() {
+    if (this.questionForm.valid && this.image) {
       const questionData = this.questionForm.value;
       console.log("Payload Sent:", questionData); // 🔍 Debugging
       if (this.image) {
-      this.dataLoaderService.createQuestion(questionData,this.image).subscribe(
-        (res: any) =>{
-          alert("✅ Question Added Successfully");
+        this.dataLoaderService.createQuestion(questionData, this.image).subscribe(
+          (res: any) => {
+            alert("✅ Question Added Successfully");
             console.log("✅ Question Added Successfully", res);
             this.questionForm.reset();
             this.getAllQuestions();
@@ -226,19 +289,74 @@ export class ViewDetailsComponent implements OnInit {
     this.selectedQuestionIndex = this.selectedQuestionIndex === index ? -1 : index;
   }
 
-  
-get paginatedQuestions() {
-  const start = (this.currentPage - 1) * this.questionsPerPage;
-  return this.questions.slice(start, start + this.questionsPerPage);
+
+  get paginatedQuestions() {
+    const start = (this.currentPage - 1) * this.questionsPerPage;
+    return this.questions.slice(start, start + this.questionsPerPage);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.questions.length / this.questionsPerPage);
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.selectedQuestionIndex = -1; // collapse open answers
+  }
+
+
+  updatePagination(): void {
+    const startIndex = (this.currentCategoryPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedCategories = this.categories.slice(startIndex, endIndex);
+  }
+
+  nextPage2(): void {
+    if (this.currentCategoryPage < Math.ceil(this.categories.length / this.itemsPerPage)) {
+      this.currentCategoryPage++;
+      this.updatePagination();
+    }
+  }
+
+  prevPage2(): void {
+    if (this.currentCategoryPage > 1) {
+      this.currentCategoryPage--;
+      this.updatePagination();
+    }
+  }
+
+  get totalproductPages(): number {
+    return this.products.length ? Math.ceil(this.products.length / this.itemsPerPage) : 1;
+  }
+
+  get totalCategoryPages(): number {
+    return this.categories.length ? Math.ceil(this.categories.length / this.itemsPerPage) : 1;
+  }
+
+  loadProductDetails(id: number) {
+    this.dataLoaderService.getProductById(id).subscribe(
+      res => this.product = res.data,
+      err => console.error('Failed to load product details', err)
+    );
+  }
+
+checkOut() {
+  const subtotal = this.getSubtotal();
+  const shipping = 10;
+  const tax = 20;
+  this.totalAmount = subtotal + shipping + tax; // 👈 assign to class property
+
+  this.cartService.setCartItems(this.cartItems);
+  this.cartService.setTotalAmount(this.totalAmount);
+
+  // ✅ Inform paymentService about total
+  this.paymentService.totalOrderAmount(this.totalAmount);
+
+  this.router.navigate(['/checkout-form'], {
+    state: { cartItems: this.cartItems, totalAmount: this.totalAmount }
+  });
 }
 
-get totalPages() {
-  return Math.ceil(this.questions.length / this.questionsPerPage);
-}
 
-changePage(page: number) {
-  this.currentPage = page;
-  this.selectedQuestionIndex = -1; // collapse open answers
-}
 
 }

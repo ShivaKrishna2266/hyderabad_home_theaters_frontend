@@ -19,6 +19,8 @@ import { ViewTestimonialComponent } from './testimonial/view-testimonial/view-te
 import { AddTestimonialComponent } from './testimonial/add-testimonial/add-testimonial.component';
 import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-testimonial.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ReviewComponent } from './review/review.component';
+import { QuestionsAnswersComponent } from './questions-answers/questions-answers.component';
 
 
 
@@ -41,6 +43,8 @@ import { OrdersComponent } from './orders/orders.component';
     AddTestimonialComponent,
     EditTestimonialComponent,
     OrdersComponent,
+    ReviewComponent,
+    QuestionsAnswersComponent,
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ import { DataService } from 'src/app/services/data/data.service';
   templateUrl: './view-categories.component.html',
   styleUrls: ['./view-categories.component.scss']
 })
-export class ViewCategoriesComponent implements OnInit{
+export class ViewCategoriesComponent implements OnInit {
   public filteredCategories: CategoryDTO[] = [];
   public brands: BrandDTO[] = [];
   public pageSize: number = 5;
@@ -20,6 +20,11 @@ export class ViewCategoriesComponent implements OnInit{
   public statusFilter: string = '';
   public selectedCategoryId: number | null = null;
 
+  public categories: CategoryDTO[] = []; // full list
+
+
+
+
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
@@ -27,12 +32,32 @@ export class ViewCategoriesComponent implements OnInit{
     private router: Router,
     private dataService: DataService,
     private brandService: BrandService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
     this.getAllBrands();
   }
+
+  applyFilters(): void {
+    this.currentPage = 1;
+
+    this.filteredCategories = this.categories.filter(category => {
+      const matchesCategory = this.selectedCategoryId
+        ? category.categoryId === this.selectedCategoryId
+        : true;
+
+      const matchesStatus = this.statusFilter
+        ? category.status?.toLowerCase().trim() === this.statusFilter.toLowerCase().trim()
+        : true;
+
+      return matchesCategory && matchesStatus;
+    });
+
+    this.totalItems = this.filteredCategories.length;
+  }
+
+
 
   getAllBrands(): void {
     this.brandService.getAllBrands().subscribe(
@@ -53,14 +78,15 @@ export class ViewCategoriesComponent implements OnInit{
   getAllCategories(): void {
     this.categoryService.getAllCategories().subscribe(
       (res: any) => {
-        this.filteredCategories = res.data;
-        this.calculateTotalPages();
+        this.categories = res.data;
+        this.applyFilters(); // ✅ initialize filtered list
       },
       (error) => {
         console.error('Failed to fetch categories', error);
       }
     );
   }
+
 
   addCategories(): void {
     alert('You want to add a Category');

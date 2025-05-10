@@ -1,8 +1,9 @@
 export interface ProductDTO{
+    brandName: any;
     productId: number,
     productName: string,
     stockQuantity: number,
-    status: boolean,
+    status: string,
     productPrice: number,
     productRank: number,
     productSku: string,

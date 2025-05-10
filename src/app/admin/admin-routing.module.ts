@@ -18,6 +18,8 @@ import { ViewTestimonialComponent } from './testimonial/view-testimonial/view-te
 import { AddTestimonialComponent } from './testimonial/add-testimonial/add-testimonial.component';
 import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-testimonial.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ReviewComponent } from './review/review.component';
+import { QuestionsAnswersComponent } from './questions-answers/questions-answers.component';
 
 
 const routes: Routes = [
@@ -39,6 +41,8 @@ const routes: Routes = [
     { path: 'add-testimonial', component: AddTestimonialComponent},
     { path: 'edit-testimonial', component: EditTestimonialComponent},
     { path : 'orders', component : OrdersComponent},
+    { path : 'review', component : ReviewComponent},
+    { path : 'Q&S', component : QuestionsAnswersComponent},
   ] 
 }
 ];

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
+import { ProductDTO } from 'src/app/DTO/productDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataLoaderService } from 'src/app/services/data_loader/data-loader.service';
@@ -13,18 +15,28 @@ import { DataLoaderService } from 'src/app/services/data_loader/data-loader.serv
 export class HeaderComponent implements OnInit {
   categories: CategoryDTO[] = [];
   subCategories: SubCategoryDTO[] = [];
+  brands: BrandDTO[] = [];
+  products: ProductDTO[] = [];
+
+  searchTerm: string = '';
+  filteredProducts: ProductDTO[] = [];
+  cartCount: number = 0;
   categoryId: string | null = null;
   selectedCategoryId: number | null = null;
-  cartCount: number = 0;
+
+  bootstrap: any;
 
   constructor(
     private dataLoaderService: DataLoaderService,
     private route: ActivatedRoute,
+    private router: Router,
     private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     this.getAllCategories();
+    this.getAllBrands();
+    this.getAllProducts();
 
     this.cartService.cartItems$.subscribe(items => {
       this.cartCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -37,8 +49,6 @@ export class HeaderComponent implements OnInit {
         if (!isNaN(categoryIdNum)) {
           this.selectedCategoryId = categoryIdNum;
           this.getSubCategoryByCategory(categoryIdNum);
-        } else {
-          console.error('Invalid category ID:', this.categoryId);
         }
       }
     });
@@ -49,20 +59,26 @@ export class HeaderComponent implements OnInit {
       (res: { data: CategoryDTO[] }) => {
         this.categories = res.data;
       },
-      (error) => {
-        console.error('Error fetching categories:', error);
-      }
+      error => console.error('Error fetching categories:', error)
     );
   }
 
-  selectCategory(categoryId: number): void {
-    this.selectedCategoryId = categoryId;
-    this.getSubCategoryByCategory(categoryId);
+  getAllBrands() {
+    this.dataLoaderService.getAllBrands().subscribe(
+      (res: { data: BrandDTO[] }) => {
+        this.brands = res.data;
+      },
+      error => console.error('Error fetching brands:', error)
+    );
   }
 
-  getCategoryName(categoryId: number): string {
-    const category = this.categories.find(b => b.categoryId === categoryId);
-    return category?.categoryName ?? 'Unknown';
+  getAllProducts() {
+    this.dataLoaderService.getAllProducts().subscribe(
+      (res: { data: ProductDTO[] }) => {
+        this.products = res.data;
+      },
+      error => console.error('Error fetching products:', error)
+    );
   }
 
   getSubCategoryByCategory(categoryId: number) {
@@ -70,9 +86,40 @@ export class HeaderComponent implements OnInit {
       (res: { data: SubCategoryDTO[] }) => {
         this.subCategories = res.data;
       },
-      (error) => {
-        console.error('Error fetching subcategories:', error);
-      }
+      error => console.error('Error fetching subcategories:', error)
     );
   }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categories.find(c => c.categoryId === categoryId);
+    return category?.categoryName ?? 'Unknown';
+  }
+
+  getBrandName(brandId: number): string {
+    const brand = this.brands.find(b => b.brandId === brandId);
+    return brand?.brandName ?? 'Unknown';
+  }
+
+  onSearch() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredProducts = this.products.filter(p =>
+      p.productName.toLowerCase().includes(term) ||
+      this.getCategoryName(p.categoryId).toLowerCase().includes(term) ||
+      this.getBrandName(p.brandId)?.toLowerCase().includes(term)
+    );
+  }
+
+  onSelectProduct(productId: number): void {
+    this.searchTerm = '';
+    this.filteredProducts = [];
+  
+    const modalEl = document.getElementById('searchModal');
+    if (modalEl) {
+      const modalInstance = (window as any).bootstrap?.Modal.getInstance(modalEl);
+      modalInstance?.hide();
+    }
+    this.router.navigate(['/view-details', productId]); 
+  }
+
+  
 }

@@ -27,17 +27,19 @@
         <!-- Brand Name Filter -->
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="brandName" class="form-label"><b>Brand Name</b></label>
-            <select id="brandId" class="form-select" name="brandId">
-                <option *ngFor="let brand of filteredBrands" [ngValue]="brand.brandId">{{ brand.brandName }}</option>
+            <select class="form-select" [(ngModel)]="selectedBrandId" (ngModelChange)="applyFilters()">
+                <option [ngValue]="null">All Brands</option>
+                <option *ngFor="let brand of brands" [ngValue]="brand.brandId">{{ brand.brandName }}</option>
             </select>
         </div>
 
         <!-- Brand Status Filter -->
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="status" class="form-label"><b>Brand Status</b></label>
-            <select name="status" id="status" class="form-select">
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+            <select class="form-select"[(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()" id="status" class="form-select">
+                <option [ngValue]="null">All</option>
+                <option [ngValue]="'Active'">Active</option>
+                <option [ngValue]="'Inactive'">Inactive</option>
             </select>
         </div>
 
@@ -63,13 +65,13 @@
                         <td>{{ brand.brandName }}</td>
                         <td>{{ getCategoryName(brand.categoryId) }}</td>
                         <td><img src="../../../../../assets/brand_images/{{brand.imageURL}}" alt="Cover Image"
-                            style="width: 50px; height: auto;"></td>
+                                style="width: 50px; height: auto;"></td>
                         <td>{{ brand.brandDescription }}</td>
                         <td>{{ brand.tagLine }}</td>
                         <td>{{ brand.status}}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" (click)="updateBrand(brand)">
-                                <i class="fa fa-edit"></i> 
+                                <i class="fa fa-edit"></i>
                             </button>
                         </td>
                     </tr>
@@ -78,7 +80,7 @@
         </div>
     </div>
 
-    <nav aria-label="Page navigation">
+   <nav aria-label="Page navigation mt-5">
         <ul class="pagination justify-content-end">
             <li class="page-item" [class.disabled]="currentPage === 1">
                 <a class="page-link" aria-label="Previous" (click)="onPageChange(currentPage - 1)">
@@ -86,15 +88,14 @@
                 </a>
             </li>
             <li *ngFor="let page of getPageArray()" class="page-item" [class.active]="page === currentPage">
-                <a class="page-link">{{ page }}</a>
+                <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
             </li>
             <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
                 <a class="page-link" aria-label="Next" (click)="onPageChange(currentPage + 1)">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
-            
         </ul>
-        <li class="pagination justify-content-end"> Total Records: {{ totalItems }}</li>
+        <p class="text-end mt-2">Total Records: {{ totalItems }}</p>
     </nav>
 </div>
