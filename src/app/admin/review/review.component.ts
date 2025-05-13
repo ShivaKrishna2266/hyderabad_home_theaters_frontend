@@ -24,7 +24,7 @@ export class ReviewComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllReview();
@@ -34,9 +34,7 @@ export class ReviewComponent implements OnInit {
   getAllReview(): void {
     this.reviewService.getAllReviews().subscribe(
       (res: { data: ReviewDTO[] }) => {
-        this.reviews = res.data;
-        console.log('Review data:', this.reviews);
-        this.filteredReviews = [...this.reviews];
+        this.reviews = res.data || [];
         this.applyFilters();
       },
       (error) => {
@@ -47,8 +45,8 @@ export class ReviewComponent implements OnInit {
 
   getAllProducts(): void {
     this.productService.getAllProducts().subscribe(
-      (data: ProductDTO[]) => {
-        this.products = data;
+      (res: { data: ProductDTO[] }) => {
+        this.products = res.data;
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -62,17 +60,18 @@ export class ReviewComponent implements OnInit {
       const matchesProduct = this.selectedProductId !== null ? review.productId === this.selectedProductId : true;
       return matchesStatus && matchesProduct;
     });
+
     this.totalItems = this.filteredReviews.length;
-    this.currentPage = 1;
+    this.currentPage = 1; // reset to first page
   }
 
-  getProductName(productId: number): string {
-    const product = this.products.find(p => p.productId === productId);
-    return product ? product.productName : 'Unknown';
+  getPaginatedReviews(): ReviewDTO[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredReviews.slice(startIndex, startIndex + this.pageSize);
   }
 
   onPageChange(page: number): void {
-    if (page > 0 && page <= this.getTotalPages()) {
+    if (page >= 1 && page <= this.getTotalPages()) {
       this.currentPage = page;
     }
   }
@@ -86,8 +85,8 @@ export class ReviewComponent implements OnInit {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  getPaginatedReviews(): ReviewDTO[] {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredReviews.slice(start, start + this.pageSize);
+  getProductName(productId: number): string {
+    const product = this.products.find(p => p.productId === productId);
+    return product ? product.productName : 'Unknown';
   }
 }
