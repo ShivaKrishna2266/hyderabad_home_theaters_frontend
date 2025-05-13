@@ -14,11 +14,9 @@
     </div>
 
     <div class="col-md-4">
-      <label class="form-label"><b>Product</b></label>
-      <select class="form-select" [(ngModel)]="selectedProductId" (ngModelChange)="applyFilters()">
-        <option [ngValue]="null">All Products</option>
-        <option *ngFor="let product of products" [ngValue]="product.productId">{{ product.productName }}</option>
-      </select>
+      <label class="form-label"><b>User Name</b></label>
+      <input type="text" class="form-control" [(ngModel)]="searchName" (ngModelChange)="applyFilters()"
+        placeholder="Search by name" />
     </div>
   </div>
 
@@ -35,22 +33,41 @@
           <th>Image</th>
           <th>Status</th>
           <th>Product</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let q of filteredQuestions; let i = index">
+        <tr *ngFor="let q of paginatedQuestions; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ q.userName }}</td>
           <td>{{ q.userEmail }}</td>
           <td>{{ q.question }}</td>
           <td>{{ q.answer }}</td>
-          <td>
-            <img *ngIf="q.image" [src]="q.image" alt="Question Image" width="60" height="60" />
-          </td>
+          <td><img src="../../../../../assets/brand_images/{{q.image}}" alt="Cover Image"
+              style="width: 50px; height: auto;"></td>
           <td>{{ q.status }}</td>
-          <!-- <td>{{ q.productId?.productName }}</td> -->
+          <td>{{ getProductName(q.productId) }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary">
+              <i class="fa fa-edit"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="prevPage()">Previous</a>
+      </li>
+      <li class="page-item disabled">
+        <a class="page-link">Page {{ currentPage }} of {{ totalPages }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>

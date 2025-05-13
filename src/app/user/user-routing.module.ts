@@ -9,13 +9,15 @@ import { AccountDetailsComponent } from "./account-details/account-details.compo
 
 
 const routes: Routes = [
-  { path: '', component: UserComponent, children: [
-    { path: 'user', component:UserComponent },
-    { path: 'orders', component:OrdersComponent},
-    { path: 'account-details', component: AccountDetailsComponent}
-    
-  ] 
-}
+  {
+    path: '',
+    component: UserComponent,
+    children: [
+      { path: '', redirectTo: 'account-details', pathMatch: 'full' }, // Default route
+      { path: 'orders', component: OrdersComponent },
+      { path: 'account-details', component: AccountDetailsComponent }
+    ]
+  }
 ];
 
 @NgModule({

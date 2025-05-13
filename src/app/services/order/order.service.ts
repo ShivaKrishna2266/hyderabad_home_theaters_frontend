@@ -1,172 +1,165 @@
 import { HostListener, Injectable } from '@angular/core';
-import { DataLoaderService } from '../data_loader/data-loader.service';
-import { UserStorageService } from '../storege/user-storege.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CartService } from '../cart/cart.service';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
-const apiUrl ="http://localhost:7070"
+import { Router } from '@angular/router';
+import { UserStorageService } from '../storege/user-storege.service';
+import { CartService } from '../cart/cart.service';
+
+const BASIC_URL = "http://localhost:7070";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 declare var Razorpay: any;
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class OrderService {
-  private paymentId: string | undefined;
-  private error: string | undefined;
-
-  // Get profile and user info from localStorage
-  // profile : any = JSON.parse(UserStorageService.getProfile());
-  profile: any = UserStorageService.getProfile();
-  userId: any = UserStorageService.getUserId();
-  email: any = UserStorageService.getEmail();
-  role: any = UserStorageService.getUserRole();
-
-  // Razorpay configuration
-  options = {
-    key: 'rzp_test_4lw80NvYa0WUy3', // Your Razorpay Test Key
-    amount: '10', // Default amount (to be updated dynamically)
-    name: 'Yakambram Kommu', // Placeholder name
-    description: 'Web Development', // Placeholder description
-    image: 'https://www.javachinna.com/wp-content/uploads/2020/02/android-chrome-512x512-1.png',
-    order_id: '', // Razorpay order ID
-    handler: (response: any) => {
-      const successEvent = new CustomEvent('payment.success', {
-        detail: response,
-        bubbles: true,
-        cancelable: true,
-      });
-      window.dispatchEvent(successEvent);
-    },
-    prefill: {
-      name: 'Yakambram',
-      email: 'yakambram.kommu@gmail.com',
-      contact: '9676222172',
-    },
-    notes: {
-      address: 'Manikonda',
-    },
-    theme: {
-      color: '#3399cc',
-    }
-  };
-
-  constructor(
-    private http: HttpClient,
-    private cartService: CartService,
-    private router: Router
-  ) {}
-
-  // Initiates the order and handles Razorpay payment flow
-  initiateOrder(totalAmount: number): void {
-    this.paymentId = '';
-    this.error = '';
-
-    this.createOrder(totalAmount).subscribe(
-      (data) => {
-        // Clear cart before initiating payment
-        this.cartService.clearCart();
-
-        // Update Razorpay options with order data
-        this.options.key = data.secretKey;
-        this.options.order_id = data.razorpayOrderId;
-        this.options.amount = data.applicationFee;
-        this.options.prefill.name = this.profile?.fullName || 'Guest';
-        // this.options.prefill.name = this.profile.fullName;
-        this.options.prefill.email = this.profile.email;
-        this.options.prefill.contact = this.profile.mobileNumber;
-
-        // Open Razorpay Checkout
-        const rzp = new Razorpay(this.options);
-
-        rzp.on('payment.failed', (response: any) => {
-          console.error('Payment Failed:', response.error);
-          this.error = response.error.reason;
-
-          const failedEvent = new CustomEvent('payment.failed', {
-            detail: response,
-            bubbles: true,
-            cancelable: true,
-          });
-          window.dispatchEvent(failedEvent);
-        });
-
-        rzp.on('payment.success', (response: any) => {
-          console.log('Payment Success:', response);
-          const successEvent = new CustomEvent('payment.success', {
-            detail: response,
-            bubbles: true,
-            cancelable: true,
-          });
-          window.dispatchEvent(successEvent);
-        });
-
-        rzp.open();
-
-        // Save Razorpay order ID for future reference
-        UserStorageService.setOrderId(data.razorpayOrderId);
-
-        // Navigate to the order list after payment (optional)
-        this.router.navigateByUrl('/user/orders');
-      },
-      (err) => {
-        this.error = err?.error?.message || 'Order creation failed';
-        console.error('Order Error:', this.error);
-      }
-    );
-  }
-
-  // Handle payment failure
-  @HostListener('window:payment.failed', ['$event'])
-  onPaymentFailed(event: any): void {
-    console.log('Inside onPaymentFailed:', event.detail);
-    // Handle failure (e.g. show toast notification)
-  }
-
-  // Creates an order on the backend
-  createOrder(totalAmount: number): Observable<any> {
-    const payload = {
-      userId: this.userId,
-      userName: this.profile?.fullName || "Default Name", // If profile is null, use fallback value
-      userNmae: this.profile?.username || "defaultUsername",
-      email: this.profile?.email || "default@example.com",
-      mobileNumber: this.profile?.mobileNumber || "0000000000",
-      amount: totalAmount,
-      profile: this.profile // This can be null or an empty object if not needed
+    profile: any = UserStorageService.getProfile();
+    userId: any = UserStorageService.getUserId();
+    email: any = UserStorageService.getEmail();
+    role: any = UserStorageService.getUserRole();
+    paymentId: string | undefined;
+    error: string | undefined;
+    options = {
+        key: "rzp_test_4lw80NvYa0WUy3",
+        amount: "10", 
+        name: "Yakambram Kommu",
+        description: "Web Development",
+        image: "https://www.javachinna.com/wp-content/uploads/2020/02/android-chrome-512x512-1.png",
+        order_id: "",
+        handler: function (response: any) {
+            var event = new CustomEvent("payment.success", 
+                {
+                    detail: response,
+                    bubbles: true,
+                    cancelable: true
+                }
+            );	  
+            window.dispatchEvent(event);
+        },
+        prefill: {
+            name: "Yakambram",
+            email: "yakambram.kommu@gmail.com",
+            contact: "9676222172"
+        },
+        notes: {
+            address: "Manikonda"
+        },
+        theme: {
+            color: "#3399cc"
+        }
     };
-  
-    return this.http.post<any>(`${apiUrl}/order`, payload, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
-  }
 
-  // Updates an order after payment completion
-  updateOrder(order: any): Observable<any> {
-    return this.http.put<any>(`${apiUrl}/order`, {
-      razorpayOrderId: order.razorpay_order_id,
-      razorpayPaymentId: order.razorpay_payment_id,
-      razorpaySignature: order.razorpay_signature
-    }, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
-  }
+    constructor(private http: HttpClient, private cartService: CartService, private router: Router) {}
 
-  // Fetches all orders
-  getOrders(): Observable<any> {
-    return this.http.get<any>(`${apiUrl}/order`, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
-  }
+    initiateOrder(totalAmount: any): void {
+        this.paymentId = ''; 
+        this.error = ''; 
 
-  // Updates the status of an order
-  updateOrderStatus(order: any): Observable<any> {
-    return this.http.put<any>(`${apiUrl}/order/${order.order_status}`, order, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
-  }
+        // Check if profile is available and complete
+        if (!this.profile || !this.profile.fullName || !this.profile.email || !this.profile.mobileNumber) {
+            this.error = 'Profile information is incomplete or missing. Please log in again.';
+            return; // Exit the method if profile data is invalid
+        }
+
+        // Proceed to create the order
+        this.createOrder(totalAmount).subscribe(
+            data => {
+                this.cartService.clearCart();
+                this.options.key = data.secretKey;
+                this.options.order_id = data.razorpayOrderId;
+                this.options.amount = data.applicationFee; // paise
+                this.options.prefill.name = this.profile.fullName;
+                this.options.prefill.email = this.profile.email;
+                this.options.prefill.contact = this.profile.mobileNumber;
+                
+                var rzp1 = new Razorpay(this.options);
+                rzp1.on('payment.failed', (response: { error: { code: any; description: any; source: any; step: any; reason: string; metadata: { order_id: any; payment_id: any; }; }; }) => {
+                    // Handle payment failure
+                    console.log(response.error.code);
+                    console.log(response.error.description);
+                    console.log(response.error.source);
+                    console.log(response.error.step);
+                    console.log(response.error.reason);
+                    console.log(response.error.metadata.order_id);
+                    console.log(response.error.metadata.payment_id);
+                    this.error = response.error.reason;
+
+                    var failedEvent = new CustomEvent('payment.failed', {
+                        detail: response,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    window.dispatchEvent(failedEvent);
+                });
+
+                rzp1.on('payment.success', (response: any) => {
+                    console.log(response);
+                    var event = new CustomEvent('payment.success', {
+                        detail: response,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    window.dispatchEvent(event);
+                });
+
+                rzp1.open();
+                UserStorageService.setOrderId(data.razorpayOrderId);
+                this.router.navigateByUrl('user/orders');
+            },
+            err => {
+                this.error = err.error.message;
+            }
+        );
+    }
+
+    @HostListener('window:payment.success', ['$event']) 
+    onPaymentSuccess(event: { detail: any; }): void {
+        console.log('Inside onPaymentSuccess:', event.detail);
+        this.updateOrder(event.detail).subscribe(
+            data => {
+                this.paymentId = data.message;
+            },
+            err => {
+                this.error = err.error.message;
+            }
+        );
+    }
+
+    @HostListener('window:payment.failed', ['$event']) 
+    onPaymentFailed(event: { detail: any; }): void {
+        console.log('Inside onPaymentFailed:', event.detail);
+        // Handle the payment failure as needed
+    }
+
+    createOrder(totalAmount: any): Observable<any> {
+        return this.http.post(BASIC_URL + '/order', {
+            userId: this.userId,
+            customerName: this.profile.fullName,
+            email: this.profile.email,
+            mobileNumber: this.profile.mobileNumber,
+            amount: totalAmount,
+            profile: this.profile
+        }, httpOptions);
+    }
+
+    updateOrder(order: { razorpay_order_id: any; razorpay_payment_id: any; razorpay_signature: any; }): Observable<any> {
+        return this.http.put(BASIC_URL + '/order', {
+            razorpayOrderId: order.razorpay_order_id,
+            razorpayPaymentId: order.razorpay_payment_id,
+            razorpaySignature: order.razorpay_signature
+        }, httpOptions);
+    }
+
+    getOrders(): Observable<any> {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.get(BASIC_URL + '/order', { headers: headers });
+    }
+
+    updateOrderStatus(order: { order_status: string; }): Observable<any> {
+        return this.http.put(BASIC_URL + '/order' + order.order_status, order, httpOptions);
+    }
 }

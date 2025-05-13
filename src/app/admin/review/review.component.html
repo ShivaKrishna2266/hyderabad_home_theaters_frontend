@@ -29,7 +29,7 @@
   </div>
 
   <!-- Reviews Table -->
-  <div class="table-responsive mt-4">
+  <div class="table-responsive mt-4 mb-3">
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -41,11 +41,12 @@
           <th>Review</th>
           <th>Status</th>
           <th>Product</th>
-          <th>Created Date</th>
+          <th>Date</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let review of reviews let i = index">
+        <tr *ngFor="let review of getPaginatedReviews(); let i = index">
           <td>{{ i + 1 + (currentPage - 1) * pageSize }}</td>
           <td>{{ review.name }}</td>
           <td>{{ review.email }}</td>
@@ -55,6 +56,9 @@
           <td>{{ review.status }}</td>
           <td>{{ getProductName(review.productId) }}</td>
           <td>{{ review.createdDate | date: 'short' }}</td>
+          <td><button class="btn btn-sm btn-primary">
+              <i class="fa fa-edit"></i>
+            </button></td>
         </tr>
         <tr *ngIf="filteredReviews.length === 0">
           <td colspan="9" class="text-center">No reviews found.</td>

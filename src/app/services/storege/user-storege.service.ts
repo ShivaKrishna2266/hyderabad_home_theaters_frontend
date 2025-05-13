@@ -56,9 +56,29 @@ export class UserStorageService {
     return user ? JSON.parse(user) : null;
   }
 
-  static getUserId(): string {
-    return this.getUser()?.userId || '';
+  // static getUserId(): string {
+  //   return this.getUser()?.userId || '';
+  // }
+
+    static getUserId(): string {
+    const user = this.getUser();
+    if(user==null){
+      return '';
+    }
+    return user.userId;
   }
+
+  getProfile(): any {
+  return JSON.parse(localStorage.getItem('profile') || '{}');
+}
+
+getUserId(): string {
+  return localStorage.getItem('userId') || '';
+}
+
+getEmail(): string {
+  return localStorage.getItem('email') || '';
+}
 
   static getEmail(): string {
     return this.getUser()?.username || '';
@@ -72,15 +92,20 @@ export class UserStorageService {
     return UserStorageService.getUser()?.role || '';
   }
 
+   getCurrentUser(): { email: string } | null {
+    // mock user, replace with real auth logic
+    return JSON.parse(localStorage.getItem('user') || 'null');
+  }
+
   // ----- Profile Handling -----
   public saveProfile(profile: any):void{
     window.localStorage.removeItem(PROFILE);
     window.localStorage.setItem(PROFILE, JSON.stringify(profile));
   }
   static getProfile(): UserProfileDTO | null {
-    const profile = localStorage.getItem(PROFILE);
-    return profile ? JSON.parse(profile) as UserProfileDTO : null;
-  }
+  const profile = localStorage.getItem(PROFILE);
+  return profile ? JSON.parse(profile) as UserProfileDTO : null;
+}
 
   // ----- Order ID Handling -----
   static setOrderId(razorpayOrderId: string): void {
