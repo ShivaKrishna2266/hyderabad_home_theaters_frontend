@@ -5,6 +5,7 @@ import { ContactUsDTO } from 'src/app/DTO/contactUsDTO';
 import { CountryCodeDTO } from 'src/app/DTO/countryCodeDTO';
 import { GeneralSettingsDTO } from 'src/app/DTO/generalSettingsDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
+import { ProfileDTO } from 'src/app/DTO/profileDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { TestimonialDTO } from 'src/app/DTO/testimonialDTO';
 
@@ -23,4 +24,5 @@ export class DataService {
   countryCodeData! : CountryCodeDTO;
   generalSettingsData! : GeneralSettingsDTO;
   testimonialData! : TestimonialDTO;
+  profileData! : ProfileDTO;
 }

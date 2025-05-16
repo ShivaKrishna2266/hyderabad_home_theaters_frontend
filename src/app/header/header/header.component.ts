@@ -4,8 +4,11 @@ import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
+import { UserDTO } from 'src/app/DTO/userDTO';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { DataLoaderService } from 'src/app/services/data_loader/data-loader.service';
+import { UserStorageService } from 'src/app/services/storege/user-storege.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +16,14 @@ import { DataLoaderService } from 'src/app/services/data_loader/data-loader.serv
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  isUserLOggedIn: boolean = false;
+  userRole: string = '';
+
+  userDetails: UserDTO | null = null;
+  loading = true;
+  errorMessage = '';
+
+
   categories: CategoryDTO[] = [];
   subCategories: SubCategoryDTO[] = [];
   brands: BrandDTO[] = [];
@@ -30,8 +41,10 @@ export class HeaderComponent implements OnInit {
     private dataLoaderService: DataLoaderService,
     private route: ActivatedRoute,
     private router: Router,
-    private cartService: CartService
-  ) {}
+    private cartService: CartService,
+    private userStorageService: UserStorageService,
+    private userService: UserService,
+  ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -52,6 +65,27 @@ export class HeaderComponent implements OnInit {
         }
       }
     });
+
+   const user = UserStorageService.getUser();
+  const userId = user?.userId;
+
+  if (userId) {
+    this.isUserLOggedIn = true;  // Set isLogined to true if user is logged in
+    this.userService.getUserDetails(userId).subscribe({
+      next: (res) => {
+        this.userDetails = res.data;
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load user details';
+        this.loading = false;
+      }
+    });
+  } else {
+    this.isUserLOggedIn = false;  // Set isLogined to false if no user is logged in
+    this.errorMessage = 'User not found in local storage';
+    this.loading = false;
+  }
   }
 
   getAllCategories() {
@@ -112,14 +146,14 @@ export class HeaderComponent implements OnInit {
   onSelectProduct(productId: number): void {
     this.searchTerm = '';
     this.filteredProducts = [];
-  
+
     const modalEl = document.getElementById('searchModal');
     if (modalEl) {
       const modalInstance = (window as any).bootstrap?.Modal.getInstance(modalEl);
       modalInstance?.hide();
     }
-    this.router.navigate(['/view-details', productId]); 
+    this.router.navigate(['/view-details', productId]);
   }
 
-  
+
 }

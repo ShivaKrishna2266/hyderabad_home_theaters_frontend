@@ -64,12 +64,9 @@ export class CartComponent implements OnInit {
 
     this.cartService.setCartItems(this.cartItems);
     this.cartService.setTotalAmount(totalAmount);
-
-    // ✅ Inform paymentService about total
     this.paymentService.totalOrderAmount(this.totalAmount);
 
     this.router.navigate(['/checkout-form'], {
-      state: { cartItems: this.cartItems, totalAmount: totalAmount }
     });
   }
 }

@@ -3,9 +3,12 @@
 <div class="container-fluid py-5">
   <div class="container py-5">
     <h1 class="mb-4">Billing details</h1>
-    <div class="container d-flex justify-content-end align-items-center py-2">
-      <div *ngIf="userEmail; else loginTemplate" class="text-muted">
-        Logged in as: <strong>{{ userEmail }}</strong>
+    <div class="container d-flex justify-content-center align-items-center py-2">
+      <div *ngIf=" userName; else loginTemplate" class="text-muted">
+         <p><strong>Logged in as : </strong>{{ userName }}</p>
+      </div>
+      <div *ngIf="profile">
+        <p><strong>Email:</strong> {{ profile.email }}</p>
       </div>
       <ng-template #loginTemplate>
         <button class="btn btn-outline-primary btn-sm" (click)="login()">Login</button>

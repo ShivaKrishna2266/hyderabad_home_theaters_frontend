@@ -1,4 +1,5 @@
 export interface UserDTO{
+    profile: any;
 
     userId: number;
     username:string;

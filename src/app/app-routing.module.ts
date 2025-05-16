@@ -21,6 +21,7 @@ import { TermsOfServiceComponent } from './policy_links/terms-of-service/terms-o
 import { CartComponent } from './cart/cart.component';
 import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'register', component:RegisterComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
+  { path: 'user-dashboard', component: UserComponent },
   { path: 'brands', component:BrandsComponent},
   { path: 'brands/:brandId', component: BrandsComponent },
   { path: 'categories', component:CategoriesComponent},
