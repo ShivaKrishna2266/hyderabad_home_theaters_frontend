@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   getRole(): string | null {
-    return this.userStorageService.getUserRole();
+    return UserStorageService.getUserRole();
   }
 
   // getRole(): string | null {
