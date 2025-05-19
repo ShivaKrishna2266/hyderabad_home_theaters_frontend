@@ -67,11 +67,11 @@ export class HeaderComponent implements OnInit {
     });
 
    const user = UserStorageService.getUser();
-  const userId = user?.userId;
+  const username = user?.username;
 
-  if (userId) {
+  if (username) {
     this.isUserLOggedIn = true;  // Set isLogined to true if user is logged in
-    this.userService.getUserDetails(userId).subscribe({
+    this.userService.getUserDetails(username).subscribe({
       next: (res) => {
         this.userDetails = res.data;
         this.loading = false;

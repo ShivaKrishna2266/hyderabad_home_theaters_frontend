@@ -72,10 +72,10 @@ export class OrdersComponent implements OnInit{
         (err) => console.error('Update error:', err)
       );
     } else {
-      this.orderService.createOrder(this.orderForm.value).subscribe(
-        () => this.getAllOrders(),
-        (err) => console.error('Create error:', err)
-      );
+      // this.orderService.createOrder(this.orderForm.value,).subscribe(
+      //   () => this.getAllOrders(),
+      //   (err) => console.error('Create error:', err)
+      // );
     }
 
     this.isShowForm = false;

@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserStorageService } from '../storege/user-storege.service';
 import { CartService } from '../cart/cart.service';
+import { ProfileDTO } from 'src/app/DTO/profileDTO';
 const BASIC_URL = "http://localhost:7070"
 
 const httpOptions = {
-	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 declare var Razorpay: any;
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class OrderService {
-	user: any = UserStorageService.getUser(); // { token, userId, username, email, role }
+  user: any = UserStorageService.getUser(); // { token, userId, username, email, role }
   profile: any = UserStorageService.getProfile(); // parsed profile object
 
   paymentId?: string;
@@ -52,13 +53,13 @@ export class OrderService {
     private http: HttpClient,
     private cartService: CartService,
     private router: Router
-  ) {}
+  ) { }
 
-  initiateOrder(totalAmount: any): void {
+  initiateOrder(totalAmount: any, profile: ProfileDTO): void {
     this.paymentId = '';
     this.error = '';
 
-    this.createOrder(totalAmount).subscribe(
+    this.createOrder(totalAmount, profile).subscribe(
       data => {
         this.cartService.clearCart();
 
@@ -124,7 +125,7 @@ export class OrderService {
     // Handle failure logic
   }
 
-  createOrder(totalAmount: any): Observable<any> {
+  createOrder(totalAmount: any, profile: ProfileDTO): Observable<any> {
     const token = this.user?.token;
 
     const headers = new HttpHeaders({
@@ -134,12 +135,28 @@ export class OrderService {
 
     return this.http.post(`${BASIC_URL}/order`, {
       userId: this.user.userId,
-      userName: this.user.username,
-      customerName: this.profile.fullName,
-      email: this.profile.email,
-      mobileNumber: this.profile.mobileNumber,
-      amount: totalAmount,
-      profile: this.profile
+      customerName: profile.firstName,
+      email: profile.email,
+      mobileNumber: profile.mobileNumber,
+      amount: totalAmount, // ✅ Correct field name
+      profile: {
+        fullName: profile.fullName,
+        firstName: profile.firstName,
+        surname: profile.surname,
+        username: this.user.username,
+        email: profile.email,
+        mobileNumber: profile.mobileNumber,
+        addressLine1: profile.addressLine1,
+        addressLine2: profile.addressLine2,
+        landmark: profile.landmark,
+        area: profile.area,
+        city: profile.city,
+        postCode: profile.postCode,
+        region: profile.region,
+        state: profile.state,
+        country: profile.country
+
+      }
     }, { headers });
   }
 

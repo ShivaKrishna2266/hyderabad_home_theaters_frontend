@@ -1,0 +1,149 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-center align-items-center" style="min-height: 100vh">
+            <form [formGroup]="profileForm" *ngIf="!profile">
+                <div class="col-md-12 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" src="../../../../assets/images/profile.jpg" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h4 class="text-right">Profile Settings</h4>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Name</label><input type="text" formControlName="firstName"
+                                class="form-control" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Surname</label><input type="text" formControlName="surname"
+                                class="form-control" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email ID</label><input readonly type="text" class="form-control"
+                                formControlName="email" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Mobile Number</label><input type="text" formControlName="mobileNumber"
+                                class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Address Line 1</label><input type="text" class="form-control"
+                                formControlName="addressLine1" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Address Line 2</label><input type="text" class="form-control"
+                                formControlName="addressLine2" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Landmark</label><input type="text" class="form-control"
+                                formControlName="landmark" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Area</label><input type="text" class="form-control"
+                                formControlName="area" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">City</label><input type="text" formControlName="city"
+                                class="form-control" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Postcode</label><input type="text" class="form-control"
+                                formControlName="postCode" required />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="labels">State</label><input type="text" formControlName="state"
+                                class="form-control" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="labels">Country</label><input type="text" formControlName="country"
+                                class="form-control" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="labels">Region</label><input type="text" formControlName="region"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit" [disabled]="profileForm.invalid"
+                            (click)="onSubmit()">
+                            Save Profile
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div *ngIf="profile">
+                <div class="col-md-12 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" src="../../../../assets/images/profile.jpg" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h4 class="text-right">Profile Settings</h4>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Name</label>
+                            <div>{{ profile?.firstName }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Surname</label>
+                            <div>{{ profile?.surname }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email ID</label>
+                            <div>{{ profile?.email }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Mobile Number</label>
+                            <div>{{ profile?.mobileNumber }}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Address Line 1</label>
+                            <div>{{ profile?.addressLine1 }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Address Line 2</label>
+                            <div>{{ profile?.addressLine2 }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Landmark</label>
+                            <div>{{ profile?.landmark }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Area</label>
+                            <div>{{ profile?.area }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">City</label>
+                            <div>{{ profile?.city }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Postcode</label>
+                            <div>{{ profile?.postCode }}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="labels">State</label>
+                            <div>{{ profile?.state }}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="labels">Country</label>
+                            <div>{{ profile?.country }}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="labels">Region</label>
+                            <div>{{ profile?.region }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
