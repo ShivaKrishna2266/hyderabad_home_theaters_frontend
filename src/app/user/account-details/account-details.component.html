@@ -5,10 +5,15 @@
 <div *ngIf="loading">Loading user details...</div>
 
 <div *ngIf="!loading && userDetails">
-  <p><strong>Name:</strong> {{ userDetails.username }}</p>
+  <p><strong>Name:</strong> {{ userDetails.firstName }}</p>
   <p><strong>Email:</strong> {{ userDetails.email }}</p>
-  <p><strong>Phone:</strong> {{ userDetails.phoneNumber }}</p>
+  <p><strong>Phone:</strong> {{ userDetails.mobileNumber }}</p>
   <p><strong>Address:</strong></p>
+  <p><strong>addressLine1</strong>{{userDetails.addressLine1}}</p>
+   <p><strong>city</strong>{{userDetails.city}}</p>
+    <p><strong>city</strong>{{userDetails.country}}</p>
+     <p><strong>postCode</strong>{{userDetails.postCode}}</p>
+     
 </div>
 
 <div *ngIf="!loading && errorMessage" class="text-danger">

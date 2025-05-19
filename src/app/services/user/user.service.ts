@@ -13,9 +13,15 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUserDetails(userId: string): Observable<any> {
+  // getUserDetails(userId: string): Observable<any> {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //   return this.http.get(`${this.apiUrl}/user/getUserById/${userId}`, {headers});
+  // }
+
+  getUserDetails(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.apiUrl}/user/getUserById/${userId}`, {headers});
+    return this.http.get(`${this.apiUrl}/user/getUserByFirstName/${username}`, {headers});
   }
 }

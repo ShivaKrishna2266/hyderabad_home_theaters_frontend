@@ -17,61 +17,86 @@ import { ProfileDTO } from '../DTO/profileDTO';
   styleUrls: ['./checkout-form.component.scss']
 })
 export class CheckoutFormComponent implements OnInit {
-  selectedPaymentMethod: string = 'razorpay'; // Default to Razorpay
+  selectedPaymentMethod: string = 'razorpay';
   email: string | null = null;
   userGender: string | null = null;
-  upiId: string = ''; // For Razorpay UPI
-  bankReferenceId: string = ''; // For Bank deposits
+  upiId: string = '';
+  bankReferenceId: string = '';
   totalAmount: number = 0.0;
   razorpayOptions: any = {};
   cartItems: any[] = [];
   userName: string | null = null;
   profile: ProfileDTO | null = null;
 
+  profileForm: ProfileDTO = {
+    fullName: '',
+    firstName: '',
+    username: '',
+    surname: '',
+    email: '',
+    mobileNumber: '',
+    addressLine1: '',
+    addressLine2: '',
+    landmark: '',
+    area: '',
+    city: '',
+    postCode: '',
+    region: '',
+    state: '',
+    country: ''
+  };
+
   constructor(
     public cartService: CartService,
     private orderService: OrderService,
     private paymentServicee: PaymentService,
+    private userService:UserService,
     private router: Router
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras?.state;
 
-    console.log('Navigation state:', state); // <-- Add this log
-
     if (state && state['cartItems'] && state['totalAmount']) {
       this.cartItems = state['cartItems'];
       this.totalAmount = state['totalAmount'];
     } else {
-      // fallback if page is refreshed or direct access
-      console.warn('No navigation state, loading from CartService');
       this.cartItems = this.cartService.getCartItems();
       this.totalAmount = this.cartService.getTotalAmount();
     }
   }
 
   ngOnInit(): void {
-
-    const user = UserStorageService.getUser() as UserDTO;
-
-    if (user) {
-      this.email = user.email;
+  const user = UserStorageService.getUser() as ProfileDTO;
+  //  const user = UserStorageService.getUser();
+    if (user?.username) {
       this.userName = user.username;
-      if (user.profile) {
-        this.profile = JSON.parse(user.profile);
-      }
+
+      // fetch full profile from backend by username
+      this.userService.getUserDetails(user.username).subscribe({
+        next: (res) => {
+          if (res && res.data) {
+            this.profileForm = { ...this.profileForm, ...res.data };
+          }
+        },
+        error: () => {
+          console.error('Failed to fetch profile');
+        }
+      });
     }
 
-    this.paymentServicee.totalAmount$.subscribe((totalAmount: number) => {
-      console.log('Received totalAmount from service:', totalAmount);
-      this.totalAmount = totalAmount;
-    });
+  // Update cart data
+  this.paymentServicee.totalAmount$.subscribe((totalAmount: number) => {
+    this.totalAmount = totalAmount;
+  });
 
-    this.cartService.cartItems$.subscribe((items: any[]) => {
-      this.cartItems = items;
-      this.totalAmount = this.cartItems.reduce((sum, item) => sum + item.product.productPrice * item.quantity, 0);
-    });
-  }
+  this.cartService.cartItems$.subscribe((items: any[]) => {
+    this.cartItems = items;
+    this.totalAmount = this.cartItems.reduce(
+      (sum, item) => sum + item.product.productPrice * item.quantity,
+      0
+    );
+  });
+}
 
   initiatePayment(): void {
     const user = UserStorageService.getUser();
@@ -87,9 +112,10 @@ export class CheckoutFormComponent implements OnInit {
       alert('User profile not found. Please complete your profile first.');
       return;
     }
-    this.orderService.initiateOrder(this.totalAmount);
 
+    this.orderService.initiateOrder(this.totalAmount, this.profileForm);
   }
+
   login(): void {
     this.router.navigate(['/login']);
   }
