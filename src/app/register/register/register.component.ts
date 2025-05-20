@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
         // Navigate based on role
         const role = this.userDataForOtp.role;
         if (role === 'ROLE_ADMIN') {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/admin-dashbord']);
         } else {
           this.router.navigate(['/user']);
         }

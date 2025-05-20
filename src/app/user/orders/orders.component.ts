@@ -13,10 +13,19 @@ export class OrdersComponent implements OnInit{
   loading: boolean = true;
   errorMessage: string = '';
 
+
+paginatedOrders: any[] = [];
+currentPage = 1;
+pageSize = 1;
+
   constructor(
     private userStorageService: UserStorageService,
     private orderService: OrderService
   ) {}
+
+  get totalPages(): number {
+  return Math.ceil(this.userOrders.length / this.pageSize);
+}
 
   ngOnInit(): void {
     const user = UserStorageService.getUser();
@@ -39,5 +48,27 @@ export class OrdersComponent implements OnInit{
         this.loading = false;
       }
     });
+
+      this.updatePaginatedOrders();
   }
+
+
+  updatePaginatedOrders() {
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  this.paginatedOrders = this.userOrders.slice(startIndex, startIndex + this.pageSize);
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePaginatedOrders();
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePaginatedOrders();
+  }
+}
 }

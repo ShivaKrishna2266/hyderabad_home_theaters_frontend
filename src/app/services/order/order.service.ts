@@ -98,6 +98,7 @@ export class OrderService {
         rzp1.open();
 
         UserStorageService.setOrderId(data.razorpayOrderId);
+        alert("Order Placed Successfully Your order ID is:")
         this.router.navigateByUrl('user/orders');
       },
       err => {
@@ -186,14 +187,17 @@ export class OrderService {
     return this.http.get(`${BASIC_URL}/order`, { headers });
   }
 
-  updateOrderStatus(order: { order_status: string }): Observable<any> {
-    const token = this.user?.token;
+ updateOrderStatus(order: { razorpayOrderId: string; orderStatus: string }): Observable<any> {
+  const token = this.user?.token;
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  });
 
-    return this.http.put(`${BASIC_URL}/order/${order.order_status}`, order, { headers });
-  }
+  return this.http.put(`${BASIC_URL}/order/${order.orderStatus}`, {
+    razorpayOrderId: order.razorpayOrderId
+  }, { headers });
+}
+
 }

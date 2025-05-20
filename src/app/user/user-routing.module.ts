@@ -4,6 +4,7 @@ import { UserComponent } from "./user.component";
 import { OrdersComponent } from "./orders/orders.component";
 import { AccountDetailsComponent } from "./account-details/account-details.component";
 import { UserAuthGuard } from "../services/auth/user.auth.guard";
+import { PaymentComponent } from "./payment/payment.component";
 
 
 
@@ -13,7 +14,8 @@ const routes: Routes = [
       // { path: '', redirectTo: 'account-details', pathMatch: 'full' },
       { path: 'user', component:UserComponent },
       { path: 'orders', component: OrdersComponent },
-      { path: 'account-details', component: AccountDetailsComponent }
+      { path: 'account-details', component: AccountDetailsComponent },
+      { path: 'payment', component: PaymentComponent}
     ]
   }
 ];
