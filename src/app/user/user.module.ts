@@ -5,11 +5,13 @@ import { UserRoutingModule } from './user-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrdersComponent } from './orders/orders.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
+import { PaymentComponent } from './payment/payment.component';
 @NgModule({
   declarations: [
     UserComponent,
     OrdersComponent,
     AccountDetailsComponent,
+    PaymentComponent,
    
   ],
   imports: [

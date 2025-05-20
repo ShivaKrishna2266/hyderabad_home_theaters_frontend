@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderService } from '../../services/order/order.service';
+import { OrderDTO } from 'src/app/DTO/orderDTO';
 
 @Component({
   selector: 'app-orders',
@@ -8,15 +9,17 @@ import { OrderService } from '../../services/order/order.service';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit{
-  public orders: any[] = [];
+ public orders: OrderDTO[] = [];
   public isShowForm = false;
   public orderForm!: FormGroup;
   public pageSize = 10;
   public currentPage = 1;
   public totalItems = 0;
   public selectedOrder: any = {};
+
   public orderStatuses: string[] = [
-    'Placed', 'Pending', 'Out for delivery', 'Recieved', 'Cancelled', 'Returned', 'Picked'
+    'Placed', 'Pending', 'Out for delivery', 'Recieved',
+    'Cancelled', 'Returned', 'Picked', 'COMPLETED'
   ];
 
   constructor(
@@ -29,7 +32,7 @@ export class OrdersComponent implements OnInit{
     this.getAllOrders();
   }
 
-  initForm() {
+   initForm() {
     this.orderForm = this.formBuilder.group({
       id: [null],
       userId: [null, Validators.required],
@@ -48,38 +51,30 @@ export class OrdersComponent implements OnInit{
   getAllOrders() {
     this.orderService.getOrders().subscribe(
       (res) => {
-        this.orders = res;
-        this.totalItems = res.length;
+        this.orders = res.data;
+        this.totalItems = this.orders.length;
       },
       (err) => {
-        console.error('Error fetching orders', err);
+        console.error('Error fetching orders:', err);
       }
     );
   }
 
-  editOrder(order: any) {
-    this.selectedOrder = { ...order };
-    this.orderForm.patchValue(this.selectedOrder);
-    this.isShowForm = true;
-  }
+   updateOrderStatus(order: OrderDTO) {
+    if (!order.razorpayOrderId || !order.orderStatus) return;
 
-  save() {
-    if (this.orderForm.invalid) return;
-
-    if (this.orderForm.value.id) {
-      this.orderService.updateOrderStatus(this.orderForm.value).subscribe(
-        () => this.getAllOrders(),
-        (err) => console.error('Update error:', err)
-      );
-    } else {
-      // this.orderService.createOrder(this.orderForm.value,).subscribe(
-      //   () => this.getAllOrders(),
-      //   (err) => console.error('Create error:', err)
-      // );
-    }
-
-    this.isShowForm = false;
-    this.clear();
+    this.orderService.updateOrderStatus({
+      razorpayOrderId: order.razorpayOrderId,
+      orderStatus: order.orderStatus
+    }).subscribe(
+      () => {
+        console.log('Order updated successfully');
+        this.getAllOrders();
+      },
+      (err) => {
+        console.error('Update error:', err);
+      }
+    );
   }
 
   clear() {
