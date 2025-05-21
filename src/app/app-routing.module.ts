@@ -23,6 +23,7 @@ import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'view-details', component:ViewDetailsComponent},
   { path: 'view-details/:id', component: ViewDetailsComponent },
   { path: 'profile', component:ProfileComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent},
 
   
 

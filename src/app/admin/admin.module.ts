@@ -21,6 +21,9 @@ import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-te
 import { OrdersComponent } from './orders/orders.component';
 import { ReviewComponent } from './review/review.component';
 import { QuestionsAnswersComponent } from './questions-answers/questions-answers.component';
+import { EditQuestionAnswerComponent } from './edit-question-answer/edit-question-answer.component';
+import { EditReviewComponent } from './edit-review/edit-review.component';
+import { HeaderComponent } from './header/header.component';
 
 
 
@@ -45,6 +48,9 @@ import { QuestionsAnswersComponent } from './questions-answers/questions-answers
     OrdersComponent,
     ReviewComponent,
     QuestionsAnswersComponent,
+    EditQuestionAnswerComponent,
+    EditReviewComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,

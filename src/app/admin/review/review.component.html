@@ -11,9 +11,8 @@
       <label for="reviewStatus" class="form-label"><b>Status</b></label>
       <select class="form-select" [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
         <option [ngValue]="null">All</option>
-        <option value="Approved">Approved</option>
-        <option value="Pending">Pending</option>
-        <option value="Rejected">Rejected</option>
+        <option value="active">active</option>
+        <option value="Inactive">Inactive</option>
       </select>
     </div>
 
@@ -56,7 +55,7 @@
           <td>{{ review.status }}</td>
           <td>{{ getProductName(review.productId) }}</td>
           <td>{{ review.createdDate | date: 'short' }}</td>
-          <td><button class="btn btn-sm btn-primary">
+          <td><button class="btn btn-sm btn-primary" (click)="editReview(review)">
               <i class="fa fa-edit"></i>
             </button></td>
         </tr>

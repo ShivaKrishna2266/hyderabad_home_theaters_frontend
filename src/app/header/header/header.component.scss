@@ -1,4 +1,20 @@
 /* Ensure the navbar is properly styled */
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 8s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .navbar {
   background-color: #fa1e1e;
   padding: 2px 0;
@@ -124,6 +140,7 @@
     transform: translateY(0);
   }
 }
+
 //===========================================//
 
 .cart {
@@ -135,6 +152,7 @@
   padding: 4px 6px;
   color: white;
 }
+
 // =============Search form====================//
 .cart i.fa-magnifying-glass {
   font-size: 1.4rem;

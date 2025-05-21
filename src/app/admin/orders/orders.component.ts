@@ -8,10 +8,15 @@ import { OrderDTO } from 'src/app/DTO/orderDTO';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit{
- public orders: OrderDTO[] = [];
+export class OrdersComponent implements OnInit {
+  public filteredOrders: OrderDTO[] = [];
+  orders: OrderDTO[] = [];
   public isShowForm = false;
   public orderForm!: FormGroup;
+
+  usernameFilter: string = '';
+  statusFilter: string = '';
+
   public pageSize = 10;
   public currentPage = 1;
   public totalItems = 0;
@@ -25,14 +30,14 @@ export class OrdersComponent implements OnInit{
   constructor(
     private orderService: OrderService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initForm();
     this.getAllOrders();
   }
 
-   initForm() {
+  initForm() {
     this.orderForm = this.formBuilder.group({
       id: [null],
       userId: [null, Validators.required],
@@ -48,11 +53,29 @@ export class OrdersComponent implements OnInit{
     });
   }
 
+
+  applyFilters(): void {
+    this.filteredOrders = this.orders.filter(order => {
+      const matchesUserName = this.usernameFilter
+        ? order.username?.toLowerCase().includes(this.usernameFilter.toLowerCase())
+        : true;
+
+      const matchesStatus = this.statusFilter
+        ? order.orderStatus?.toLowerCase() === this.statusFilter.toLowerCase()
+        : true;
+
+      return matchesUserName && matchesStatus;
+    });
+
+    this.totalItems = this.filteredOrders.length;
+    this.currentPage = 1; // Optional: reset to first page
+  }
+
   getAllOrders() {
     this.orderService.getOrders().subscribe(
       (res) => {
-        this.orders = res.data;
-        this.totalItems = this.orders.length;
+        this.orders = res.data;             // ✅ Assign to the source list
+        this.applyFilters();                // ✅ Apply filters to update filteredOrders
       },
       (err) => {
         console.error('Error fetching orders:', err);
@@ -60,7 +83,8 @@ export class OrdersComponent implements OnInit{
     );
   }
 
-   updateOrderStatus(order: OrderDTO) {
+
+  updateOrderStatus(order: OrderDTO) {
     if (!order.razorpayOrderId || !order.orderStatus) return;
 
     this.orderService.updateOrderStatus({
@@ -80,6 +104,10 @@ export class OrdersComponent implements OnInit{
   clear() {
     this.orderForm.reset();
     this.selectedOrder = {};
+  }
+
+  calculateTotalItems() {
+    this.totalItems = this.filteredOrders.length;
   }
 
   getPageArray(): number[] {
