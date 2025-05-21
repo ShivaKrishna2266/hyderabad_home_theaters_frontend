@@ -15,12 +15,12 @@ export class RegisterComponent implements OnInit {
   signupForm!: FormGroup;
   otpForm!: FormGroup;
   otpSent = false;
-  appUserRoles: string[] = ['ROLE_ADMIN','ROLE_USER']; // You can replace with API-based dynamic roles
+  appUserRoles: string[] = ['ROLE_ADMIN', 'ROLE_USER']; // You can replace with API-based dynamic roles
   userDataForOtp: any;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private router: Router) { }
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -38,22 +38,31 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.signupForm.valid && this.signupForm.value.password === this.signupForm.value.confirmPassword) {
-      this.userDataForOtp = this.signupForm.value;
-      this.authService.register(this.signupForm.value).subscribe({
-        next: (res) => {
-          this.otpSent = true;
-          alert("OTP sent to your mobile number.");
-        },
-        error: (err) => {
-          alert("Failed to send OTP.");
-          console.error(err);
-        }
-      });
-    } else {
+    if (!this.signupForm.valid) {
       alert("Please fill all fields correctly.");
+      return;
     }
+    if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
+      alert("Password and Confirm Password do not match.");
+      return;
+    }
+    this.userDataForOtp = this.signupForm.value;
+    this.authService.register(this.signupForm.value).subscribe({
+      next: (res) => {
+        this.otpSent = true;
+        alert("OTP sent to your mobile number.");
+      },
+      error: (err) => {
+        if (err.error && err.error.error) {
+          alert(err.error.error); // show backend error (like username exists)
+        } else {
+          alert("Failed to send OTP.");
+        }
+        console.error(err);
+      }
+    });
   }
+
 
   onOtpSubmit() {
     const otpPayload = {

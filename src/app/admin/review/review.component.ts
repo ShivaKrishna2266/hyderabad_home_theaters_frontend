@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { ReviewDTO } from 'src/app/DTO/reviewDTO';
 import { ProductService } from 'src/app/services/admin/product.service';
 import { ReviewService } from 'src/app/services/admin/review.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-review',
@@ -23,7 +25,9 @@ export class ReviewComponent implements OnInit {
 
   constructor(
     private reviewService: ReviewService,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router,
+    private dataService: DataService,
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +56,11 @@ export class ReviewComponent implements OnInit {
         console.error('Error fetching products:', error);
       }
     );
+  }
+
+  editReview(reviews: ReviewDTO): void {
+    this.dataService.reviewData = reviews;
+    this.router.navigate(['admin/editReview']);
   }
 
   applyFilters(): void {

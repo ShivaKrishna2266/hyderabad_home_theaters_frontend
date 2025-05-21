@@ -6,6 +6,8 @@ import { CountryCodeDTO } from 'src/app/DTO/countryCodeDTO';
 import { GeneralSettingsDTO } from 'src/app/DTO/generalSettingsDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { ProfileDTO } from 'src/app/DTO/profileDTO';
+import { QuestionDTO } from 'src/app/DTO/questionDTO';
+import { ReviewDTO } from 'src/app/DTO/reviewDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { TestimonialDTO } from 'src/app/DTO/testimonialDTO';
 
@@ -25,4 +27,6 @@ export class DataService {
   generalSettingsData! : GeneralSettingsDTO;
   testimonialData! : TestimonialDTO;
   profileData! : ProfileDTO;
+  questionsData!:QuestionDTO;
+  reviewData! : ReviewDTO;
 }

@@ -36,6 +36,7 @@ import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
 import { UserModule } from "./user/user.module";
 import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -67,6 +68,7 @@ import { ProfileComponent } from './profile/profile.component';
     CheckoutFormComponent,
     ViewDetailsComponent,
     ProfileComponent,
+    ForgotPasswordComponent,
     
     
     

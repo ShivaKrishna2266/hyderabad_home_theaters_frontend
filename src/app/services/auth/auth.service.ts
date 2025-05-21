@@ -41,5 +41,9 @@ export class AuthService {
     });
     return this.http.get(`${this.apiUrl}/protected-route`, { headers });
   }
+
+  requestPasswordReset(username: string) {
+  return this.http.post('/api/auth/forgot-password', { username }, { observe: 'response' });
+}
 }
 

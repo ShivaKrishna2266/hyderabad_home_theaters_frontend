@@ -20,6 +20,9 @@ import { EditTestimonialComponent } from './testimonial/edit-testimonial/edit-te
 import { OrdersComponent } from './orders/orders.component';
 import { ReviewComponent } from './review/review.component';
 import { QuestionsAnswersComponent } from './questions-answers/questions-answers.component';
+import { EditQuestionAnswerComponent } from './edit-question-answer/edit-question-answer.component';
+import { EditReviewComponent } from './edit-review/edit-review.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const routes: Routes = [
@@ -43,6 +46,9 @@ const routes: Routes = [
     { path : 'orders', component : OrdersComponent},
     { path : 'review', component : ReviewComponent},
     { path : 'Q&S', component : QuestionsAnswersComponent},
+    { path : 'editQuestion&Answer', component: EditQuestionAnswerComponent},
+    { path : 'editReview', component: EditReviewComponent},
+    { path : 'header', component: HeaderComponent},
   ] 
 }
 ];

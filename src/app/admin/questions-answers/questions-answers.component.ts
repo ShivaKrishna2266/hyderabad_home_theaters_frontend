@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { QuestionDTO } from 'src/app/DTO/questionDTO';
 import { ProductService } from 'src/app/services/admin/product.service';
 import { QuestionsService } from 'src/app/services/admin/questions.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-questions-answers',
   templateUrl: './questions-answers.component.html',
   styleUrls: ['./questions-answers.component.scss']
 })
-export class QuestionsAnswersComponent implements OnInit{
- questions: QuestionDTO[] = [];
+export class QuestionsAnswersComponent implements OnInit {
+  questions: QuestionDTO[] = [];
   filteredQuestions: QuestionDTO[] = [];
   paginatedQuestions: QuestionDTO[] = [];
   products: ProductDTO[] = [];
@@ -26,8 +28,10 @@ export class QuestionsAnswersComponent implements OnInit{
 
   constructor(
     private questionsService: QuestionsService,
-    private productService: ProductService
-  ) {}
+    private productService: ProductService,
+    private router: Router,
+    private dataService: DataService,
+  ) { }
 
   ngOnInit(): void {
     this.getAllQuestions();
@@ -48,15 +52,26 @@ export class QuestionsAnswersComponent implements OnInit{
     );
   }
 
+  editQuestionAnswers(q: QuestionDTO): void {
+    this.dataService.questionsData = q;
+    this.router.navigate(['admin/editQuestion&Answer']);
+  }
 
-  
+
   applyFilters(): void {
     this.filteredQuestions = this.questions.filter((question) => {
-      const matchesStatus = this.selectedStatus ? question.status === this.selectedStatus : true;
-      const matchesProduct = this.selectedProductId ? question.productId === this.selectedProductId : true;
-      const matchesName = this.searchName
-        ? question.userName.toLowerCase().includes(this.searchName.toLowerCase())
+      const matchesStatus = this.selectedStatus
+        ? question.status === this.selectedStatus
         : true;
+
+      const matchesProduct = this.selectedProductId
+        ? question.productId === this.selectedProductId
+        : true;
+
+      const matchesName = this.searchName
+        ? question.userName?.toLowerCase().includes(this.searchName.toLowerCase())
+        : true;
+
       return matchesStatus && matchesProduct && matchesName;
     });
 
@@ -64,6 +79,7 @@ export class QuestionsAnswersComponent implements OnInit{
     this.currentPage = 1;
     this.updatePaginatedQuestions();
   }
+
 
   updatePaginatedQuestions(): void {
     const start = (this.currentPage - 1) * this.pageSize;
