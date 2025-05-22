@@ -4,8 +4,10 @@ import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ContactUsDTO } from 'src/app/DTO/contactUsDTO';
 import { CountryCodeDTO } from 'src/app/DTO/countryCodeDTO';
 import { GeneralSettingsDTO } from 'src/app/DTO/generalSettingsDTO';
+import { HeaderDTO } from 'src/app/DTO/headerDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { ProfileDTO } from 'src/app/DTO/profileDTO';
+import { ProjectDTO } from 'src/app/DTO/projectDTO';
 import { QuestionDTO } from 'src/app/DTO/questionDTO';
 import { ReviewDTO } from 'src/app/DTO/reviewDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
@@ -29,4 +31,6 @@ export class DataService {
   profileData! : ProfileDTO;
   questionsData!:QuestionDTO;
   reviewData! : ReviewDTO;
+  headerData! : HeaderDTO;
+  projectData! : ProjectDTO;
 }

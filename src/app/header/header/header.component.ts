@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
+import { HeaderDTO } from 'src/app/DTO/headerDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { SubCategoryDTO } from 'src/app/DTO/subCategoryDTO';
 import { UserDTO } from 'src/app/DTO/userDTO';
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
   subCategories: SubCategoryDTO[] = [];
   brands: BrandDTO[] = [];
   products: ProductDTO[] = [];
+  headers: HeaderDTO[] = [];
 
   searchTerm: string = '';
   filteredProducts: ProductDTO[] = [];
@@ -50,6 +52,7 @@ export class HeaderComponent implements OnInit {
     this.getAllCategories();
     this.getAllBrands();
     this.getAllProducts();
+    this.getAllHeaders();
 
     this.cartService.cartItems$.subscribe(items => {
       this.cartCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -111,6 +114,15 @@ export class HeaderComponent implements OnInit {
       (res: { data: ProductDTO[] }) => {
         this.products = res.data;
       },
+      error => console.error('Error fetching products:', error)
+    );
+  }
+
+  getAllHeaders(){
+    this.dataLoaderService.getAllHeaders().subscribe(
+      (res :{data : HeaderDTO[]})=>{
+        this.headers = res.data;
+     },
       error => console.error('Error fetching products:', error)
     );
   }
