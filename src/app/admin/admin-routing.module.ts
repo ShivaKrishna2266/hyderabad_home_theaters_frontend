@@ -23,6 +23,7 @@ import { QuestionsAnswersComponent } from './questions-answers/questions-answers
 import { EditQuestionAnswerComponent } from './edit-question-answer/edit-question-answer.component';
 import { EditReviewComponent } from './edit-review/edit-review.component';
 import { HeaderComponent } from './header/header.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,7 @@ const routes: Routes = [
     { path : 'editQuestion&Answer', component: EditQuestionAnswerComponent},
     { path : 'editReview', component: EditReviewComponent},
     { path : 'header', component: HeaderComponent},
+    { path : 'admin-projects', component: ProjectsComponent}
   ] 
 }
 ];
