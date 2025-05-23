@@ -99,6 +99,17 @@ export class ViewCategoriesComponent implements OnInit {
     this.router.navigate(['/admin/edit-categories']);
   }
 
+  deleteCategory(category: CategoryDTO) {
+    const confirmDelete = confirm(`Are you sure you want to delete the categoey: ${category.categoryName}?`);
+    if (!confirmDelete) return;
+
+    this.categoryService.deleteCategory(category).subscribe({
+      next: () => this.getAllCategories(),  // ✅ Refresh the brand list after deletion
+      error: err => console.error('Delete failed', err)
+    });
+  }
+
+
   calculateTotalPages(): void {
     this.totalItems = this.filteredCategories.length;
   }

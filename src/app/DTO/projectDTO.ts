@@ -4,7 +4,7 @@ export interface ProjectDTO {
     projectName: string;
     customerName: string;
     description: string;
-    images:string;
+   images: string[];
     startDate:Date;
     endDate: Date;
 }

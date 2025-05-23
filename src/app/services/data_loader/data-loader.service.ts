@@ -137,4 +137,8 @@ export class DataLoaderService {
   getAllHeaders(): Observable<any>{
   return this.http.get<any>(this.apiUrl + "/data/getAllHeaders");
   }
+
+  getAllProjects():Observable<any>{
+    return this.http.get<any>(this.apiUrl + "/data/getAllProjects");
+  }
 }

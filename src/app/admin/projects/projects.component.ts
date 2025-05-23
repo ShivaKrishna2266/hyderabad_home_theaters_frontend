@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductDTO } from 'src/app/DTO/productDTO';
 import { ProjectDTO } from 'src/app/DTO/projectDTO';
 import { ProjectService } from 'src/app/services/admin/project.service';
@@ -10,44 +11,44 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
+  public projects: ProjectDTO[] = [];
 
-     public projects: ProjectDTO[] = [];   
+  public pageSize = 5;
+  public currentPage = 1;
+  public totalItems = 0;
 
-   public pageSize: number = 5;
-   public currentPage: number = 1;
-   public totalItems: number = 0;
-  
-   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
-  
-  constructor(
-            private dataService :DataService,
-            private projectService: ProjectService,
-  ){
-
-  }
+  constructor(private projectService: ProjectService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllProjects();
   }
 
-
-  getAllProjects(){
+  getAllProjects() {
     this.projectService.getAllProjects().subscribe(
-      (res :{data :ProjectDTO[]})=>{
-        this.projects = res.data;
+      (res: { data: ProjectDTO[] }) => {
+        this.projects = res.data.map(project => ({
+          ...project,
+          images: project.images ?? [],  // <-- ensure images is an array
+        }));
+        this.totalItems = this.projects.length;
       },
-       (error) => {
+      (error) => {
         console.error('Error fetching Projects:', error);
       }
     );
   }
 
-  addProjects(){}
+  addProjects(): void {
+    this.router.navigate(['admin/add-project']);
+  }
+
+  editProject(project: ProjectDTO): void {
+    console.log('Edit project:', project);
+  }
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.getTotalPages()) {
       this.currentPage = page;
-      this.pageChange.emit(this.currentPage);
     }
   }
 
@@ -73,5 +74,4 @@ export class ProjectsComponent implements OnInit {
 
     return pages;
   }
-
 }
