@@ -1,3 +1,4 @@
+<!-- projects.component.html -->
 <div class="container">
     <section class="view-project">
         <div class="card-header mt-5 p-2">
@@ -10,22 +11,6 @@
     </div>
 
     <div class="row mt-5 mb-3">
-        <!-- Pagination Dropdown -->
-        <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 mb-3">
-            <label for="Show" class="form-label"><b>Show</b></label>
-            <select id="Show" class="form-select" >
-                <option value="2">2</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="30">30</option>
-                <option value="60">60</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-            </select>
-        </div>
-
-
-
         <div class="table-responsive mt-5 mb-4">
             <table class="table table-striped table-hover">
                 <thead>
@@ -42,17 +27,24 @@
                 </thead>
                 <tbody>
                     <tr
-                        *ngFor="let project of projects.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
-                        <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
+                        *ngFor=" let project of projects.slice( (currentPage - 1) * pageSize,currentPage * pageSize);let i = index ">
+                        <td>{{ i + 1 + (currentPage - 1) * pageSize }}</td>
                         <td>{{ project.projectName }}</td>
-                        <td>{{(project.customerName) }}</td>
-                        <td><img src="../../../../../assets/brand_images/{{project.images}}" alt="Cover Image"
-                                style="width: 50px; height: auto;"></td>
-                        <td>{{ project.description }}</td>
-                        <td>{{ project.startDate }}</td>
-                        <td>{{ project.endDate}}</td>
+                        <td>{{ project.customerName }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary">
+                            <ng-container *ngIf="project.images">
+                                <img *ngFor="let image of project.images" [src]="'assets/projects_images/' + image"
+                                    alt="Project Image" style="width: 50px; height: auto; margin-right: 5px;">
+                            </ng-container>
+                            <ng-template #noImage>
+                                <span>No Image</span>
+                            </ng-template>
+                        </td>
+                        <td>{{ project.description }}</td>
+                        <td>{{ project.startDate | date: 'shortDate' }}</td>
+                        <td>{{ project.endDate | date: 'shortDate' }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" (click)="editProject(project)">
                                 <i class="fa fa-edit"></i>
                             </button>
                         </td>
@@ -80,4 +72,4 @@
         </ul>
         <p class="text-end mt-2">Total Records: {{ totalItems }}</p>
     </nav>
-    </div>
+</div>

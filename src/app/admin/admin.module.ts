@@ -25,6 +25,7 @@ import { EditQuestionAnswerComponent } from './edit-question-answer/edit-questio
 import { EditReviewComponent } from './edit-review/edit-review.component';
 import { HeaderComponent } from './header/header.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { AddProjectComponent } from './projects/add-project/add-project.component';
 
 
 
@@ -53,6 +54,7 @@ import { ProjectsComponent } from './projects/projects.component';
     EditReviewComponent,
     HeaderComponent,
     ProjectsComponent,
+    AddProjectComponent,
   ],
   imports: [
     CommonModule,

@@ -2,8 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
+import { BrandService } from 'src/app/services/admin/brand.service';
 import { CategoryService } from 'src/app/services/admin/category.service';
-import { BrandService } from 'src/app/services/brands/brand.service';
+
 import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
@@ -89,6 +90,16 @@ export class ViewBrandsComponent implements OnInit {
     this.dataService.brandData = brand;
     this.router.navigate(['admin/edit-brands']);
   }
+
+deleteBrand(brand: BrandDTO): void {
+  const confirmDelete = confirm(`Are you sure you want to delete the brand: ${brand.brandName}?`);
+  if (!confirmDelete) return;
+
+  this.brandService.deleteBrand(brand).subscribe({
+    next: () => this.getAllBrands(),  // ✅ Refresh the brand list after deletion
+    error: err => console.error('Delete failed', err)
+  });
+}
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.getTotalPages()) {

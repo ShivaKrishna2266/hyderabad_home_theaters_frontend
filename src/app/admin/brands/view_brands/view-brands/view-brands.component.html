@@ -70,11 +70,15 @@
                         <td>{{ brand.brandDescription }}</td>
                         <td>{{ brand.tagLine }}</td>
                         <td>{{ brand.status}}</td>
-                        <td>
+                        <td class="d-flex gap-2">
                             <button class="btn btn-sm btn-primary" (click)="updateBrand(brand)">
                                 <i class="fa fa-edit"></i>
                             </button>
+                            <button class="btn btn-sm btn-danger" (click)="deleteBrand(brand)">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
+
                     </tr>
                 </tbody>
             </table>
