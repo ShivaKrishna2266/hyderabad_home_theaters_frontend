@@ -43,9 +43,12 @@
                         <td>{{ project.description }}</td>
                         <td>{{ project.startDate | date: 'shortDate' }}</td>
                         <td>{{ project.endDate | date: 'shortDate' }}</td>
-                        <td>
+                        <td class="d-flex gap-2">
                             <button class="btn btn-sm btn-primary" (click)="editProject(project)">
                                 <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" (click)="deleteProject(project)">
+                                <i class="fa fa-trash"></i>
                             </button>
                         </td>
                     </tr>

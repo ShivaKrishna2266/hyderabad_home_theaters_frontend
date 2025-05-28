@@ -31,28 +31,34 @@ export class LoginComponent {
     this.hidePassword = !this.hidePassword;
   }
   onSubmit(): void {
-    if (this.loginForm.invalid) {
-      return;
-    }
-    const { username, password } = this.loginForm.value;
-    this.authService.login(username, password).subscribe(
-      (response) => {
-        console.log(response.data);
-        const res = response.body;
-        if (res && res.token && res.role) {
-          this.userStorageService.saveToken(res.token);
-          this.userStorageService.saveUser(res);
-          this.userStorageService.saveProfile(res.profile);
-          if (res.role === 'ROLE_ADMIN') {
-            this.router.navigateByUrl('/admin/admin-dashbord');
-          } else if (res.role === 'ROLE_USER') {
-            this.router.navigateByUrl('/user');
-          } else {
-            this.router.navigateByUrl('/home');
-          }
-        }
-      },
-      (error) => { }
-    );
+  if (this.loginForm.invalid) {
+    return;
   }
+  const { username, password } = this.loginForm.value;
+  this.authService.login(username, password).subscribe(
+    (response) => {
+      console.log(response.data);
+      const res = response.body;
+      if (res && res.token && res.role) {
+        this.userStorageService.saveToken(res.token);
+        this.userStorageService.saveUser(res);
+        this.userStorageService.saveProfile(res.profile);
+        if (res.role === 'ROLE_ADMIN') {
+          this.router.navigateByUrl('/admin/admin-dashbord');
+        } else if (res.role === 'ROLE_USER') {
+          this.router.navigateByUrl('/user');
+        } else {
+          this.router.navigateByUrl('/home');
+        }
+      }
+    },
+    (error) => {
+      // Show alert on error - e.g. mismatch or unauthorized
+      alert('Username and password do not match. Please try again.');
+      // You can also check for specific error status codes if needed:
+      // if (error.status === 401) { ... }
+    }
+  );
+}
+
 }

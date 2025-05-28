@@ -51,9 +51,12 @@
               style="width: 50px; height: auto;"></td>
           <td>{{ q.status }}</td>
           <td>{{ getProductName(q.productId) }}</td>
-          <td>
+          <td  class="d-flex gap-2">
             <button class="btn btn-sm btn-primary">
               <i class="fa fa-edit" (click)="editQuestionAnswers(q)"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteQuestionAnswers(q)">
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>

@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./view-testimonial.component.scss']
 })
 export class ViewTestimonialComponent implements OnInit {
- filteredTestimonails: TestimonialDTO[] = [];
+  filteredTestimonails: TestimonialDTO[] = [];
   nameFilter: string = '';
   statusFilter: string = '';
 
@@ -107,7 +107,13 @@ export class ViewTestimonialComponent implements OnInit {
     }
   }
 
-  deteleTestimonial() {
-    // Handle delete functionality here
+  deteleTestimonial(testimonial: TestimonialDTO): void {
+    const confirmDelete = confirm(`Are you sure you want to delete the testimonial: ${testimonial.name}?`);
+    if (!confirmDelete) return;
+
+    this.testimonialService.deleteTestimonial(testimonial).subscribe({
+      next: () => this.getAllTestimonial(),  // ✅ Refresh the brand list after deletion
+      error: err => console.error('Delete failed', err)
+    });
   }
 }

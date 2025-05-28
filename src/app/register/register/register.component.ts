@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
         if (role === 'ROLE_ADMIN') {
           this.router.navigate(['/admin/admin-dashbord']);
         } else {
-          this.router.navigate(['/user']);
+          this.router.navigate(['/login']);
         }
       },
       error: (err) => {

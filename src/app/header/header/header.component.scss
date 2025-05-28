@@ -2,26 +2,26 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  height: 2rem; /* adjust height as needed */
+  height: 2rem;
 }
 
 .scrolling-text {
   display: inline-block;
   white-space: nowrap;
-  padding-left: 100%; /* Start offscreen */
-  animation: scroll-left 10s linear infinite;
+  animation: scroll-left 15s linear infinite;
   font-weight: bold;
+  will-change: transform;
 }
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(0%);
+    transform: translateX(100%);
   }
-
   100% {
     transform: translateX(-100%);
   }
 }
+
 
 
 .navbar {

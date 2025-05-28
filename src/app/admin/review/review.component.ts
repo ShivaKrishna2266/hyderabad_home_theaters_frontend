@@ -63,6 +63,16 @@ export class ReviewComponent implements OnInit {
     this.router.navigate(['admin/editReview']);
   }
 
+
+  deleteReview(reviews: ReviewDTO): void {
+    const confirmDelete = confirm(`Are you sure you want to delete the Review: ${reviews.name}?`);
+    if (!confirmDelete) return;
+
+    this.reviewService.deleteReview(reviews).subscribe({
+      next: () => this.getAllReview(),  // ✅ Refresh the brand list after deletion
+      error: err => console.error('Delete failed', err)
+    });
+  }
   applyFilters(): void {
     this.filteredReviews = this.reviews.filter((review) => {
       const matchesStatus = this.selectedStatus ? review.status === this.selectedStatus : true;

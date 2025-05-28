@@ -58,6 +58,16 @@ export class QuestionsAnswersComponent implements OnInit {
   }
 
 
+  deleteQuestionAnswers(q: QuestionDTO): void {
+    const confirmDelete = confirm(`Are you sure you want to delete the Question: ${q.question}?`);
+    if (!confirmDelete) return;
+
+    this.questionsService.deleteQuestions(q).subscribe({
+      next: () => this.getAllQuestions(),  // ✅ Refresh the brand list after deletion
+      error: err => console.error('Delete failed', err)
+    });
+  }
+
   applyFilters(): void {
     this.filteredQuestions = this.questions.filter((question) => {
       const matchesStatus = this.selectedStatus

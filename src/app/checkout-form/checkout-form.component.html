@@ -8,7 +8,7 @@
          <p><strong>Logged in as : </strong>{{ userName }}</p>
       </div>
       <div *ngIf="profile">
-        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
       </div>
       <ng-template #loginTemplate>
         <button class="btn btn-outline-primary btn-sm" (click)="login()">Login</button>

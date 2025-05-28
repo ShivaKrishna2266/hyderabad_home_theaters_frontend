@@ -15,7 +15,7 @@ export class OrdersComponent implements OnInit{
 
 
 paginatedOrders: any[] = [];
-currentPage = 1;
+currentPage = 0;
 pageSize = 1;
 
   constructor(

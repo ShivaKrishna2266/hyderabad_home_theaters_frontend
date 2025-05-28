@@ -100,6 +100,16 @@ export class ViewProductsComponent implements OnInit {
     this.router.navigate(['admin/edit-products']);
   }
 
+  deleteProduct(product: ProductDTO): void{
+    const confirmDelete = confirm(`Are you sure you want to delete the product: ${product.productName}?`);
+  if (!confirmDelete) return;
+
+  this.productService.deleteProduct(product).subscribe({
+    next: () => this.getAllProducts(),  // ✅ Refresh the brand list after deletion
+    error: err => console.error('Delete failed', err)
+  });
+  }
+
   getBrandName(brandId: number): string {
     const foundBrand = this.brands.find(brand => brand.brandId === brandId);
     return foundBrand ? foundBrand.brandName : 'Unknown';
