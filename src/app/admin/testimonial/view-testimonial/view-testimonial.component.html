@@ -23,11 +23,12 @@
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="name" class="form-label"><b>Testimonial Name</b></label>
             <input id="name" class="form-control" [(ngModel)]="nameFilter" (ngModelChange)="applyFilters()" />
-        
+
         </div>
         <div class="col-md-4 col-sm-4 mb-3">
             <label for="status" class="form-label"><b>Testimonial Status</b></label>
-            <select name="status" id="status" class="form-select" [(ngModel)]="statusFilter" (ngModelChange)="applyFilters()">
+            <select name="status" id="status" class="form-select" [(ngModel)]="statusFilter"
+                (ngModelChange)="applyFilters()">
                 <option value="">All</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -49,18 +50,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let testimonial of filteredTestimonails.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
+                <tr
+                    *ngFor="let testimonial of filteredTestimonails.slice((currentPage - 1) * pageSize, currentPage * pageSize); let i = index">
                     <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
                     <td>{{testimonial.name}}</td>
                     <td>{{testimonial.designation}}</td>
-                    <td><img src="../../../../assets/testimonial_images/{{testimonial.image}}" alt="Cover Image" style="width: 50px; height: auto;"></td>
+                    <td><img src="../../../../assets/testimonial_images/{{testimonial.image}}" alt="Cover Image"
+                            style="width: 50px; height: auto;"></td>
                     <td>{{testimonial.status}}</td>
                     <td>
                         <button class="btn btn-sm btn-primary" (click)="updateTestimonial(testimonial)">
                             <i class="fa fa-edit"></i>
                         </button>
                     </td>
-                    <td (click)="deteleTestimonial()"><button class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button></td>
+                    <button class="btn btn-sm btn-danger" (click)="deteleTestimonial(testimonial)">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </tr>
             </tbody>
         </table>

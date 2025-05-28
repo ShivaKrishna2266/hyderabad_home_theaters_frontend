@@ -10,20 +10,20 @@ import { ProductDTO } from 'src/app/DTO/productDTO';
 })
 export class ProductService {
 
- 
-   private apiUrl = environment.apiUrl;
- 
-   constructor(
-               private userStorageService:UserStorageService,
-               private http: HttpClient,
-   ) { }
+
+  private apiUrl = environment.apiUrl;
+
+  constructor(
+    private userStorageService: UserStorageService,
+    private http: HttpClient,
+  ) { }
 
 
-   getAllProducts(): Observable<any>{
+  getAllProducts(): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(this.apiUrl + "/admin/getAllProducts" , {headers})
-   }
+    return this.http.get<any>(this.apiUrl + "/admin/getAllProducts", { headers })
+  }
 
   //  addProduct(product: ProductDTO,  imageFile: File): Observable<ProductDTO> {
   //   const formData: FormData = new FormData();
@@ -41,19 +41,27 @@ export class ProductService {
     const formData: FormData = new FormData();
     formData.append('productDTO', new Blob([JSON.stringify(product)], { type: 'application/json' }));
     formData.append('productImageFile', imageFile);
-  
+
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
-  
+
     return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
   }
 
-   updateProduct(product:ProductDTO): Observable<any> {
-      const token = localStorage.getItem('token');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.put<any>(this.apiUrl +"/admin/updateProduct/" +product.productId, product, {headers});
-      }
-  
+  updateProduct(product: ProductDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put<any>(this.apiUrl + "/admin/updateProduct/" + product.productId, product, { headers });
+  }
+
+  deleteProduct(product: ProductDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.delete<any>(`${this.apiUrl}/admin/deleteProductById/${product.productId}`, { headers });
+  }
+
 }

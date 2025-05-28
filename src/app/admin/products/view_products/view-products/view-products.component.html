@@ -63,10 +63,13 @@
                     <td>{{ product.productSku }}</td>
                     <td><img src="../../../../../assets/brand_images/{{product.imageURL}}" alt="Cover Image" style="width: 50px; height: auto;"></td>
                     <td>{{ product.status }}</td>
-                    <td>
+                    <td class="d-flex gap-2">
                         <button class="btn btn-sm btn-primary" (click)="updateProduct(product)">
                             <i class="fa fa-edit"></i>
                         </button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">
+                                <i class="fa fa-trash"></i>
+                            </button>
                     </td>
                 </tr>
             </tbody>

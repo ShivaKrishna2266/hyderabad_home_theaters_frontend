@@ -38,6 +38,18 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
+  deleteProject(project: ProjectDTO): void {
+
+    const confirmDelete = confirm(`Are you sure you want to delete the Project: ${project.projectName}?`);
+    if (!confirmDelete) return;
+
+    this.projectService.deleteProject(project).subscribe({
+      next: () => this.getAllProjects(),  // ✅ Refresh the brand list after deletion
+      error: err => console.error('Delete failed', err)
+    });
+
+  }
+
   addProjects(): void {
     this.router.navigate(['admin/add-project']);
   }

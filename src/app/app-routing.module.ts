@@ -24,6 +24,10 @@ import { ViewDetailsComponent } from './view-details/view-details.component';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { HomeTheatreComponent } from './home-theatre/home-theatre.component';
+import { AcousticDesignComponent } from './acoustic-design/acoustic-design.component';
+import { VisitOurWarehouseComponent } from './visit-our-warehouse/visit-our-warehouse.component';
+import { HomeSecurityComponent } from './home-security/home-security.component';
 
 
 
@@ -58,6 +62,10 @@ const routes: Routes = [
   { path: 'view-details/:id', component: ViewDetailsComponent },
   { path: 'profile', component:ProfileComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'home-theater', component: HomeTheatreComponent},
+  { path: 'acoustic-design', component:AcousticDesignComponent},
+  { path: 'visit-our-warehouse', component:VisitOurWarehouseComponent},
+  { path: 'home-security', component:HomeSecurityComponent},
 
   
 

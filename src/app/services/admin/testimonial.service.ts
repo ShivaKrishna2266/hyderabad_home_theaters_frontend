@@ -35,7 +35,7 @@ export class TestimonialService {
     return this.http.post<any>(this.apiUrl + "/admin/addTestimonials", formData, { headers })
   }
 
-  updateTestimonial(testimonial: TestimonialDTO,  imageFile: File): Observable<any> {
+  updateTestimonial(testimonial: TestimonialDTO, imageFile: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('testimonialImageFile', imageFile);
     formData.append('testimonialDTO', JSON.stringify(testimonial));
@@ -47,4 +47,12 @@ export class TestimonialService {
     return this.http.put<any>(this.apiUrl + "/admin/updateTestimonial/" + testimonial.testimonialId, formData, { headers });
   }
 
+
+  deleteTestimonial(testimonial: TestimonialDTO): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.delete<any>(`${this.apiUrl}/admin/deleteTestimonialById/${testimonial.testimonialId}`, { headers });
+  }
 }

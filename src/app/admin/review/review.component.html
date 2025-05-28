@@ -55,9 +55,14 @@
           <td>{{ review.status }}</td>
           <td>{{ getProductName(review.productId) }}</td>
           <td>{{ review.createdDate | date: 'short' }}</td>
-          <td><button class="btn btn-sm btn-primary" (click)="editReview(review)">
+          <td class="d-flex gap-2">
+            <button class="btn btn-sm btn-primary" (click)="editReview(review)">
               <i class="fa fa-edit"></i>
-            </button></td>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteReview(review)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
         </tr>
         <tr *ngIf="filteredReviews.length === 0">
           <td colspan="9" class="text-center">No reviews found.</td>

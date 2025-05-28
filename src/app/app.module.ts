@@ -37,6 +37,10 @@ import { ViewDetailsComponent } from './view-details/view-details.component';
 import { UserModule } from "./user/user.module";
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { HomeTheatreComponent } from './home-theatre/home-theatre.component';
+import { AcousticDesignComponent } from './acoustic-design/acoustic-design.component';
+import { VisitOurWarehouseComponent } from './visit-our-warehouse/visit-our-warehouse.component';
+import { HomeSecurityComponent } from './home-security/home-security.component';
 
 
 
@@ -69,6 +73,10 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ViewDetailsComponent,
     ProfileComponent,
     ForgotPasswordComponent,
+    HomeTheatreComponent,
+    AcousticDesignComponent,
+    VisitOurWarehouseComponent,
+    HomeSecurityComponent,
     
     
     

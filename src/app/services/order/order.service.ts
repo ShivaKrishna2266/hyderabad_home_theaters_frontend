@@ -136,7 +136,7 @@ export class OrderService {
 
     return this.http.post(`${BASIC_URL}/order`, {
       userId: this.user.userId,
-      customerName: profile.firstName,
+      customerName: profile.username,
       email: profile.email,
       mobileNumber: profile.mobileNumber,
       amount: totalAmount, // ✅ Correct field name
