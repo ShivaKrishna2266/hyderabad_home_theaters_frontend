@@ -2,13 +2,36 @@
 <div *ngIf="product" class="container mt-4">
   <div class="p-4">
     <div class="row">
-      <!-- Fixed Image Column -->
-      <div class="col-md-6 col-sm-6 col-lg-6 d-flex justify-content-center ">
-        <img src="https://m.media-amazon.com/images/I/71v1Rl3RBUL.jpg" class="product-image" alt="Product Image" />
-      </div>
+      <!-- LEFT SIDE: Product Images -->
+      <div class="col-md-6 position-sticky" style="top: 20px; height: fit-content;">
+        <div id="productCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let imageFileName of product.images; let i = index" class="carousel-item"
+              [ngClass]="{ 'active': i === 0 }">
+              <img [src]="'assets/product_images/' + imageFileName" class="d-block w-100 img-fluid rounded shadow"
+                alt="Product Image">
+            </div>
+          </div>
 
-      <!-- Scrollable Product Info -->
-      <div class="col-md-6 product-info">
+          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+          <div class="carousel-indicators">
+            <button *ngFor="let image of product.images; let i = index" type="button" data-bs-target="#productCarousel"
+              [attr.data-bs-slide-to]="i" [class.active]="i === 0" aria-current="i === 0 ? 'true' : undefined"
+              [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT SIDE: Product Info -->
+      <div class="col-md-6 col-sm-12 product-info">
         <h3>{{ getBrandName(product.brandId) }}– Redefining Strength and Style</h3>
         <h2>{{ product.productName }}</h2>
         <div class="mb-2 text-success">
@@ -103,8 +126,8 @@
               {{ product.status ? 'Available' : 'Unavailable' }}
             </span>
           </li>
-          <li>Category ID: {{ product.categoryId }}</li>
-          <li>SubCategory ID: {{ product.subCategoryId }}</li>
+          <li>Category: {{ getCategoryName(product.categoryId) }}</li>
+          <!-- <li>SubCategory ID: {{ product.subCategoryId }}</li> -->
         </ul>
         <hr>
 
@@ -431,15 +454,15 @@
       <h2><b>Discover Our Most Popular Categories</b></h2>
       <div class="row">
         <div *ngFor="let category of paginatedCategories" class="col-md-3 col-sm-6">
-          <div class="h-100 p-3 animate__animated animate__fadeInRight">
+          <div class="animate__animated animate__fadeInRight">
             <!-- <div class="card hover-bg text-center"> -->
             <div class="card hover-bg">
               <div class="image">
-                <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
-                  class="image">
+                 <img [src]="'assets/brand_images/' + category.imageUrl" alt="{{ category.categoryName }}"
+             (click)="router1.navigate(['/categories', category.categoryId])"  type="button" class="category-img">
               </div>
               <h4 class="card-title" type="button"><b>{{ category.categoryName }}</b></h4>
-              <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p> -->
+              <p class="card-text"><strong></strong> {{ category.description }}</p>
               <p class="card-text"><strong></strong> {{ category.tagline }}</p>
               <button (click)="router1.navigate(['/categories', category.categoryId])"
                 class="btn btn-primary add-to-cart-btn">

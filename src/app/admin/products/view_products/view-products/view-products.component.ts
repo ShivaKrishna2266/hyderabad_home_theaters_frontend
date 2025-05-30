@@ -47,9 +47,13 @@ export class ViewProductsComponent implements OnInit {
 
   getAllProducts() {
     this.productService.getAllProducts().subscribe(
-      (res: any) => {
-        this.products = res.data;  // Save the full list of products
-        this.applyFilters();        // Apply filters when products are fetched
+      (res: {data: ProductDTO[]}) => {
+        this.products = res.data.map(product => ({
+          ...product,
+          images: product.images ?? [],
+        })) ;
+        this.applyFilters();     
+        this.totalItems = this.products.length;   
       },
       (error) => {
         console.log("Product Not Shown", error);

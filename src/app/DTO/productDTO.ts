@@ -8,7 +8,7 @@ export interface ProductDTO{
     productRank: number,
     productSku: string,
     imageName: string,
-    imageURL: string,
+     images: string[];
     categoryId: number,
     brandId: number,
     subCategoryId: number,

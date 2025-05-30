@@ -37,18 +37,14 @@ export class ProductService {
   //   return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
   // }
 
-  addProduct(product: ProductDTO, imageFile: File): Observable<ProductDTO> {
-    const formData: FormData = new FormData();
-    formData.append('productDTO', new Blob([JSON.stringify(product)], { type: 'application/json' }));
-    formData.append('productImageFile', imageFile);
+ addProduct(formData: FormData): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+  return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
+}
 
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-    return this.http.post<ProductDTO>(`${this.apiUrl}/admin/createProduct`, formData, { headers });
-  }
 
   updateProduct(product: ProductDTO): Observable<any> {
     const token = localStorage.getItem('token');

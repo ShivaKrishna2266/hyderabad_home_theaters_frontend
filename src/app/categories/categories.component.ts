@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit {
   displayedCategoriess: CategoryDTO[] = [];
 
   searchTerm: string = '';
+  hovering: { [productId: string]: boolean } = {};
 
 
 

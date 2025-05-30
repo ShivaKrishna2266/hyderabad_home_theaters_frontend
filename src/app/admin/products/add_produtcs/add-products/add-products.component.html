@@ -46,9 +46,14 @@
                     </select>
                 </div>
         
-                <div class="col-md-6 col-sm-12 mb-3">
+                <!-- <div class="col-md-6 col-sm-12 mb-3">
                     <label for="imageURL" class="form-label"><b>Product Image</b></label>
                     <input type="file" id="imageURL" name="imageURL" (change)="onFileChange($event, 'imageURL')" accept="image/*" class="form-control" required>
+                </div> -->
+
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="images" class="form-label required-label"><b>Images (max 2)</b></label>
+                    <input type="file" id="images" name="images" (change)="onFileChange($event)" accept="image/*" multiple class="form-control" />
                 </div>
         
                 <div class="col-md-4 col-sm-4 mb-3">
@@ -117,7 +122,7 @@
                 </div>
         
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || !imageURL">Submit</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || !images">Submit</button>
                 </div>
             </div>
         </form>

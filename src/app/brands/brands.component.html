@@ -25,14 +25,9 @@
         <div class="col-md-3 col-sm-6" *ngFor="let brand of displayedBrands">
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg text-center">
-
               <!-- <img src="../.././assets/brand_images/karnaSurya.jpeg" alt="{{ brand.brandName }}" class="category-img"> -->
-
-              <img [src]="'assets/brand_images/' + brand.imageURL" alt="{{ brand.brandName }}" class="category-img">
-
-              <!-- <img [src]="'assets/brand_images/' + brand.imageURL" (error)="onImageError($event)"
-                alt="{{ brand.brandName }}" class="category-img"> -->
-
+              <img [src]="'assets/brand_images/' + brand.imageURL" alt="{{ brand.brandName }}"
+                (click)="router.navigate(['/brands', brand.brandId])" type="button" class="category-img">
               <h4><b>{{ brand.brandName }}</b></h4>
               <p class="card-text"><b>{{ brand.brandDescription }}</b></p>
               <button (click)="router.navigate(['/brands', brand.brandId])" class="btn btn-primary">View
@@ -91,10 +86,18 @@
         <div class="col-md-3" *ngFor="let product of filteredProducts">
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg">
-              <img
+              <!-- <img
                 src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxIZWFkcGhvbmVzfGVufDB8MHx8fDE3Mjk1MDkzMjV8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
-                class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button">
+                class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button"> -->
 
+              <div class="carousel-inner" (mouseenter)="hovering[product.productId] = true"
+                (mouseleave)="hovering[product.productId] = false">
+                <div *ngFor="let imageFileName of product.images; let i = index" class="carousel-item"
+                  [ngClass]="{ 'active': (!hovering[product.productId] && i === 0) || (hovering[product.productId] && i === 1) }">
+                  <img [src]="'assets/product_images/' + imageFileName" class="d-block w-100 img-fluid rounded shadow"
+                    alt="{{ imageFileName }}">
+                </div>
+              </div>
               <div class="p-2">
                 <h4 class="card-title" (click)="viewProductDetails(product)" type="button"><b>{{ product.productName
                     }}</b></h4>
