@@ -37,14 +37,24 @@
 
 
   <div class="row mt-4 mb-4">
-    <div class="col-md-3 col-sm-6" *ngFor="let product of filteredProducts" >
+    <div class="col-md-3 col-sm-6" *ngFor="let product of filteredProducts">
       <div class="h-100 p-3 animate__animated animate__fadeInRight">
         <div class="card hover-bg">
-          <img
+          <!-- <img
             src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxIZWFkcGhvbmVzfGVufDB8MHx8fDE3Mjk1MDkzMjV8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
-            class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button">
+            class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button"> -->
 
-          <!-- <img src="../.././assets/boss-home-theater-system.webp" alt="{{ product.productName }}" class="category-img"> -->
+          <div class="carousel-inner" (mouseenter)="hovering[product.productId] = true"
+            (mouseleave)="hovering[product.productId] = false">
+            <div *ngFor="let imageFileName of product.images; let i = index" class="carousel-item"
+              [ngClass]="{ 'active': (!hovering[product.productId] && i === 0) || (hovering[product.productId] && i === 1) }">
+              <img [src]="'assets/product_images/' + imageFileName" class="d-block w-100 img-fluid rounded shadow"
+                alt="{{ imageFileName }}">
+            </div>
+          </div>
+
+
+
           <div class="p-2">
             <h4 class="card-title" (click)="viewProductDetails(product)" type="button"><b>{{ product.productName
                 }}</b></h4>
@@ -82,8 +92,8 @@
       </div>
     </div>
 
-     <!-- Pagination Controls -->
-     <div class="text-center mt-3">
+    <!-- Pagination Controls -->
+    <div class="text-center mt-3">
       <i class="fa fa-angle-left pagination-shadow" (click)="prevPage()" [class.disabled]="currentPage === 1"></i>
       <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
       <i class="fa fa-angle-right pagination-shadow" (click)="nextPage()"

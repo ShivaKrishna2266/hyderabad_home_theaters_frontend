@@ -17,19 +17,22 @@
         <input type="text" [(ngModel)]="searchTerm" (input)="filterCategories()" placeholder="Search by Category Name"
           class="form-control" />
       </div>
-    
+
       <div class="col-md-3 mb-2 ms-auto text-end underline-text">
         <p><b>Total Categories: {{ categories.length }}</b></p>
       </div>
     </div>
-    
+
 
     <div class="row mb-4">
       <div class="col-md-3 col-sm-6" *ngFor="let category of displayedCategoriess">
         <div class="h-100 p-3 animate__animated animate__fadeInRight">
           <div class="card hover-bg text-center">
-            <img src="../.././assets/Buystack_AVR-X1800H_Image_StudioF_NA.webp" alt="{{ category.categoryName }}"
-              class="category-img">
+            <!-- <img src="../.././assets/Buystack_AVR-X1800H_Image_StudioF_NA.webp" alt="{{ category.categoryName }}"
+              class="category-img"> -->
+
+            <img [src]="'assets/brand_images/' + category.imageUrl" alt="{{ category.categoryName }}"
+              (click)="router.navigate(['/categories', category.categoryId])" type="button" class="category-img">
             <h4><b>{{ category.categoryName }}</b></h4>
             <p class="card-text"><b>{{category.description}}</b></p>
             <button (click)="router.navigate(['/categories', category.categoryId])" class="btn btn-primary">
@@ -87,10 +90,18 @@
         <div class="col-md-3 col-sm-6 mb-4" *ngFor="let product of filteredProducts">
           <div class="h-100 p-3 animate__animated animate__fadeInRight">
             <div class="card hover-bg">
-              <img
+              <!-- <img
                 src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxIZWFkcGhvbmVzfGVufDB8MHx8fDE3Mjk1MDkzMjV8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
-                class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button" />
+                class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button" /> -->
 
+              <div class="carousel-inner" (mouseenter)="hovering[product.productId] = true"
+                (mouseleave)="hovering[product.productId] = false">
+                <div *ngFor="let imageFileName of product.images; let i = index" class="carousel-item"
+                  [ngClass]="{ 'active': (!hovering[product.productId] && i === 0) || (hovering[product.productId] && i === 1) }">
+                  <img [src]="'assets/product_images/' + imageFileName" class="d-block w-100 img-fluid rounded shadow"
+                    alt="{{ imageFileName }}">
+                </div>
+              </div>
               <div class="p-2">
                 <h4 class="card-title" type="button" (click)="viewProductDetails(product)">
                   <b>{{ product.productName }}</b>
@@ -123,7 +134,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Pagination Controls -->
     <div class="text-center mt-3">
       <i class="fa fa-angle-left pagination-shadow" (click)="prevPage()" [class.disabled]="currentPage === 1"></i>

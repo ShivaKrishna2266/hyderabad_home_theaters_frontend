@@ -61,7 +61,16 @@
                     <td>{{ product.productPrice }}</td>
                     <td>{{ product.productRank }}</td>
                     <td>{{ product.productSku }}</td>
-                    <td><img src="../../../../../assets/brand_images/{{product.imageURL}}" alt="Cover Image" style="width: 50px; height: auto;"></td>
+                    <!-- <td><img src="../../../../../assets/brand_images/{{product.images}}" alt="Cover Image" style="width: 50px; height: auto;"></td> -->
+                    <td>
+                            <ng-container *ngIf="product.images">
+                                <img *ngFor="let image of product.images" [src]="'assets/product_images/' + image"
+                                    alt="Project Image" style="width: 50px; height: auto; margin-right: 5px;">
+                            </ng-container>
+                            <ng-template #noImage>
+                                <span>No Image</span>
+                            </ng-template>
+                        </td>
                     <td>{{ product.status }}</td>
                     <td class="d-flex gap-2">
                         <button class="btn btn-sm btn-primary" (click)="updateProduct(product)">

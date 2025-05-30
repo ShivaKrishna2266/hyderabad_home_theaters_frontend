@@ -10,7 +10,7 @@ import UserDTO, { AppUserRole } from "./user.dto";
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Register User (Step 1)
   register(userData: any): Observable<any> {
@@ -42,8 +42,15 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/protected-route`, { headers });
   }
 
-  requestPasswordReset(username: string) {
-  return this.http.post('/api/auth/forgot-password', { username }, { observe: 'response' });
-}
+
+  requestPasswordReset(email: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, { observe: 'response' });
+  }
+
+   resetPassword(token: string, newPassword: string): Observable<any> {
+    const params = { token, newPassword };
+    return this.http.post(`${this.apiUrl}/reset-password`, null, { params });
+  }
+
 }
 

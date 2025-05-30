@@ -16,7 +16,7 @@ import { PaymentService } from '../services/payment/payment.service';
   styleUrls: ['./view-details.component.scss']
 })
 export class ViewDetailsComponent implements OnInit {
-
+  currentImageIndex = 0;
   brands: BrandDTO[] = [];
   product!: ProductDTO;
   cartItems: any[] = [];
@@ -144,6 +144,21 @@ export class ViewDetailsComponent implements OnInit {
 
   }
 
+
+  // ================IMAGE=============================//
+
+  showNextImage() {
+    if (this.currentImageIndex < this.product.images.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+
+  showPreviousImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+
   getAllCategories(): void {
     this.dataLoaderService.getAllCategories().subscribe(
       (res: { data: CategoryDTO[] }) => {
@@ -171,6 +186,11 @@ export class ViewDetailsComponent implements OnInit {
   getBrandName(brandId: number): string {
     const foundBrand = this.brands.find(brand => brand.brandId === brandId);
     return foundBrand ? foundBrand.brandName : 'Unknown';
+  }
+
+  getCategoryName(categoryId: number) {
+    const foundCategory = this.categories.find(category => category.categoryId === categoryId);
+    return foundCategory ? foundCategory.categoryName : 'Unknown';
   }
 
   getAllProducts(): void {
@@ -340,23 +360,20 @@ export class ViewDetailsComponent implements OnInit {
     );
   }
 
-checkOut() {
-  const subtotal = this.getSubtotal();
-  const shipping = 10;
-  const tax = 20;
-  this.totalAmount = subtotal + shipping + tax; // 👈 assign to class property
+  checkOut() {
+    const subtotal = this.getSubtotal();
+    const shipping = 10;
+    const tax = 20;
+    this.totalAmount = subtotal + shipping + tax; // 👈 assign to class property
 
-  this.cartService.setCartItems(this.cartItems);
-  this.cartService.setTotalAmount(this.totalAmount);
+    this.cartService.setCartItems(this.cartItems);
+    this.cartService.setTotalAmount(this.totalAmount);
 
-  // ✅ Inform paymentService about total
-  this.paymentService.totalOrderAmount(this.totalAmount);
+    // ✅ Inform paymentService about total
+    this.paymentService.totalOrderAmount(this.totalAmount);
 
-  this.router.navigate(['/checkout-form'], {
-    state: { cartItems: this.cartItems, totalAmount: this.totalAmount }
-  });
-}
-
-
-
+    this.router.navigate(['/checkout-form'], {
+      state: { cartItems: this.cartItems, totalAmount: this.totalAmount }
+    });
+  }
 }

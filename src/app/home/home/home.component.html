@@ -24,7 +24,8 @@
     <!-- Slide 2: IMAGE -->
     <div class="carousel-item" data-bs-interval="1000">
       <video class="d-block w-100" autoplay muted loop playsinline>
-        <source src="https://v.ftcdn.net/10/25/36/83/700_F_1025368370_OPAkEvq4OZbHuUZKhAtXkueDbH1h4IOC_ST.mp4" type="video/mp4">
+        <source src="https://v.ftcdn.net/10/25/36/83/700_F_1025368370_OPAkEvq4OZbHuUZKhAtXkueDbH1h4IOC_ST.mp4"
+          type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -70,14 +71,22 @@
         <div class="h-100 p-2 animate__animated animate__fadeInRight">
           <!-- <div class="card hover-bg text-center"> -->
           <div class="card hover-bg">
-            <img
+            <!-- <img
               src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxIZWFkcGhvbmVzfGVufDB8MHx8fDE3Mjk1MDkzMjV8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
-              class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button">
+              class="card-img-top" alt="Product Image" (click)="viewProductDetails(product)" type="button"> -->
 
-            <!-- <img src="../.././assets/boss-home-theater-system.webp" alt="{{ product.productName }}" class="category-img"> -->
+            <div class="carousel-inner_1" (mouseenter)="hovering[product.productId] = true"
+              (mouseleave)="hovering[product.productId] = false">
+              <div *ngFor="let imageFileName of product.images; let i = index" class="carousel-item"
+                [ngClass]="{ 'active': (!hovering[product.productId] && i === 0) || (hovering[product.productId] && i === 1) }">
+                <img [src]="'assets/product_images/' + imageFileName" class="d-block w-100 img-fluid rounded shadow"
+                  (click)="viewProductDetails(product)" type="button" alt="{{ imageFileName }}">
+              </div>
+            </div>
+
             <div class="p-2">
-              <h4 class="card-title" (click)="viewProductDetails(product)" type="button"><b>{{ product.productName
-                  }}</b></h4>
+              <h4 class="card-title" (click)="viewProductDetails(product)" type="button"><b>{{ product.productName}}</b>
+              </h4>
               <p class="card-text">High-quality wireless with noise cancellation technology.</p>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="h5 mb-0">₹{{ product.productPrice }}</span>
@@ -138,13 +147,19 @@
         <div class="h-100 p-3 animate__animated animate__fadeInRight">
           <!-- <div class="card hover-bg text-center"> -->
           <div class="card hover-bg">
-            <div class="image">
-              <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
-                class="image">
+            <div class="category_image">
+              <!-- <img src="../../../assets/eleser-section-4k-projecter.png" alt="{{ category.categoryName }}"
+                class="image"> -->
+              <img [src]="'assets/brand_images/' + category.imageUrl" alt="{{ category.categoryName }}" class="image">
+
             </div>
-            <h4 class="card-title" type="button"><b>{{ category.categoryName }}</b></h4>
-            <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p> -->
-            <p class="card-text"><strong></strong> {{ category.tagline }}</p>
+            <div class="p-2">
+              <h4 class="card-title" type="button" (click)="router.navigate(['/categories', category.categoryId])"><b>{{
+                  category.categoryName }}</b></h4>
+              <!-- <p class="card-text"><strong>Description:</strong> {{ category.description }}</p> -->
+              <p class="card-text"><strong></strong> {{ category.tagline }}</p>
+            </div>
+
             <button (click)="router.navigate(['/categories', category.categoryId])"
               class="btn btn-primary add-to-cart-btn">
               View All {{category.categoryName}}
@@ -203,9 +218,7 @@
     <div class="col-md-3 col-sm-6">
       <div class="h-100 p-3 animate__animated animate__fadeInRight">
         <div class="card hover-bg">
-          <img
-            src="../../../assets/safe hands with us/authorized.webp"
-            alt="image" class="image">
+          <img src="../../../assets/safe hands with us/authorized.webp" alt="image" class="image">
           <h2><b>Authorised Online Dealer</b></h2>
           <p>We offer free shipping and delivery at your doorsteps on all our products with no hidden charges.</p>
         </div>
@@ -215,8 +228,7 @@
       <div class="h-100 p-3 animate__animated animate__fadeInRight">
         <div class="card hover-bg">
 
-          <img src="../../../assets/safe hands with us/cash on delivery.webp"
-            alt="image" class="image">
+          <img src="../../../assets/safe hands with us/cash on delivery.webp" alt="image" class="image">
 
           <h2><b>COD Available</b></h2>
           <p>Apart from prepayment facility we also offer Cash On Delivery options so that you can pay after proper
@@ -227,8 +239,7 @@
     <div class="col-md-3 col-sm-6">
       <div class="h-100 p-3 animate__animated animate__fadeInRight">
         <div class="card hover-bg">
-          <img src="../../../assets/safe hands with us/Customer-Service.png" alt="image"
-            class="image">
+          <img src="../../../assets/safe hands with us/Customer-Service.png" alt="image" class="image">
           <h2><b>Support</b></h2>
           <p>We provide you with complete pre and post purchase support to you so that you can get the best as per your
             need.</p>
@@ -238,8 +249,7 @@
     <div class="col-md-3 col-sm-6">
       <div class="h-100 p-3 animate__animated animate__fadeInRight">
         <div class="card hover-bg">
-          <img src="../../../assets/safe hands with us/secure payment.jpg" alt="image"
-            class="image">
+          <img src="../../../assets/safe hands with us/secure payment.jpg" alt="image" class="image">
           <h2><b>Secure Payment</b></h2>
           <p>We have partnered with top banks and payment gateways so that you can pay safely and securely on every
             purchase.</p>
@@ -348,7 +358,8 @@
           </div>
           <h4><b>Visit Our Warehouse</b></h4><br>
           <p>Read our Daily Blogs & News</p>
-          <a routerLink="/visit-our-warehouse" class="read-more mb-2"><i class="fa fa-arrow-right fa-1x">Read More</i></a>
+          <a routerLink="/visit-our-warehouse" class="read-more mb-2"><i class="fa fa-arrow-right fa-1x">Read
+              More</i></a>
         </div>
       </div>
     </div>
@@ -370,14 +381,10 @@
                 class="d-block w-100">
             </div>
             <div class="carousel-item">
-              <img
-                src="../../../assets/Our Services/3d-rendering-cinema.jpg"
-                alt="Image 2" class="d-block w-100">
+              <img src="../../../assets/Our Services/3d-rendering-cinema.jpg" alt="Image 2" class="d-block w-100">
             </div>
             <div class="carousel-item">
-              <img
-                src="../../../assets/Our Services/gaming-room-setup.jpg"
-                alt="Image 3" class="d-block w-100">
+              <img src="../../../assets/Our Services/gaming-room-setup.jpg" alt="Image 3" class="d-block w-100">
             </div>
           </div>
         </div>
@@ -430,9 +437,7 @@
                 alt="Image 1" class="d-block w-100">
             </div>
             <div class="carousel-item">
-              <img
-                src="../../../assets/Our Services/lpo.png"
-                alt="Image 2" class="d-block w-100">
+              <img src="../../../assets/Our Services/lpo.png" alt="Image 2" class="d-block w-100">
             </div>
             <div class="carousel-item">
               <img
@@ -507,13 +512,11 @@
                 <h4 class="text-primary">{{ testimonial.designation }}</h4>
                 <small class="stars">
                   <ng-container *ngFor="let star of [1,2,3,4,5]">
-                    <i class="fa"
-                       [ngClass]="{
+                    <i class="fa" [ngClass]="{
                          'fa-star': +testimonial.star >= star,
                          'fa-star-half-o': +testimonial.star >= star - 0.5 && +testimonial.star < star,
                          'fa-star-o': +testimonial.star < star - 0.5
-                       }"
-                       aria-hidden="true">
+                       }" aria-hidden="true">
                     </i>
                   </ng-container>
                   <small class="text-muted">({{ testimonial.star }})</small>

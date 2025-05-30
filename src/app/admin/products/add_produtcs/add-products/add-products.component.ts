@@ -23,7 +23,8 @@ export class AddProductsComponent implements OnInit {
   categories: CategoryDTO[] = [];
   subCategories: SubCategoryDTO[] = [];
 
-  imageURL: File | null = null;
+  images: File[] = [];
+  imagePreviews: string[] = [];
 
   productForm: FormGroup = this.formBuilder.group({
     productName: ['', [Validators.required, Validators.minLength(3)]],
@@ -96,30 +97,49 @@ export class AddProductsComponent implements OnInit {
 
   // Handle form submission
   onSubmit() {
-    if (this.productForm.valid && this.imageURL) {
-      const productData = this.productForm.value;
-      console.log("Payload Sent:", productData); // Debugging output
+  if (this.productForm.valid && this.images.length > 0) {
+    const productData = this.productForm.value;
 
-      // Send data to the product service with the image
-      this.productService.addProduct(productData, this.imageURL).subscribe(
-        (res: any) => {
-          console.log("Product Added Successfully", res);
-          this.router.navigate(["/admin/view-products"]);
-        },
-        (err) => {
-          console.error("Error Adding Product", err);
-        }
-      );
-    } else {
-      console.log("Form is invalid");
+    const formData = new FormData();
+    formData.append('productDTO', JSON.stringify(productData));  // IMPORTANT: stringify!
+
+    for (let i = 0; i < this.images.length; i++) {
+      formData.append('productImageFile', this.images[i]);  // match backend param name
     }
+
+    this.productService.addProduct(formData).subscribe(
+      (res: any) => {
+        console.log("Product Added Successfully", res);
+        this.router.navigate(["/admin/view-products"]);
+      },
+      (err) => {
+        console.error("Error Adding Product", err);
+      }
+    );
+  } else {
+    console.log("Form is invalid or no images selected");
   }
+}
 
   // Handle file selection for image upload
-  onFileChange(event: any, fileType: string): void {
-    const file: File = event.target.files[0];
-    if (file && fileType === 'imageURL') {
-      this.imageURL = file;
+ onFileChange(event: any): void {
+    const files: FileList = event.target.files;
+    this.images = [];
+    this.imagePreviews = [];
+
+    for (let i = 0; i < files.length && i < 3; i++) {
+      const file = files[i];
+      this.images.push(file);
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreviews.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (files.length > 2) {
+      alert('You can only upload up to 2 images.');
     }
   }
 }

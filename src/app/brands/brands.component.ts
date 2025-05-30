@@ -21,6 +21,8 @@ export class BrandsComponent implements OnInit {
   displayedBrands: BrandDTO[] = [];
   searchBrandName: string = '';
 
+  hovering: { [productId: string]: boolean } = {};
+
   // Pagination
   itemsPerPage = 8;
   currentPage = 1;

@@ -22,7 +22,7 @@ export class OrderService {
   error?: string;
 
   options = {
-    key: "rzp_test_4lw80NvYa0WUy3",
+    key: "NTzshf1Vzc0kKt",
     amount: "10",
     name: "Yakambram Kommu",
     description: "Web Development",

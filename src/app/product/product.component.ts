@@ -20,6 +20,8 @@ export class ProductComponent implements OnInit {
   priceTo: number | null = null;
   selectedPriceRange: any = null;
 
+hovering: { [productId: string]: boolean } = {};
+
 //pagenation
   itemsPerPage = 12;
   currentPage = 1;

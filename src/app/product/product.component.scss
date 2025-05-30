@@ -116,3 +116,38 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+// ====================IMAGE ON HOVER====================
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 200px; /* or any fixed height you want */
+  overflow: hidden;
+}
+
+.carousel-inner .carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-inner .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* makes sure the image covers the box */
+  border-radius: 8px; /* matches your 'rounded' class if needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* matches your 'shadow' class */
+}
+
+.carousel-inner .carousel-item:not(.active) {
+  display: none;
+}
+
+.carousel-inner .carousel-item.active {
+  display: block;
+}
+// ================================================
+

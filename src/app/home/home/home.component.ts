@@ -87,6 +87,7 @@ export class HomeComponent implements OnInit {
     this.chunkTestimonials();
   }
 
+ hovering: { [productId: string]: boolean } = {};
 
   products: ProductDTO[] = [];
   displayedProducts: ProductDTO[] = [];
@@ -119,6 +120,9 @@ Math: any;
     this.getAllTestimonials();
   }
 
+  isFullUrl(image: string): boolean {
+  return image.startsWith('http');
+}
   getAllProducts(): void {
     this.dataLoaderService.getAllProducts().subscribe(
       (res: { data: ProductDTO[] }) => {
