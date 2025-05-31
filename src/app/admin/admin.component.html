@@ -4,12 +4,17 @@
     <nav id="sidebar" class="col-md-3 col-lg-3 sidebar">
       <div class="accordion" id="accordionMenu">
         <!-- Dashboard -->
+
         <div class="accordion-item">
-          <h2 class="accordion-header p-3" routerLink="/admin">
+          <button class="btn btn-primary" routerLink="/admin/admin-register">
+            + Create New Admin
+          </button>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header p-3" routerLink="/admin/dashbord">
             <i class="fas fa-desktop"></i> Dashboard
           </h2>
         </div>
-
         <!-- View Brands -->
         <div class="accordion-item">
           <h2 class="accordion-header position-relative p-3" id="headingViewBrands" data-bs-toggle="collapse"
@@ -87,7 +92,7 @@
 
 
 
-          <div class="accordion-item">
+        <div class="accordion-item">
           <h2 class="accordion-header position-relative p-3" id="headingProjects" data-bs-toggle="collapse"
             data-bs-target="#collapseProjects" aria-expanded="true" aria-controls="collapseProjects">
             <i class="fas fa-newspaper"></i> Projects
@@ -150,7 +155,7 @@
 
         <!-- HEADRE -->
 
-         <div class="accordion-item">
+        <div class="accordion-item">
           <h2 class="accordion-header position-relative p-3" id="headingViewHeaders" data-bs-toggle="collapse"
             data-bs-target="#collapseViewHeaders" aria-expanded="true" aria-controls="collapseViewHeaders">
             <i class="fas fa-newspaper"></i> Header
@@ -163,7 +168,7 @@
             </div>
           </div>
         </div>
-        
+
 
 
         <!-- Orders -->
@@ -187,6 +192,7 @@
     <!-- Page content -->
     <main class="col-md-9 px-md-4">
       <div class="pt-3 pb-2 mb-3 border-bottom">
+
         <router-outlet></router-outlet>
       </div>
       <div class="pt-3 pb-2 mb-3 border-bottom text-center">

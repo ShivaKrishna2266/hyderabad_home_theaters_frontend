@@ -1,0 +1,81 @@
+<div class="p-4 w-100">
+    <h1 class=" text-center "><b>Dashboard</b></h1>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Total Sales</b></h5>
+                    <p class="card-text">₹{{ totalSalesAmount | number:'1.0-2' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Orders</b></h5>
+                    <p class="card-text">{{ totalOrders }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Customers</b></h5>
+                    <p class="card-text">{{totalcustomers}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Revenue</b></h5>
+                    <p class="card-text">₹8,900</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Recent Orders
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>S NO</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of paginatedOrders; let i = index">
+                        <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                        <td>{{ order.username }}</td>
+                        <td>{{ order.email }}</td>
+                        <td><span class="badge bg-success">{{ order.orderStatus }}</span></td>
+                        <td>₹{{ order.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Pagination Controls -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                        <button class="page-link" (click)="changePage(currentPage - 1)"><i
+                                class="fa fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let idx = index"
+                        [class.active]="currentPage === idx + 1">
+                        <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+                    </li>
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                        <button class="page-link" (click)="changePage(currentPage + 1)"><i
+                                class="fa fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container d-flex justify-content-center">
+  <div class="card col-md-6 mt-5 mb-5">
+    <div class="mt-4 d-flex justify-content-center">
+      <h2><b>Create Admin Account</b></h2>
+    </div>
+
+    <form [formGroup]="adminRegisterForm" (ngSubmit)="onSubmit()" class="form mt-3 mb-2">
+      <div class="mb-3">
+        <label for="username" class="form-label"><b>Admin Name</b></label>
+        <input type="text" id="username" class="form-control" placeholder="Enter Admin Name" formControlName="username" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label"><b>Admin Email</b></label>
+        <input type="email" id="email" class="form-control" placeholder="Enter Email" formControlName="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label"><b>Mobile Number</b></label>
+        <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter Number" formControlName="phoneNumber" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label"><b>Password</b></label>
+        <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label"><b>Confirm Password</b></label>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" required>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4 mb-3">
+        <button type="submit" class="btn btn-success" [disabled]="adminRegisterForm.invalid">Create Admin</button>
+      </div>
+    </form>
+  </div>
+</div>

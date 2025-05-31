@@ -15,19 +15,19 @@ export class RegisterComponent implements OnInit {
   signupForm!: FormGroup;
   otpForm!: FormGroup;
   otpSent = false;
-  appUserRoles: string[] = ['ROLE_ADMIN', 'ROLE_USER']; // You can replace with API-based dynamic roles
   userDataForOtp: any;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
-      role: ['USER', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
@@ -42,19 +42,26 @@ export class RegisterComponent implements OnInit {
       alert("Please fill all fields correctly.");
       return;
     }
+
     if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
       alert("Password and Confirm Password do not match.");
       return;
     }
-    this.userDataForOtp = this.signupForm.value;
-    this.authService.register(this.signupForm.value).subscribe({
+
+    // Attach role here manually
+    this.userDataForOtp = {
+      ...this.signupForm.value,
+      role: 'ROLE_USER'
+    };
+
+    this.authService.register(this.userDataForOtp).subscribe({
       next: (res) => {
         this.otpSent = true;
         alert("OTP sent to your mobile number.");
       },
       error: (err) => {
         if (err.error && err.error.error) {
-          alert(err.error.error); // show backend error (like username exists)
+          alert(err.error.error); // backend error
         } else {
           alert("Failed to send OTP.");
         }
@@ -62,7 +69,6 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
 
   onOtpSubmit() {
     const otpPayload = {
@@ -73,7 +79,6 @@ export class RegisterComponent implements OnInit {
     this.authService.verifyOtp(otpPayload).subscribe({
       next: (res) => {
         alert('Register Successfully!');
-        // Navigate based on role
         const role = this.userDataForOtp.role;
         if (role === 'ROLE_ADMIN') {
           this.router.navigate(['/admin/admin-dashbord']);

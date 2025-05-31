@@ -46,6 +46,7 @@ import { HomeSecurityComponent } from './home-security/home-security.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,7 +94,8 @@ import { HomeSecurityComponent } from './home-security/home-security.component';
     NgxPaginationModule,
     MatToolbarModule,
     UserModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+   
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

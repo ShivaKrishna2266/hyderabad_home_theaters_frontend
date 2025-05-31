@@ -1,0 +1,77 @@
+/* Make card headers bold and distinct */
+.card-header {
+    font-weight: 600;
+    font-size: 1.2rem;
+    background-color: #f9faf8;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Center card titles and values nicely */
+.card .card-title {
+    font-size: 1rem;
+    color: #555;
+    text-underline-position:below;
+}
+
+.card .card-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+}
+/* Add subtle shadow to cards */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Badge for order status */
+.badge.bg-success {
+    background-color: #28a745 !important;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+/* Pagination styling */
+.pagination .page-link {
+    color: #007bff;
+    border: none;
+    background: transparent;
+    margin: 0 3px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+}
+
+/* Table styles */
+.table thead th {
+    font-weight: 600;
+    background-color: #f1f1f1;
+}
+
+.table tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Adjust icon size inside buttons */
+.page-link i.fa {
+    font-size: 0.9rem;
+}
