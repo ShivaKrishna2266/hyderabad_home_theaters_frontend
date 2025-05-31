@@ -17,9 +17,9 @@
               <img src="../assets/WhatsApp Image 2025-04-07 .jpg" alt="Logo_1" class="img-fluid" />
             </div>
             <div class="col-md-9 p-3 d-flex justify-content-between bg-danger">
-              <i class="fas fa-bars fa-3x" [routerLink]="'/admin/admin-dashbord'"></i>
+              <i class="fas fa-bars fa-2x" [routerLink]="'/admin/admin-dashbord'"></i>
               <div class="logout" (mouseenter)="showCard()" (mouseleave)="hideCard()">
-                <i class="fas fa-user fa-3x"></i>
+                <i class="fas fa-user fa-2x"></i>
                 <div class="logout-card" *ngIf="cardVisible" (mouseenter)="resetCloseTimer()" (mouseleave)="hideCard()">
                   <div class="logout-card-item" (click)="logOut()"><b>Logout</b></div>
                 </div>

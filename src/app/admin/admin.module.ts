@@ -26,6 +26,8 @@ import { EditReviewComponent } from './edit-review/edit-review.component';
 import { HeaderComponent } from './header/header.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -55,6 +57,8 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
     HeaderComponent,
     ProjectsComponent,
     AddProjectComponent,
+    AdminRegisterComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -63,7 +67,7 @@ import { AddProjectComponent } from './projects/add-project/add-project.componen
     ReactiveFormsModule,
   ],
   exports: [
-    AdminComponent,
+    AdminComponent, 
   ]
 })
 export class AdminModule { }

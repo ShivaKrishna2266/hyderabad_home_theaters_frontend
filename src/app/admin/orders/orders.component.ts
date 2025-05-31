@@ -24,7 +24,7 @@ export class OrdersComponent implements OnInit {
 
   public orderStatuses: string[] = [
     'Placed', 'Pending', 'Out for delivery', 'Recieved',
-    'Cancelled', 'Returned', 'Picked', 'COMPLETED'
+    'Cancelled', 'Returned', 'Picked',
   ];
 
   constructor(

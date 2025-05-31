@@ -3,6 +3,7 @@ import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ContactUsDTO } from 'src/app/DTO/contactUsDTO';
 import { CountryCodeDTO } from 'src/app/DTO/countryCodeDTO';
+import { CustomersDTO } from 'src/app/DTO/customersDTO';
 import { GeneralSettingsDTO } from 'src/app/DTO/generalSettingsDTO';
 import { HeaderDTO } from 'src/app/DTO/headerDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
@@ -33,4 +34,5 @@ export class DataService {
   reviewData! : ReviewDTO;
   headerData! : HeaderDTO;
   projectData! : ProjectDTO;
+  customerData! : CustomersDTO;
 }

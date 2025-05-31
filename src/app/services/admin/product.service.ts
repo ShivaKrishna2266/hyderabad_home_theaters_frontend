@@ -60,4 +60,9 @@ export class ProductService {
     return this.http.delete<any>(`${this.apiUrl}/admin/deleteProductById/${product.productId}`, { headers });
   }
 
+    getAllCustomers(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(this.apiUrl + "/admin/getAllCustomers", { headers })
+  }
 }

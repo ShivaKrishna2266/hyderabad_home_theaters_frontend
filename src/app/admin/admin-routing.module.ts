@@ -25,6 +25,8 @@ import { EditReviewComponent } from './edit-review/edit-review.component';
 import { HeaderComponent } from './header/header.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const routes: Routes = [
@@ -52,7 +54,9 @@ const routes: Routes = [
     { path : 'editReview', component: EditReviewComponent},
     { path : 'header', component: HeaderComponent},
     { path : 'admin-projects', component: ProjectsComponent},
-    { path : 'add-project', component: AddProjectComponent}
+    { path : 'add-project', component: AddProjectComponent},
+    { path : 'admin-register', component: AdminRegisterComponent},
+    { path : 'dashbord', component: DashboardComponent},
   ] 
 }
 ];
