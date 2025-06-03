@@ -27,6 +27,9 @@ import { ProjectsComponent } from './projects/projects.component';
 import { AddProjectComponent } from './projects/add-project/add-project.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ViewBannersComponent } from './banners/view-banners/view-banners.component';
+import { AddBannersComponent } from './banners/add-banners/add-banners.component';
+import { EditBannerComponent } from './banners/edit-banner/edit-banner.component';
 
 
 const routes: Routes = [
@@ -57,6 +60,9 @@ const routes: Routes = [
     { path : 'add-project', component: AddProjectComponent},
     { path : 'admin-register', component: AdminRegisterComponent},
     { path : 'dashbord', component: DashboardComponent},
+    { path : 'view-banners', component: ViewBannersComponent},
+    { path : 'add-banners', component: AddBannersComponent},
+    { path : 'edit-banners', component: EditBannerComponent},
   ] 
 }
 ];
