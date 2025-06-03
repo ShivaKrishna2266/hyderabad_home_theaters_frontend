@@ -1,53 +1,74 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 
+declare var Tawk_API: any;
 @Component({
   selector: 'app-whatsapp-widget',
   templateUrl: './whatsapp-widget.component.html',
   styleUrls: ['./whatsapp-widget.component.scss']
 })
+
 export class WhatsappWidgetComponent implements OnInit {
 
-  public isChatBoxEnable: boolean = false;
-  isVisible = false;
+  isVisible: boolean = false;
+  isChatBoxEnable: boolean = true;
+  logoSrc: string = 'your-logo.png'; 
+  buttonMessage: string = '';  // <-- to hold return text
 
-  constructor(){}
+ faqList = [
+  { 
+    question: 'What services do you offer?', 
+    answer: 'We offer premium home theater installations, including design, setup, and calibration.',
+    showAnswer: false
+  },
+  { 
+    question: 'How can I contact support?', 
+    answer: 'You can use the live chat, WhatsApp widget, or email us at support@hyderabadhometheaters.com.',
+    showAnswer: false
+  },
+  { 
+    question: 'What are your working hours?', 
+    answer: 'We are available from 9 AM to 9 PM, Monday to Saturday.',
+    showAnswer: false
+  }
+];
 
   ngOnInit(): void {
-    
+    this.loadTawkToScript();
   }
 
-  logoSrc = 'https://cdn.clare.ai/wati/images/WATI_logo_square_2.png';
-
-  handleError() {
-    this.logoSrc = 'https://cdn.clare.ai/wati/images/WATI_logo_square_2.png';
-  }
-
-  messageUs() {
-    this.isChatBoxEnable = true;
-  }
-
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    this.isVisible = window.scrollY > 200; // Show button when scrolled 200px down
-    console.log("Scroll Position:", window.scrollY, "isVisible:", this.isVisible); // Debugging
+  loadTawkToScript(): void {
+    var s1 = document.createElement('script');
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/68385ebe572be3190b6e56ce/1ise346or';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    var s0 = document.getElementsByTagName('script')[0];
+    s0.parentNode?.insertBefore(s1, s0);
   }
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  openPopup() {
-    this.isChatBoxEnable = true;
-    setTimeout(() => {
-        document.querySelector('.wa-chat-box')?.classList.add('show');
-    }, 50);
+
+  closePopup(): void {
+    this.isChatBoxEnable = false;
+  }
+
+  handleError(): void {
+    this.logoSrc = 'fallback-image.png';
+  }
+
+  messageUs(): void {
+    if (typeof Tawk_API !== 'undefined') {
+      Tawk_API.maximize();
+      this.buttonMessage = 'Chat opened!';
+    } else {
+      this.buttonMessage = 'Chat API not ready!';
+    }
+  }
+
+
+  toggleAnswer(index: number): void {
+  this.faqList[index].showAnswer = !this.faqList[index].showAnswer;
 }
-
-closePopup() {
-    document.querySelector('.wa-chat-box')?.classList.remove('show');
-    setTimeout(() => {
-        this.isChatBoxEnable = false;
-    }, 300);
-}
-
-
 }

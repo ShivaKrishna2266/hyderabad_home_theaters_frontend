@@ -362,3 +362,32 @@
   .wa-chat-bubble-close-btn img {
     pointer-events: none;
   }
+
+  // ==================================================
+
+    .whatsapp-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.whatsapp-popup:hover {
+  background-color: #1ebe57;
+  transform: scale(1.05);
+}
+
+.whatsapp-popup img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}

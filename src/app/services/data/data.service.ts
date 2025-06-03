@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BannerDTO } from 'src/app/DTO/bannerDTO';
 import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ContactUsDTO } from 'src/app/DTO/contactUsDTO';
@@ -35,4 +36,5 @@ export class DataService {
   headerData! : HeaderDTO;
   projectData! : ProjectDTO;
   customerData! : CustomersDTO;
+  bannerData! : BannerDTO;
 }
