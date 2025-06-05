@@ -1,1 +1,44 @@
-<p>edit-banner works!</p>
+<div class="container">
+    <section class="view-banners">
+        <div class="card-header mt-5 p-2 text-center">
+            <h1 class="mt-3"><b>Edit Banner</b></h1>
+        </div>
+    </section>
+
+    <div class="card mt-5 p-4">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="title" class="form-label"><b>Brand Titiw</b></label>
+                <input type="text" id="title" name="title" [(ngModel)]="banners.title" class="form-control"
+                    required>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="subTitle" class="form-label"><b>Brand subTitle</b></label>
+                <textarea id="subTitle" name="subTitle" [(ngModel)]="banners.subTitle"
+                    class="form-control" required></textarea>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="url" class="form-label"><b>Tag Line</b></label>
+                <input type="text" id="url" name="url" [(ngModel)]="banners.url" class="form-control"
+                    required>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-3">
+                <label for="status" class="form-label"><b>Status</b></label>
+                <select name="status" id="status" [(ngModel)]="banners.status" class="form-control" required>
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+            </div>
+
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

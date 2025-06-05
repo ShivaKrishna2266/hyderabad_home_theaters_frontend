@@ -6,6 +6,7 @@ import { ProductDTO } from '../DTO/productDTO';
 import { ProductService } from '../services/product/product.service';
 import { DataLoaderService } from '../services/data_loader/data-loader.service';
 import { CartService } from '../services/cart/cart.service';
+import { BannerDTO } from '../DTO/bannerDTO';
 
 @Component({
   selector: 'app-brands',
@@ -13,6 +14,10 @@ import { CartService } from '../services/cart/cart.service';
   styleUrls: ['./brands.component.scss']
 })
 export class BrandsComponent implements OnInit {
+
+  banner?: BannerDTO;
+  title: string = 'Brand Banner';
+
   brands: BrandDTO[] = [];
   products: ProductDTO[] = [];
   filteredProducts: ProductDTO[] = [];
@@ -72,6 +77,23 @@ export class BrandsComponent implements OnInit {
     });
 
     this.getAllBrands();
+    this.loadBannerByTitle();
+  }
+
+  loadBannerByTitle(): void {
+    this.dataLoaderService.getBannerByTitle(this.title).subscribe({
+      next: (res) => {
+        this.banner = res.data;
+      },
+      error: (err) => {
+        console.error('Banner not found:', err);
+      }
+    });
+  }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/banners_images/fallback-image.jpg';  // fallback image
   }
 
   getBrandName(brandId: number): void {
@@ -128,12 +150,12 @@ export class BrandsComponent implements OnInit {
       this.displayedBrands = [...this.brands]; // Show all brands if search is empty
       return;
     }
-  
+
     this.displayedBrands = this.brands.filter(brand =>
       brand.brandName?.toLowerCase().includes(term)
     );
   }
-  
+
   filterProducts(): void {
     this.filteredProducts = this.products.filter(product =>
       product.productName.toLowerCase().includes(this.searchName.toLowerCase()) &&

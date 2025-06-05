@@ -5,8 +5,8 @@
         </div>
     </section>
 
-     <div class="card mt-5 p-4">
-        <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+    <div class="card mt-5 p-4">
+        <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="title" class="form-label"><b>Banner Title</b></label>
@@ -14,30 +14,37 @@
                 </div>
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="subTitle" class="form-label"><b>Sub-Title </b></label>
-                    <input name="subTitle"id="subTitle"class="form-control"formControlName="subTitle">
-                  </div>                
+                    <textarea name="subTitle" id="subTitle" class="form-control" formControlName="subTitle"></textarea>
+                </div>
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="url" class="form-label"><b>Banner URL</b></label>
-                    <textarea id="url" name="url" class="form-control" formControlName="url"></textarea>
-                </div>     
-            
+                    <input id="url" name="url" class="form-control" formControlName="url">
+                </div>
                 <div class="col-md-6 col-sm-12 mb-3">
                     <label for="status" class="form-label"><b>Status</b></label>
                     <select name="status" id="status" class="form-control" formControlName="status">
-                      <option value="" disabled selected>Select Status</option>
-                      <option value="active">ACTIVE</option>
-                      <option value="inactive">INACTIVE</option>
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="active">ACTIVE</option>
+                        <option value="inactive">INACTIVE</option>
                     </select>
-                  </div>      
-                  <div class="col-md-6 col-sm-12 mb-3">
-                    <label for="coverImage" class="form-label required-label"><b>Banner Image</b></label>
-                   <input type="file" id="coverImage" name="coverImage" formControlName="coverImage" class="form-control ">
-                  </div>            
+                </div>
+                <!-- Image Upload -->
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label><b>Upload Images (up to 4)</b></label>
+                    <input type="file" (change)="onImageChange($event)" accept="image/*" multiple
+                        class="form-control" />
+                </div>
+                <!-- Video Upload -->
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label><b>Upload Video</b></label>
+                    <input type="file" (change)="onVideoChange($event)" accept="video/*" multiple
+                        class="form-control" />
+                </div>
             </div>
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary" [disabled]="brandForm.invalid">Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="bannerForm.invalid">Submit</button>
             </div>
         </form>
-        
+
     </div>
 </div>

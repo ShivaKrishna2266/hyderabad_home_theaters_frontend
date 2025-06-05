@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BannerDTO } from 'src/app/DTO/bannerDTO';
 import { BannerService } from 'src/app/services/admin/banner.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-view-banners',
@@ -22,13 +23,12 @@ export class ViewBannersComponent implements OnInit {
   constructor(
     private bannerService: BannerService,
     private router: Router,
+    private dataService: DataService,
 
   ) { };
-
   ngOnInit(): void {
     this.getAllBanners();
   }
-
   getAllBanners() {
     this.bannerService.getAllBanners().subscribe(
       (res: any) => {
@@ -39,20 +39,15 @@ export class ViewBannersComponent implements OnInit {
       }
     )
   }
-
-
   addBanner() {
     this.router.navigate(['admin/add-banners']);
   }
-
   updateBanner(banner: BannerDTO) {
+    this.dataService.bannerData = banner;
     this.router.navigate(['admin/edit-banners']);
   }
-
   deleteBanner(banner: BannerDTO) {
   }
-
-
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.getTotalPages()) {
       this.currentPage = page;

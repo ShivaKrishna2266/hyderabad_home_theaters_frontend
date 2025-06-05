@@ -17,61 +17,61 @@ export class DataLoaderService {
 
   private apiUrl = environment.apiUrl;
   constructor(
-              private http:HttpClient,
+    private http: HttpClient,
   ) { }
 
   getAllBrands(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllBrands");
   }
 
-  getBrandById(brandId: number): Observable<any>{
+  getBrandById(brandId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getBrandById/${brandId}`);
   }
 
-  getAllProducts(): Observable<any>{
+  getAllProducts(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllProducts");
   }
   getProductsByBrand(brandId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getProductsByBrand/${brandId}`);
   }
-  
-  getAllCategories(): Observable<any>{
-     return this.http.get<any>(this.apiUrl + "/data/getAllCategories");
+
+  getAllCategories(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/data/getAllCategories");
   }
 
-  getCategoryById(categoryId: number): Observable<any>{
+  getCategoryById(categoryId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getCategoryById/${categoryId}`);
   }
-  getSubCategoryByCategory(categoryId: number): Observable<any>{
+  getSubCategoryByCategory(categoryId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getSubCategoryByCategory/${categoryId}`)
-  } 
+  }
 
-   getProductById(productId: number): Observable<any>{
+  getProductById(productId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getProductById/${productId}`)
-  } 
+  }
 
-  getProductByCategory(categoryId: number): Observable<any>{
+  getProductByCategory(categoryId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getProductByCategory/${categoryId}`)
-  } 
-  
+  }
 
-  getAllGeneralSettings() : Observable<any>{
+
+  getAllGeneralSettings(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllGeneralSettings");
   }
 
-  getAllCountryCodes(): Observable<any>{
+  getAllCountryCodes(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllCountryCodes");
   }
 
-  addCountactUs(data : any){
-    return this.http.post<any>(`${this.apiUrl}/data/addContactUs` , data);
+  addCountactUs(data: any) {
+    return this.http.post<any>(`${this.apiUrl}/data/addContactUs`, data);
   }
 
-  getAllTestimonial(): Observable<any>{
+  getAllTestimonial(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllTestimonials");
   }
 
-  getAllReviews(): Observable<any>{
+  getAllReviews(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllReviews");
   }
 
@@ -83,15 +83,15 @@ export class DataLoaderService {
     const formData: FormData = new FormData();
     formData.append('reviewDTO', JSON.stringify(reviewData)); // 👈 Must match backend's @RequestPart("reviewDTO")
     formData.append('reviewImageFile', image); // 👈 Must match backend's @RequestPart("reviewImageFile")
-  
+
     return this.http.post<any>(`${this.apiUrl}/data/createReview`, formData);
   }
 
-  getAllQuestions(): Observable<any>{
+  getAllQuestions(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllQuestions");
   }
 
-  createQuestion(questionData: QuestionDTO, image: File): Observable<any>{
+  createQuestion(questionData: QuestionDTO, image: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('questionDTO', JSON.stringify(questionData)); // 👈 Must match backend's @RequestPart("reviewDTO")
     formData.append('questionImageFile', image); // 👈 Must match backend's @RequestPart("reviewImageFile")
@@ -102,7 +102,7 @@ export class DataLoaderService {
   getProductQuestion(productId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/data/getProductQuestion/${productId}/question`);
   }
-  
+
 
 
   //=====================CART=======================================//
@@ -134,11 +134,25 @@ export class DataLoaderService {
     return this.http.post(this.apiUrl, data);
   }
 
-  getAllHeaders(): Observable<any>{
-  return this.http.get<any>(this.apiUrl + "/data/getAllHeaders");
+  getAllHeaders(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/data/getAllHeaders");
   }
 
-  getAllProjects():Observable<any>{
+  getAllProjects(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/data/getAllProjects");
   }
+
+  getAllBanners(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/data/getAllBanners");
+  }
+
+  getBannerById(bannerId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/data/getBannerById/${bannerId}`);
+  }
+
+  getBannerByTitle(title: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/data/getBannersByTitle`, { params: { title } });
+  }
+
+
 }
