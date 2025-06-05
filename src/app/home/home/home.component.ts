@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BannerDTO } from 'src/app/DTO/bannerDTO';
 import { BrandDTO } from 'src/app/DTO/brandDTO';
 import { CategoryDTO } from 'src/app/DTO/categoryDTO';
 import { ProductDTO } from 'src/app/DTO/productDTO';
@@ -13,6 +14,14 @@ import { DataLoaderService } from 'src/app/services/data_loader/data-loader.serv
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  
+  banner!: BannerDTO;
+  bannerId!: number;
+
+  //  banner?: BannerDTO;
+   banners?: BannerDTO;
+  title: string = 'Services Banner';
 
   // Defult Testimonial//
 
@@ -87,7 +96,7 @@ export class HomeComponent implements OnInit {
     this.chunkTestimonials();
   }
 
- hovering: { [productId: string]: boolean } = {};
+  hovering: { [productId: string]: boolean } = {};
 
   products: ProductDTO[] = [];
   displayedProducts: ProductDTO[] = [];
@@ -96,7 +105,7 @@ export class HomeComponent implements OnInit {
   categoryId: number | null = null;
   brands: BrandDTO[] = [];
   chunkedTestimonials: TestimonialDTO[][] = [];
-  testimonials : TestimonialDTO[] =[];
+  testimonials: TestimonialDTO[] = [];
   public isChatBoxEnable: boolean = false;
 
   // showCategories: boolean = true; // Set to false to hide categories
@@ -105,24 +114,99 @@ export class HomeComponent implements OnInit {
   currentProductPage: number = 1;
   currentCategoryPage: number = 1;
   itemsPerPage: number = 4; // Show 4 items per page
-Math: any;
+  Math: any;
 
   constructor(
-              private dataLoaderService: DataLoaderService,
-              private cartService : CartService,
-              public router: Router,
-  ) {}
+    private dataLoaderService: DataLoaderService,
+    private cartService: CartService,
+    public router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategories();
     this.getAllBrands();
     this.getAllTestimonials();
+    this.getAllBanners();
+    this.loadBannerByTitle();
+
+    // Get the bannerId from route parameters (e.g., /carousel/123)
+    this.bannerId = +this.route.snapshot.paramMap.get('bannerId')!;
+    this.getBannerById(this.bannerId);
+
+    this.dataLoaderService.getBannerByTitle('YourTitleHere').subscribe({
+      next: (res) => this.banner = res.data,
+      error: (err) => console.error(err)
+    });
+
+     const title = this.route.snapshot.queryParamMap.get('title');
+  if (title) {
+    this.getBannerByTitle(title);
+  }
   }
 
   isFullUrl(image: string): boolean {
-  return image.startsWith('http');
+    return image.startsWith('http');
+  }
+
+  
+
+  getAllBanners(): void {
+    this.dataLoaderService.getAllBanners().subscribe((res: any) => {
+      if (res.data?.length) {
+        this.banner = res.data[0]; // take the first banner
+      }
+    });
+  }
+
+ loadBannerByTitle(): void {
+    this.dataLoaderService.getBannerByTitle(this.title).subscribe({
+      next: (res) => {
+        this.banners = res.data;
+        console.log('Banner loaded:', this.banners);
+      },
+      error: (err) => {
+        console.error('Banner not found:', err);
+      }
+    });
+  }
+
+  onImgError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/banners_images/fallback-image.jpg';
+  }
+  getBannerById(bannerId: number): void {
+    this.dataLoaderService.getBannerById(bannerId).subscribe({
+      next: (res) => {
+        if (res && res.data) {
+          this.banner = res.data;
+        } else {
+          console.error('No banner data found');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching banner:', err);
+      }
+    });
+  }
+
+  getBannerByTitle(title: string): void {
+  this.dataLoaderService.getBannerByTitle(title).subscribe({
+    next: (res) => {
+      this.banner = res.data;
+    },
+    error: (err) => {
+      console.error('Error fetching banner:', err);
+    }
+  });
 }
+getImageUrl(image: string): string {
+  return this.isFullUrl(image) ? image : 'assets/banners_images/' + image;
+}
+
+
+
   getAllProducts(): void {
     this.dataLoaderService.getAllProducts().subscribe(
       (res: { data: ProductDTO[] }) => {
@@ -170,8 +254,8 @@ Math: any;
       },
     );
   }
-  
-  
+
+
 
   updateDisplayedProducts(): void {
     const startIndex = (this.currentProductPage - 1) * this.itemsPerPage;

@@ -1,10 +1,20 @@
-<div class="container-fluid p-0">
+<!-- <div class="container-fluid p-0">
   <div class="image-container">
     <img src="../../assets/vecteezy_a-home-theater-with-reclining-chairs-and-a-projector_56318023.jpg" alt="Banner">
     <div class="overlay-text animate__animated animate__fadeInRight">All Your Favorite Categories in One Place – Choose
       the
       One That Fits You</div>
   </div>
+</div> -->
+
+<div class="container-fluid p-0 mb-3" *ngIf="banner">
+    <div class="image-container position-relative">
+        <img *ngIf="banner.coverImage?.length" [src]="'assets/banners_images/' + banner.coverImage[0]"
+            [alt]="banner.title" class="w-100" (error)="onImgError($event)" />
+        <div class="overlay-text animate__animated animate__fadeInRight">
+            {{ banner.subTitle }}
+        </div>
+    </div>
 </div>
 
 <div class="container mt-4">

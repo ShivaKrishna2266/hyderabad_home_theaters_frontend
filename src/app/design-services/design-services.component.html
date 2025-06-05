@@ -1,8 +1,11 @@
-<div class="container-fluid p-0 mb-3">
-    <div class="image-container">
-        <img src="../../assets/design_services/vecteezy_ai-generated-cinema-interiors-cinemas_38498123.jpg" alt="Banner">
-        <div class="overlay-text animate__animated animate__fadeInRight">Few of our services are here, carefully chosen
-            to meet your needs.</div>
+
+<div class="container-fluid p-0 mb-3" *ngIf="banner">
+    <div class="image-container position-relative">
+        <img *ngIf="banner.coverImage?.length" [src]="'assets/banners_images/' + banner.coverImage[0]"
+            [alt]="banner.title" class="w-100" (error)="onImgError($event)" />
+        <div class="overlay-text animate__animated animate__fadeInRight">
+            {{ banner.subTitle }}
+        </div>
     </div>
 </div>
 <div class="container mt-4">

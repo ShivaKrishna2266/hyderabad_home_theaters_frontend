@@ -1,9 +1,19 @@
-<div class="container-fluid p-0">
+<!-- <div class="container-fluid p-0">
   <div class="image-container">
     <img src="../../assets/speaker_brands_D_Brands.webp" alt="Banner">
     <div class="overlay-text animate__animated animate__fadeInRight">All Your Favorite Brands in One Place – Choose the
       One That Fits You</div>
   </div>
+</div> -->
+
+<div class="container-fluid p-0 mb-3" *ngIf="banner">
+    <div class="image-container position-relative">
+        <img *ngIf="banner.coverImage?.length" [src]="'assets/banners_images/' + banner.coverImage[0]"
+            [alt]="banner.title" class="w-100" (error)="onImgError($event)" />
+        <div class="overlay-text animate__animated animate__fadeInRight">
+            {{ banner.subTitle }}
+        </div>
+    </div>
 </div>
 
 <div class="container mt-3">

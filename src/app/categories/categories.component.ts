@@ -5,6 +5,7 @@ import { SubCategoryDTO } from '../DTO/subCategoryDTO';
 import { CategoryDTO } from '../DTO/categoryDTO';
 import { ProductDTO } from '../DTO/productDTO';
 import { CartService } from '../services/cart/cart.service';
+import { BannerDTO } from '../DTO/bannerDTO';
 
 @Component({
   selector: 'app-categories',
@@ -12,6 +13,9 @@ import { CartService } from '../services/cart/cart.service';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
+   banner?: BannerDTO;
+   title: string = 'Category Banner';
+
   categories: CategoryDTO[] = [];
   categoryId: number | null = null;
   subCategories: SubCategoryDTO[] = [];
@@ -62,6 +66,7 @@ export class CategoriesComponent implements OnInit {
     this.displayedCategoriess = this.categories;
 
     this.getAllCategories();
+     this.loadBannerByTitle();
 
     this.route.paramMap.subscribe(parmas => {
       const id = parmas.get('categoryId');
@@ -78,6 +83,22 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+
+   loadBannerByTitle(): void {
+    this.dataLoaderService.getBannerByTitle(this.title).subscribe({
+      next: (res) => {
+        this.banner = res.data;
+      },
+      error: (err) => {
+        console.error('Banner not found:', err);
+      }
+    });
+  }
+
+ onImgError(event: Event) {
+  const img = event.target as HTMLImageElement;
+  img.src = 'assets/banners_images/fallback-image.jpg';  // fallback image
+}
 
   filterCategories() {
     const term = this.searchTerm.toLowerCase();

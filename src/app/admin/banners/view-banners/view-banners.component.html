@@ -18,6 +18,7 @@
                     <th>Banner title</th>
                     <th>subTitle </th>
                     <th>Cover Image</th>
+                    <th>Video</th>
                     <th>url</th>
                     <th>status</th>
                     <th>proStatus</th>
@@ -30,7 +31,27 @@
                     <td>{{ i + 1 +(currentPage - 1) * pageSize}}</td>
                     <td>{{ banner.title }}</td>
                     <td>{{ (banner.subTitle) }}</td>
-                    <td><img src="../../../../../assets/banner" alt="Cover Image" style="width: 50px; height: auto;">
+                    <td>
+                        <ng-container *ngIf="banner.coverImage">
+                            <img *ngFor="let image of banner.coverImage" [src]="'assets/banners_images/' + image"
+                                alt="Banner Image" style="width: 50px; height: auto; margin-right: 5px;">
+                        </ng-container>
+                        <ng-template #noImage>
+                            <span>No Image</span>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="banner.videoFileName && banner.videoFileName.length > 0; else noVideo">
+                            <div style="display: flex; gap: 8px;">
+                                <video *ngFor="let video of banner.videoFileName" width="100" height="60" controls>
+                                    <source [src]="'assets/banners_images/' + video">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </ng-container>
+                        <ng-template #noVideo>
+                            <span>No Video</span>
+                        </ng-template>
                     </td>
                     <td>{{ banner.url }}</td>
                     <td>{{ banner.status }}</td>
@@ -43,7 +64,6 @@
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
-
                 </tr>
             </tbody>
         </table>
